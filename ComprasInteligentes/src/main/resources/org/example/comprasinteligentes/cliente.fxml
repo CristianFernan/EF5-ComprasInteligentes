@@ -11,7 +11,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<VBox alignment="CENTER" prefHeight="430.0" prefWidth="575.0" spacing="20.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.comprasinteligentes.controllers.ClienteController">
+<VBox alignment="CENTER" prefHeight="486.0" prefWidth="575.0" spacing="20.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.comprasinteligentes.controllers.ClienteController">
     <padding>
         <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
     </padding>
@@ -57,9 +57,9 @@
                   </HBox>
                </children>
             </VBox>
-            <VBox prefHeight="100.0" prefWidth="257.0">
+            <VBox prefHeight="154.0" prefWidth="278.0">
                <children>
-                  <HBox prefHeight="6.0" prefWidth="258.0" />
+                  <HBox prefHeight="12.0" prefWidth="258.0" />
                   <HBox prefHeight="86.0" prefWidth="258.0">
                      <children>
                         <Label prefHeight="18.0" prefWidth="101.0" text="Direccion:">
@@ -74,30 +74,40 @@
                         </TextArea>
                      </children>
                   </HBox>
+                  <HBox alignment="BOTTOM_RIGHT" prefHeight="54.0" prefWidth="258.0">
+                     <children>
+                        <Button fx:id="btnAgregar" mnemonicParsing="false" onAction="#agregarCliente" text="Agregar Cliente">
+                           <HBox.margin>
+                              <Insets />
+                           </HBox.margin>
+                        </Button>
+                        <Button fx:id="btnDatos" mnemonicParsing="false" onAction="#cargarDatosCliente" text="Cargar Clientes">
+                           <HBox.margin>
+                              <Insets left="15.0" />
+                           </HBox.margin>
+                        </Button>
+                     </children>
+                  </HBox>
                </children>
             </VBox>
          </children>
       </HBox>
-      <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
+      <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0">
          <children>
-            <Button fx:id="btnAgregar" mnemonicParsing="false" onAction="#agregarCliente" text="Agregar Cliente">
+            <Label text="Identificador Cliente:" />
+            <TextField fx:id="txtIDCliente">
                <HBox.margin>
-                  <Insets />
+                  <Insets left="10.0" />
                </HBox.margin>
-            </Button>
+            </TextField>
             <Button fx:id="btnEliminar" mnemonicParsing="false" onAction="#eliminarCliente" text="Eliminar Cliente">
                <HBox.margin>
-                  <Insets left="15.0" />
+                  <Insets left="50.0" />
                </HBox.margin>
             </Button>
-            <Button fx:id="btnGuardar" mnemonicParsing="false" onAction="#guardarCliente" text="Guardar Cambios">
+            <Button fx:id="btnModificar" mnemonicParsing="false" onAction="#modificarCliente" text="Modificar Cliente">
                <HBox.margin>
-                  <Insets left="15.0" />
-               </HBox.margin>
-            </Button>
-            <Button fx:id="btnDatos" mnemonicParsing="false" onAction="#cargarDatosCliente" text="Cargar Datos">
-               <HBox.margin>
-                  <Insets left="15.0" />
+                  <Insets left="10.0" />
                </HBox.margin>
             </Button>
          </children>

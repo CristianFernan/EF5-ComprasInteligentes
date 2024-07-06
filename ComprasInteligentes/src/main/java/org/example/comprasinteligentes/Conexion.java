@@ -13,7 +13,7 @@ public class Conexion { // 00107223 Creacion de un singleton para la conexion co
 
     private Conexion(){} // 00107223 constructor privado para que no se pueda llamar afuera de la clase
 
-    private Connection conectar(){ // 00107223 funcion que establece la conexión con la base de datos
+    public Connection conectar(){ // 00107223 funcion que establece la conexión con la base de datos
         try { // 00107223 Try obligatorio para atrapar cualquier error provocado durante la conexión
              conexion = DriverManager.getConnection(URL, user, password); // 00107223 asignandole una conexion al objeto conexion
             return conexion; // 00107223 retornando la conexión
@@ -23,7 +23,7 @@ public class Conexion { // 00107223 Creacion de un singleton para la conexion co
         return conexion; // 00107223 retorna el objeto conexion aun si la conexion no se logra establecer correctamente
     }
 
-    private void cerrarConexion(){ // 00107223 funcion que establece la conexión con la base de datos
+    public void cerrarConexion(){ // 00107223 funcion que establece la conexión con la base de datos
         try { // 00107223 Try obligatorio para atrapar cualquier error provocado durante la conexión
             if(!conexion.isClosed() && conexion != null){ // 00107223 condicional que verifica si existe una conexión y si dicha conexión no esta ya cerrada
                 conexion.close(); // 00107223 cierra la conexión con la base de datos

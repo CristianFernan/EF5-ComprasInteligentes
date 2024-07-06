@@ -11,7 +11,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<VBox alignment="CENTER" prefHeight="430.0" prefWidth="575.0" spacing="20.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/21" fx:controller="org.example.comprasinteligentes.controllers.ClienteController">
+<VBox alignment="CENTER" prefHeight="430.0" prefWidth="575.0" spacing="20.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.comprasinteligentes.controllers.ClienteController">
     <padding>
         <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
     </padding>
@@ -102,12 +102,12 @@
             </Button>
          </children>
       </HBox>
-      <TableView prefHeight="200.0" prefWidth="200.0">
+      <TableView fx:id="tbListadoCliente" prefHeight="200.0" prefWidth="200.0">
         <columns>
-          <TableColumn prefWidth="75.0" text="N° Cliente" />
-          <TableColumn prefWidth="86.4000244140625" text="Nombre" />
-            <TableColumn prefWidth="75.0" text="Apellido" />
-            <TableColumn prefWidth="93.5999755859375" text="Num Telefono" />
+          <TableColumn fx:id="nombre" prefWidth="86.4000244140625" text="Nombre" />
+            <TableColumn fx:id="apellido" prefWidth="75.0" text="Apellido" />
+            <TableColumn fx:id="numeroTelefono" prefWidth="101.5999755859375" text="Num Telefono" />
+           <TableColumn fx:id="direccion" prefWidth="170.4000244140625" text="Direccion" />
         </columns>
          <columnResizePolicy>
             <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />

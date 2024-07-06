@@ -33,7 +33,7 @@ public class Conexion { // 00107223 Creacion de un singleton para la conexion co
         }
     }
 
-    private Conexion getInstance(){ // 00107223 patron de diseño singleton, obtiene la unica intancia de la conexión
+    public static Conexion getInstance(){ // 00107223 patron de diseño singleton, obtiene la unica intancia de la conexión
         if (instance == null){ // 00107223 verifica si no existe una instancia ya creada
             instance = new Conexion(); // 00107223 crea una instancia
         }

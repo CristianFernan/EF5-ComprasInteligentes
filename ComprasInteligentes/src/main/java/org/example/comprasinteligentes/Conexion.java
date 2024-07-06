@@ -15,7 +15,7 @@ public class Conexion { // 00107223 Creacion de un singleton para la conexion co
 
     private Connection conectar(){ // 00107223 funcion que establece la conexión con la base de datos
         try { // 00107223 Try obligatorio para atrapar cualquier error provocado durante la conexión
-             conexion = DriverManager.getConnection(URL, user, password); // 00107223 asignandole una conexion al objeto conexion
+            conexion = DriverManager.getConnection(URL, user, password); // 00107223 asignandole una conexion al objeto conexion
             return conexion; // 00107223 retornando la conexión
         } catch (SQLException e) { // 00107223 catch que atrapa los errores durante la conexión
             System.out.println("error en la base de datos: " + e); // 00107223 mensaje personalizado de error
@@ -33,7 +33,7 @@ public class Conexion { // 00107223 Creacion de un singleton para la conexion co
         }
     }
 
-    private Conexion getInstance(){ // 00107223 patron de diseño singleton, obtiene la unica intancia de la conexión
+    public static Conexion getInstance(){ // 00107223 patron de diseño singleton, obtiene la unica intancia de la conexión
         if (instance == null){ // 00107223 verifica si no existe una instancia ya creada
             instance = new Conexion(); // 00107223 crea una instancia
         }

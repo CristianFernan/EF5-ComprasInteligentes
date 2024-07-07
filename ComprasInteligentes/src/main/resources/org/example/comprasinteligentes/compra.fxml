@@ -96,7 +96,7 @@
             <MenuButton mnemonicParsing="false" text="Menu">
               <items>
                 <MenuItem fx:id="btnClientes" mnemonicParsing="false" onAction="#onBtnClientesClick" text="Clientes" />
-                <MenuItem fx:id="onBtnTarjetasClick" mnemonicParsing="false" text="Tarjetas" />
+                <MenuItem fx:id="btnTarjetas" mnemonicParsing="false" onAction="#onBtnTarjetasClick" text="Tarjetas" />
               </items>
             </MenuButton>
          </children>

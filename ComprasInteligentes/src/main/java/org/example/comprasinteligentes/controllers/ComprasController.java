@@ -138,10 +138,9 @@ public class ComprasController{//00016623 Clase controladora para manejar la ló
         }
     }
     @FXML
-    private void onBtnTarjetasClick(ActionEvent event){ // 00016623 Método para manejar el evento de clic en el botón de Clientes,
+    private void onBtnTarjetasClick(){ // 00016623 Método para manejar el evento de clic en el botón de Clientes,
         // Cerrando ventana actual
-        Node source = (Node) event.getTarget(); //00016623 Obtiene el nodo que disparó el evento
-        ((Stage) source.getScene().getWindow()).close(); //00016623 Cierra la ventana actual obteniendo la ventana a través del nodo
+        ((Stage) tbListadoCompra.getScene().getWindow()).close(); //00016623 Cierra la ventana actual casteando en stage la ventana de la tabla tbListadoCompra
         //00016623 Abriendo nueva ventana de Tarjetas
         try{
             Stage stage = new Stage(); //00016623 Crea una nueva instancia de Stage para la nueva ventana

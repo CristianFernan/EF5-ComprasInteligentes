@@ -1,16 +1,127 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.geometry.Insets?>
-<?import javafx.scene.control.Label?>
-<?import javafx.scene.layout.VBox?>
-
 <?import javafx.scene.control.Button?>
-<VBox alignment="CENTER" spacing="20.0" xmlns:fx="http://javafx.com/fxml"
-      fx:controller="org.example.comprasinteligentes.controllers.ClienteController">
-    <padding>
-        <Insets bottom="20.0" left="20.0" right="20.0" top="20.0"/>
-    </padding>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
 
-    <Label fx:id="welcomeText"/>
-    <Button text="Hello!" onAction="#onHelloButtonClick"/>
+<VBox alignment="CENTER" prefHeight="486.0" prefWidth="575.0" spacing="20.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.comprasinteligentes.controllers.ClienteController">
+    <padding>
+        <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
+    </padding>
+   <children>
+      <Label text="Gestionar Cliente">
+         <font>
+            <Font name="System Bold" size="18.0" />
+         </font>
+      </Label>
+      <HBox prefHeight="201.0" prefWidth="488.0">
+         <children>
+            <VBox prefHeight="100.0" prefWidth="257.0">
+               <children>
+                  <HBox alignment="CENTER_LEFT" prefHeight="67.0" prefWidth="244.0">
+                     <children>
+                        <Label text="Nombre:" />
+                        <TextField fx:id="txtNombre" prefHeight="26.0" prefWidth="165.0">
+                           <HBox.margin>
+                              <Insets left="20.0" />
+                           </HBox.margin>
+                        </TextField>
+                     </children>
+                  </HBox>
+                  <HBox alignment="CENTER_LEFT" prefHeight="67.0" prefWidth="244.0">
+                     <children>
+                        <Label text="Apellido:" />
+                        <TextField fx:id="txtApellido" prefHeight="26.0" prefWidth="165.0">
+                           <HBox.margin>
+                              <Insets left="20.0" />
+                           </HBox.margin>
+                        </TextField>
+                     </children>
+                  </HBox>
+                  <HBox alignment="CENTER_LEFT" prefHeight="67.0" prefWidth="244.0">
+                     <children>
+                        <Label prefHeight="18.0" prefWidth="68.0" text="Telefono:" />
+                        <TextField fx:id="txtTelefono" prefHeight="26.0" prefWidth="165.0" promptText="XXXX-XXXX">
+                           <HBox.margin>
+                              <Insets />
+                           </HBox.margin>
+                        </TextField>
+                     </children>
+                  </HBox>
+               </children>
+            </VBox>
+            <VBox prefHeight="154.0" prefWidth="278.0">
+               <children>
+                  <HBox prefHeight="12.0" prefWidth="258.0" />
+                  <HBox prefHeight="86.0" prefWidth="258.0">
+                     <children>
+                        <Label prefHeight="18.0" prefWidth="101.0" text="Direccion:">
+                           <HBox.margin>
+                              <Insets />
+                           </HBox.margin>
+                        </Label>
+                        <TextArea fx:id="txtDireccion" prefHeight="86.0" prefWidth="243.0">
+                           <HBox.margin>
+                              <Insets left="10.0" />
+                           </HBox.margin>
+                        </TextArea>
+                     </children>
+                  </HBox>
+                  <HBox alignment="BOTTOM_RIGHT" prefHeight="54.0" prefWidth="258.0">
+                     <children>
+                        <Button fx:id="btnAgregar" mnemonicParsing="false" onAction="#agregarCliente" text="Agregar Cliente">
+                           <HBox.margin>
+                              <Insets />
+                           </HBox.margin>
+                        </Button>
+                        <Button fx:id="btnDatos" mnemonicParsing="false" onAction="#cargarDatosCliente" text="Cargar Clientes">
+                           <HBox.margin>
+                              <Insets left="15.0" />
+                           </HBox.margin>
+                        </Button>
+                     </children>
+                  </HBox>
+               </children>
+            </VBox>
+         </children>
+      </HBox>
+      <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0">
+         <children>
+            <Label text="Identificador Cliente:" />
+            <TextField fx:id="txtIDCliente">
+               <HBox.margin>
+                  <Insets left="10.0" />
+               </HBox.margin>
+            </TextField>
+            <Button fx:id="btnEliminar" mnemonicParsing="false" onAction="#eliminarCliente" text="Eliminar Cliente">
+               <HBox.margin>
+                  <Insets left="50.0" />
+               </HBox.margin>
+            </Button>
+            <Button fx:id="btnModificar" mnemonicParsing="false" onAction="#modificarCliente" text="Modificar Cliente">
+               <HBox.margin>
+                  <Insets left="10.0" />
+               </HBox.margin>
+            </Button>
+         </children>
+      </HBox>
+      <TableView fx:id="tbListadoCliente" prefHeight="200.0" prefWidth="200.0">
+        <columns>
+          <TableColumn fx:id="nombre" prefWidth="86.4000244140625" text="Nombre" />
+            <TableColumn fx:id="apellido" prefWidth="75.0" text="Apellido" />
+            <TableColumn fx:id="numeroTelefono" prefWidth="101.5999755859375" text="Num Telefono" />
+           <TableColumn fx:id="direccion" prefWidth="170.4000244140625" text="Direccion" />
+        </columns>
+         <columnResizePolicy>
+            <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
+         </columnResizePolicy>
+      </TableView>
+   </children>
 </VBox>

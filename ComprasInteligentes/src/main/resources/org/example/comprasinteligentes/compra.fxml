@@ -5,7 +5,7 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<VBox alignment="CENTER" prefHeight="443.0" prefWidth="575.0" spacing="20.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.comprasinteligentes.controllers.ComprasController">
+<VBox alignment="CENTER" prefHeight="552.0" prefWidth="575.0" spacing="20.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.comprasinteligentes.controllers.ComprasController">
     <padding>
         <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
     </padding>
@@ -15,7 +15,7 @@
             <Font name="System Bold" size="18.0" />
          </font>
       </Label>
-      <HBox prefHeight="201.0" prefWidth="488.0">
+      <HBox prefHeight="151.0" prefWidth="535.0">
          <children>
             <VBox prefHeight="139.0" prefWidth="267.0">
                <children>
@@ -32,13 +32,13 @@
                   <HBox alignment="CENTER_LEFT" prefHeight="67.0" prefWidth="244.0">
                      <children>
                         <Label prefHeight="17.0" prefWidth="60.0" text="Tarjeta:" />
-                        <ComboBox fx:id="cmbTarjeta" prefHeight="25.0" prefWidth="169.0" />
+                        <ComboBox fx:id="cmbTarjeta" prefHeight="25.0" prefWidth="165.0" />
                      </children>
                   </HBox>
                   <HBox alignment="CENTER_LEFT" prefHeight="67.0" prefWidth="244.0">
                      <children>
                         <Label prefHeight="18.0" prefWidth="60.0" text="Fecha:" />
-                        <DatePicker fx:id="dpFecha" editable="false" showWeekNumbers="true" />
+                        <DatePicker fx:id="dpFecha" editable="false" prefHeight="25.0" prefWidth="165.0" showWeekNumbers="true" />
                      </children>
                   </HBox>
                </children>
@@ -64,7 +64,7 @@
             </VBox>
          </children>
       </HBox>
-      <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="15.0">
+      <HBox alignment="CENTER" prefHeight="65.0" prefWidth="535.0" spacing="15.0">
          <children>
             <Button fx:id="btnAgregar" mnemonicParsing="false" onAction="#onBtnAgregarCompraClick" text="Agregar compra">
                <HBox.margin>
@@ -79,7 +79,7 @@
             <Button fx:id="btnLimpiar" layoutX="294.0" layoutY="17.0" mnemonicParsing="false" onAction="#onBtnlimpiarClick" text="Limpiar" />
          </children>
       </HBox>
-      <TableView fx:id="tbListadoCompra" prefHeight="200.0" prefWidth="200.0">
+      <TableView fx:id="tbListadoCompra" prefHeight="200.0" prefWidth="535.0">
         <columns>
             <TableColumn fx:id="monto" maxWidth="104.0" minWidth="54.0" prefWidth="70.0" text="Monto" />
             <TableColumn fx:id="descripcion" minWidth="90.0" prefWidth="131.0" text="Descripción" />
@@ -91,5 +91,15 @@
             <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
          </columnResizePolicy>
       </TableView>
+      <VBox alignment="TOP_RIGHT" prefHeight="24.0" prefWidth="535.0">
+         <children>
+            <MenuButton mnemonicParsing="false" text="Menu">
+              <items>
+                <MenuItem fx:id="btnClientes" mnemonicParsing="false" onAction="#onBtnClientesClick" text="Clientes" />
+                <MenuItem fx:id="onBtnTarjetasClick" mnemonicParsing="false" text="Tarjetas" />
+              </items>
+            </MenuButton>
+         </children>
+      </VBox>
    </children>
 </VBox>

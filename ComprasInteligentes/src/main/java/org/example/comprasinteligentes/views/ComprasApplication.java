@@ -4,6 +4,7 @@ import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+
 import java.io.IOException;
 
 public class ComprasApplication extends Application { //00016623 Clase principal que extiende de Application para iniciar la aplicación JavaFX

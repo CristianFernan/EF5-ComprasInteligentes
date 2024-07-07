@@ -43,6 +43,24 @@ public class Cliente { //00107223 Creación de clase Cliente para poder gestiona
         return numeroTelefono; // 00107223 retorno del número telefono
     }
 
+    //Setters
+
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
+    }
+
+    public void setApellido(String apellido) {
+        this.apellido = apellido;
+    }
+
+    public void setDireccion(String direccion) {
+        this.direccion = direccion;
+    }
+
+    public void setNumeroTelefono(String numeroTelefono) {
+        this.numeroTelefono = numeroTelefono;
+    }
+
     @Override
     public String toString(){ // 00107223 sobreescribir el toString para su uso en los comboBox
         return nombre + " " + apellido; // 00107223 retorna el nombre y el apellido del cliente

@@ -1,12 +1,18 @@
 package org.example.comprasinteligentes.controllers;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.Node;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.stage.Stage;
 import org.example.comprasinteligentes.Alerts;
 import org.example.comprasinteligentes.Conexion;
 import org.example.comprasinteligentes.clases.Compra;
 import org.example.comprasinteligentes.clases.CompraCustom;
 import org.example.comprasinteligentes.clases.Tarjeta;
+import org.example.comprasinteligentes.views.ClienteApplication;
+import org.example.comprasinteligentes.views.TarjetaApplication;
+
 import java.sql.*;
 import java.time.LocalDate;
 
@@ -118,4 +124,32 @@ public class ComprasController{//00016623 Clase controladora para manejar la ló
         cargarDatosCompra(); //00016623 Llama al método cargarDatosCompra para actualizar la tabla de compras
     }
 
+    @FXML
+    private void onBtnClientesClick(){ // 00016623 Método para manejar el evento de clich en el botón de btnClientes del menu,
+        // Cerrando ventana actual
+        ((Stage) tbListadoCompra.getScene().getWindow()).close(); //00016623 Cierra la ventana actual casteando en stage la ventana de la tabla tbListadoCompra
+        try{
+            Stage stage = new Stage(); //00016623 Crea una nueva instancia de Stage para la nueva ventana
+            ClienteApplication app = new ClienteApplication(); //00016623 Crea una instancia de la aplicación de Clientes
+            app.start(stage); //00016623 Inicia la aplicación de Clientes en el nuevo Stage
+        }catch (Exception e){
+            Alerts.showAlert("Error", "Error al intentar abrir ventana", 3); //00016623 Muestra una alerta en caso de error
+            System.out.println("No se pudo abrir la ventana de tareas, " + e.getMessage()); //00016623 Imprime el mensaje de error en la consola
+        }
+    }
+    @FXML
+    private void onBtnTarjetasClick(ActionEvent event){ // 00016623 Método para manejar el evento de clic en el botón de Clientes,
+        // Cerrando ventana actual
+        Node source = (Node) event.getTarget(); //00016623 Obtiene el nodo que disparó el evento
+        ((Stage) source.getScene().getWindow()).close(); //00016623 Cierra la ventana actual obteniendo la ventana a través del nodo
+        //00016623 Abriendo nueva ventana de Tarjetas
+        try{
+            Stage stage = new Stage(); //00016623 Crea una nueva instancia de Stage para la nueva ventana
+            TarjetaApplication app = new TarjetaApplication(); //00016623 Crea una instancia de la aplicación de Tarjetas
+            app.start(stage); //00016623 Inicia la aplicación de Tarjetas en el nuevo Stage
+        }catch (Exception e){
+            Alerts.showAlert("Error", "Error al intentar abrir ventana", 3); //00016623 Muestra una alerta en caso de error
+            System.out.println("No se pudo abrir la ventana de tareas, " + e.getMessage()); //00016623 Imprime el mensaje de error en la consola
+        }
+    }
 }

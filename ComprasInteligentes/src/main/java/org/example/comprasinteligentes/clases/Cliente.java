@@ -17,6 +17,11 @@ public class Cliente { //00107223 Creación de clase Cliente para poder gestiona
         this.numeroTelefono = numeroTelefono; // 00107223 asignacion del numero telefono
     }
 
+    public Cliente(int id, String apellido) {
+        this.id = id;
+        this.apellido = apellido;
+    }
+
     //Getters
     public int getId() { // 00107223 getter del id para su manejo en el CRUD
         return id; // 00107223 retorno del id

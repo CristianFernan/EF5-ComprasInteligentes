@@ -66,7 +66,10 @@ public class Tarjeta { // 00068223 Creacion de la clase Tarjeta para poder gesti
     }
     @Override // 00068223 Anotacion para sobreescribir el metodo toString de la clase
     public String toString(){ // 00068223 Metodo toString para representar el objeto como cadena
-        String numeroTarjetaCensurado = "XXXX XXXX XXXX " + numeroTarjeta.substring(numeroTarjeta.length() - 4); // 00068223 Censura el numero de la tarjeta, mostrando solo los ultimos cuatro digitos
-        return numeroTarjetaCensurado + " " + facilitador.getFacilitador() + " " + cliente.getApellido(); // 00068223 Retorna la construccion de la cadena de texto
+        return getTarjetaCensurada() + " " + facilitador.getFacilitador() + " " + cliente.getApellido(); // 00068223 Retorna la construccion de la cadena de texto
+    }
+  
+  public String getTarjetaCensurada(){ // 00016623 Método para censurar el número de tarjeta
+        return "XXXX XXXX XXXX " + numeroTarjeta.substring(numeroTarjeta.length() - 4); // 00068223 Censura el numero de la tarjeta, mostrando solo los ultimos cuatro digitos
     }
 }

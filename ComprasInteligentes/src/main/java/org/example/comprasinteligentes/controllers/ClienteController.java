@@ -15,8 +15,8 @@ import java.util.ResourceBundle;
 import java.util.function.UnaryOperator;
 import java.util.regex.Pattern;
 
-public class ClienteController implements Initializable{
-    private static Conexion conexion = Conexion.getInstance();
+public class ClienteController{
+    private static final Conexion conexion = Conexion.getInstance();
     @FXML
     private TextField txtNombre; // 00107223 objeto TextField txtNombre para obtener datos
     @FXML
@@ -101,8 +101,8 @@ public class ClienteController implements Initializable{
     }
 
 
-    @Override
-    public void initialize(URL url, ResourceBundle resourceBundle) { // 00107233 Manejar validaciones a la hora de iniciar la vista
+    @FXML
+    public void initialize() { // 00107233 Manejar validaciones a la hora de iniciar la vista
         // Tabla
         nombre.setCellValueFactory(new PropertyValueFactory<Cliente, String>("nombre")); // 00107223 asignarle una value factory a la columna para que utilize el atributo nombre para guardarlos
         apellido.setCellValueFactory(new PropertyValueFactory<Cliente, String>("apellido")); // 00107223 asignarle una value factory a la columna para que utilize el atributo apellido para guardarlos

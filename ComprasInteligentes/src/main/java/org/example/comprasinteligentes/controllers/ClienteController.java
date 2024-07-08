@@ -71,7 +71,7 @@ public class ClienteController implements Initializable{
             result = ps.executeUpdate();
 
             if (result > 0){
-                int id = buscarCliente(Integer.parseInt(txtIDCliente.getText()));
+                int id = buscarClienteTabla(Integer.parseInt(txtIDCliente.getText()));
                 if (id != -1) {
                     tbListadoCliente.getItems().remove(id);
                     tbListadoCliente.refresh(); // 00107223 Refrescar la tabla para mostrar los cambios de la tabl
@@ -100,7 +100,7 @@ public class ClienteController implements Initializable{
             result = ps.executeUpdate();
 
             if (result > 0){
-                int id = buscarCliente(Integer.parseInt(txtIDCliente.getText()));
+                int id = buscarClienteTabla(Integer.parseInt(txtIDCliente.getText()));
                 if (id != -1){
                     Cliente cliente = tbListadoCliente.getItems().get(id);
                     cliente.setId(Integer.parseInt(txtIDCliente.getText()));
@@ -136,29 +136,36 @@ public class ClienteController implements Initializable{
         numeroTelefono.setCellValueFactory(new PropertyValueFactory<Cliente, String>("numeroTelefono")); // 00107223 asignarle una value factory a la columna para que utilize el atributo numero telefono para guardarlos
         direccion.setCellValueFactory(new PropertyValueFactory<Cliente, String>("direccion")); // 00107223 asignarle una value factory a la columna para que utilize el atributo direccion para guardarlos
         identificador.setCellValueFactory(new PropertyValueFactory<Cliente, String>("id")); // 00107223 asignarle una value factory a la columna para que utilize el atributo id para guardarlos
-        telefonoValidacion(); // 00107223 llamada a la validacion del txtTelefono
-        idValidacion(); // 00107223 llamada a la validacion del txtIDCliente
+        initTelefono(); // 00107223 llamada a la validacion del txtTelefono
+        initID(); // 00107223 llamada a la validacion del txtIDCliente
     }
 
 
-    private int buscarCliente(int ID){
-        ObservableList<Cliente> clientes = tbListadoCliente.getItems();
+    private void obtenerCliente(int ID){
+        try {
+            Statement st = conexion.conectar().createStatement();
+            ResultSet rs = st.executeQuery("SELECT ID, NOMBRE, APELLIDO, DIRECCION, NUMEROTELEFONO FROM tbCLIENTE WHERE ID ="+ID+";");
 
+            while (rs.next()){
+                txtNombre.setText(rs.getString("NOMBRE"));
+                txtApellido.setText(rs.getString("APELLIDO"));
+                txtTelefono.setText(rs.getString("NUMEROTELEFONO"));
+                txtDireccion.setText(rs.getString("DIRECCION"));
+            }
+        } catch (SQLException e){
+            System.out.println("error de conexion: " + e);
+        }
+
+    }
+
+    private  int buscarClienteTabla(int ID){
+        ObservableList<Cliente> clientes = tbListadoCliente.getItems();
         for (Cliente cliente : clientes){
             if (cliente.getId() == ID){
                 return clientes.indexOf(cliente); // 00107223 se devuelve el indice de la fila del cliente
             }
         }
         return -1; // 00107223 se devuelve un indice fuera de los limites, por lo que no removeria nada
-    }
-
-    private void limpiar(){
-        txtTelefono.setText("");
-        txtTelefono.setPromptText("XXXX-XXXX");
-        txtApellido.setText("");
-        txtNombre.setText("");
-        txtDireccion.setText("");
-        txtIDCliente.setText("");
     }
 
     private void imprimirTabla(){
@@ -176,7 +183,16 @@ public class ClienteController implements Initializable{
         }
     }
 
-    private void telefonoValidacion(){ // 00107223 Funcion para la validacion del campo numero telefono, siguiendo el patron XXXX-XXXX, donde cada "X" representa un numero del 0-9
+    private void limpiar(){
+        txtTelefono.setText("");
+        txtTelefono.setPromptText("XXXX-XXXX");
+        txtApellido.setText("");
+        txtNombre.setText("");
+        txtDireccion.setText("");
+        txtIDCliente.setText("");
+    }
+
+    private void initTelefono(){ // 00107223 Funcion para la validacion del campo numero telefono, siguiendo el patron XXXX-XXXX, donde cada "X" representa un numero del 0-9
         Pattern pattern = Pattern.compile("\\d{0,4}-?\\d{0,4}"); // 00107223 Crear un patron para el textField del numero de telefono, \\d representa los numeros 0-9 {0,4} que deben ser 4 digitos, es separado por un "-"
 
         UnaryOperator<TextFormatter.Change> filtro  = generarFiltro(pattern); // 00107223 Se obtiene el filtro en base al patron que se busca implementar
@@ -193,7 +209,7 @@ public class ClienteController implements Initializable{
         });
     }
 
-    private void idValidacion(){
+    private void initID(){
         Pattern pattern = Pattern.compile("\\d*"); // 00107223 Crear un patron para el textField del ID, \\d representa los numeros 0-9
 
         UnaryOperator<TextFormatter.Change> filtro =  generarFiltro(pattern); // 00107223 Se obtiene el filtro en base al patron que se busca implementar
@@ -201,6 +217,9 @@ public class ClienteController implements Initializable{
         TextFormatter<String> formatter = new TextFormatter<>(filtro); // 00107223 Crear un objeto textFormatter para aplicarlo en el txtIDCliente, este contiene el formato de filtro, que contiene el patron de solo enteros
         txtIDCliente.setTextFormatter(formatter); // 00107723 Asignacion del formato ya validado.
 
+        txtIDCliente.textProperty().addListener((observable, oldValue, newValue) ->{
+            obtenerCliente(Integer.parseInt(txtIDCliente.getText()));
+        });
     }
 
     private UnaryOperator<TextFormatter.Change> generarFiltro(Pattern pattern) { // 00107223 Funcion unaria que sirve para filtrar los cambios hechos dentro del textField, recibe TextFormatter.Change que chequea cada vez que hay una modificacion en cada input del textField.

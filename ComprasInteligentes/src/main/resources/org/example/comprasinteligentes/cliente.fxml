@@ -11,6 +11,8 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
+<?import javafx.scene.control.MenuButton?>
+<?import javafx.scene.control.MenuItem?>
 <VBox alignment="CENTER" prefHeight="486.0" prefWidth="575.0" spacing="20.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.comprasinteligentes.controllers.ClienteController">
     <padding>
         <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
@@ -123,5 +125,15 @@
             <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
          </columnResizePolicy>
       </TableView>
+      <VBox alignment="TOP_RIGHT" prefHeight="24.0" prefWidth="535.0">
+         <children>
+            <MenuButton mnemonicParsing="false" text="Menu">
+               <items>
+                  <MenuItem fx:id="btnCompras" mnemonicParsing="false" onAction="#onBtnComprasClick" text="Compras" />
+                  <MenuItem fx:id="btnTarjetas" mnemonicParsing="false" onAction="#onBtnTarjetasClick" text="Tarjetas" />
+               </items>
+            </MenuButton>
+         </children>
+      </VBox>
    </children>
 </VBox>

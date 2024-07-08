@@ -3,11 +3,16 @@ package org.example.comprasinteligentes.controllers;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.stage.Stage;
 import org.example.comprasinteligentes.Alerts;
 import org.example.comprasinteligentes.Conexion;
 import org.example.comprasinteligentes.clases.Facilitador;
 import org.example.comprasinteligentes.clases.Tarjeta;
 import org.example.comprasinteligentes.clases.Cliente; // 00068223 Importacion de la clase Cliente
+import org.example.comprasinteligentes.views.ClienteApplication;
+import org.example.comprasinteligentes.views.ComprasApplication;
+import org.example.comprasinteligentes.views.TarjetaApplication;
+
 import java.sql.*;
 
 public class TarjetaController { //00068223 Clase controladora para manejar la logica de las tarjetas
@@ -47,9 +52,8 @@ public class TarjetaController { //00068223 Clase controladora para manejar la l
         facilitador.setCellValueFactory(new PropertyValueFactory<>("facilitador")); //00068223 asignarle una value factory a la columna para que utilice el atributo facilitador para guardarlos
         cliente.setCellValueFactory(new PropertyValueFactory<>("cliente")); //00068223 asignarle una value factory a la columna para que utilice el atributo cliente para guardarlos
         cargarFacilitadores(); //00068223 llamado de funcion para rellenar cmb de facilitadores
-        cargarTarjetas(); //00068223 llamado de funcion para rellenar la tabla de tarjetas
+        //cargarDatosTarjeta(); //00068223 llamado de funcion para rellenar la tabla de tarjetas
     }
-
     @FXML
     private void onBtnGuardarTarjetaClick() { //00068223 Funcion para manejar el evento de click en el boton guardar tarjeta
         if (!txtNumeroTarjeta.getText().isBlank() && cmbFacilitador.getValue() != null && !txtCliente.getText().isBlank() && dpFechaExpiracion.getValue() != null) { // 00068223 Verifica si los campos no estan vacios
@@ -84,12 +88,11 @@ public class TarjetaController { //00068223 Clase controladora para manejar la l
             Alerts.showAlert("Campos incompletos", "Favor llenar todos los campos necesarios para la creacion de la tarjeta", 2); //00068223 Muestra alerta de campos incompletos
         }
     }
-
     private void cargarDatosTarjeta() { //00068223 Funcion para cargar los datos de las tarjetas en la tabla
         tbListadoTarjetas.getItems().clear(); //00068223 Limpia los elementos de la tabla de tarjetas
         try { //00068223 Inicio del bloque try para manejar excepciones SQL
             Statement st = conexion.conectar().createStatement(); //00068223 Crea una declaracion SQL para ejecutar consultas
-            ResultSet rs = st.executeQuery("SELECT t.id, t.numeroTarjeta, t.fechaExpiracion, f.id AS idFacilitador, f.facilitador, c.id AS idCliente, c.nombre AS clienteNombre FROM tbtarjeta t INNER JOIN tbFacilitador f ON t.idFacilitador = f.id INNER JOIN tbCliente c ON t.idCliente = c.id"); //00068223 Ejecuta una consulta SQL para obtener los datos de las tarjetas
+            ResultSet rs = st.executeQuery("SELECT t.id, t.numeroTarjeta, t.fechaExpiracion, t.tipo, f.id AS idFacilitador, f.facilitador, c.id AS idCliente, c.nombre AS clienteNombre FROM tbtarjeta t INNER JOIN tbFacilitador f ON t.idFacilitador = f.id INNER JOIN tbCliente c ON t.idCliente = c.id"); //00068223 Ejecuta una consulta SQL para obtener los datos de las tarjetas
             while (rs.next()) { //00068223 Itera sobre los resultados de la consulta
                 Facilitador facilitador = new Facilitador(rs.getInt("idFacilitador"), rs.getString("facilitador"));
                 Cliente cliente = new Cliente(rs.getInt("idCliente"), rs.getString("clienteNombre"));
@@ -135,21 +138,31 @@ public class TarjetaController { //00068223 Clase controladora para manejar la l
         cargarDatosTarjeta(); //00068223 Llama al metodo cargarDatosTarjeta para actualizar la tabla de tarjetas
     }
 
-    private void cargarTarjetas() { //00068223 Funcion para cargar las tarjetas en la tabla
-        tbListadoTarjetas.getItems().clear(); //00068223 Limpia los elementos de la tabla de tarjetas
-        try { //00068223 Inicio del bloque try para manejar excepciones SQL
-            Statement st = conexion.conectar().createStatement(); //00068223 Crea una declaracion SQL para ejecutar consultas
-            ResultSet rs = st.executeQuery("SELECT t.id, t.numeroTarjeta, t.fechaExpiracion, f.id AS idFacilitador, f.facilitador, c.id AS idCliente, c.nombre AS clienteNombre FROM tbtarjeta t INNER JOIN tbFacilitador f ON t.idFacilitador = f.id INNER JOIN tbCliente c ON t.idCliente = c.id"); //00068223 Ejecuta una consulta SQL para obtener los datos de las tarjetas
-            while (rs.next()) { //00068223 Itera sobre los resultados de la consulta
-                Facilitador facilitador = new Facilitador(rs.getInt("idFacilitador"), rs.getString("facilitador"));
-                Cliente cliente = new Cliente(rs.getInt("idCliente"), rs.getString("clienteNombre"));
-                Tarjeta tarjeta = new Tarjeta(rs.getInt("id"), rs.getString("numeroTarjeta"), rs.getDate("fechaExpiracion"), rs.getString("tipo"), facilitador, cliente); //00068223 Crea una nueva instancia de Tarjeta con los datos obtenidos
-                tbListadoTarjetas.getItems().add(tarjeta); //00068223 Agrega la tarjeta a la lista de la tabla
-            }
-            conexion.cerrarConexion(); //00068223 Cierra la conexion a la base de datos
-        } catch (SQLException e) { //00068223 Captura las excepciones SQL que ocurran en el bloque try
-            Alerts.showAlert("Error", "Error de conexion", 3); //00068223 Muestra alerta de error de conexion
-            System.out.println("error de conexion: " + e); //00068223 Imprime el mensaje de error de conexion en la consola
+    @FXML
+    private void onBtnClientesClick() { // 00016623 Método para manejar el evento de click en el botón de btnClientes del menu,
+        // Cerrando ventana actual
+        ((Stage) tbListadoTarjetas.getScene().getWindow()).close(); //00016623 Cierra la ventana actual casteando en stage la ventana de la tabla tbListadoTarjetas
+        try {//00068223 Inicio del bloque try para manejar excepciones al abrir ventana
+            Stage stage = new Stage(); //00016623 Crea una nueva instancia de Stage para la nueva ventana
+            ClienteApplication app = new ClienteApplication(); //00016623 Crea una instancia de la aplicación de Clientes
+            app.start(stage); //00016623 Inicia la aplicación de Clientes en el nuevo Stage
+        } catch (Exception e) {//00016623 Captura las excepciones que ocurran en el bloque try
+            Alerts.showAlert("Error", "Error al intentar abrir ventana", 3); //00016623 Muestra una alerta en caso de error
+            System.out.println("No se pudo abrir la ventana de tareas, " + e.getMessage()); //00016623 Imprime el mensaje de error en la consola
+        }
+    }
+    @FXML
+    private void onBtnComprasClick() { // 00016623 Método para manejar el evento de click en el botón de Compras,
+        // Cerrando ventana actual
+        ((Stage) tbListadoTarjetas.getScene().getWindow()).close(); //00016623 Cierra la ventana actual casteando en stage la ventana de la tabla tbListadoTarjetas
+        //00016623 Abriendo nueva ventana de Compras
+        try {//00068223 Inicio del bloque try para manejar excepciones al abrir ventana
+            Stage stage = new Stage(); //00016623 Crea una nueva instancia de Stage para la nueva ventana
+            ComprasApplication app = new ComprasApplication(); //00016623 Crea una instancia de la aplicación de Compras
+            app.start(stage); //00016623 Inicia la aplicación de Compras en el nuevo Stage
+        } catch (Exception e) {//00016623 Captura las excepciones que ocurran en el bloque try
+            Alerts.showAlert("Error", "Error al intentar abrir ventana", 3); //00016623 Muestra una alerta en caso de error
+            System.out.println("No se pudo abrir la ventana de tareas, " + e.getMessage()); //00016623 Imprime el mensaje de error en la consola
         }
     }
 }

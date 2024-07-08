@@ -37,6 +37,8 @@ public class ClienteController implements Initializable{
     private TableColumn<Cliente, String> numeroTelefono; // 00107223 objeto TableColumn para acceder en el controller
     @FXML
     private TableColumn<Cliente, String> direccion; // 00107223 objeto TableColumn para acceder en el controller
+    @FXML
+    private TableColumn<Cliente, String> identificador; // 00107223 objeto TableColumn para identificar en el controller
 
     @FXML
     private void agregarCliente(){
@@ -54,6 +56,7 @@ public class ClienteController implements Initializable{
             if (result > 0) tbListadoCliente.getItems().add(cliente);
             System.out.println(result>0 ? "Exito" : "Fracaso");
             limpiar();
+            imprimirTabla();
             conexion.cerrarConexion();
         } catch (SQLException e){
             System.out.println("error de conexion: " + e);
@@ -77,6 +80,7 @@ public class ClienteController implements Initializable{
             //PlaceHolder creo que lo cambiaremos a un alert
             System.out.println(result>0 ? "Exito" : "Fracaso");
             limpiar();
+            imprimirTabla();
             conexion.cerrarConexion();
         } catch (SQLException e){
             System.out.println("error de conexion: " + e);
@@ -99,10 +103,12 @@ public class ClienteController implements Initializable{
                 int id = buscarCliente(Integer.parseInt(txtIDCliente.getText()));
                 if (id != -1){
                     Cliente cliente = tbListadoCliente.getItems().get(id);
+                    cliente.setId(Integer.parseInt(txtIDCliente.getText()));
                     cliente.setNombre(txtNombre.getText());
                     cliente.setApellido(txtApellido.getText());
                     cliente.setNumeroTelefono(txtTelefono.getText());
                     cliente.setDireccion(txtDireccion.getText());
+
                     tbListadoCliente.refresh(); // 00107223 Refrescar la tabla para mostrar los cambios de la tabla
                 }
             }
@@ -110,6 +116,7 @@ public class ClienteController implements Initializable{
             //PlaceHolder creo que lo cambiaremos a un alert
             System.out.println(result>0 ? "Exito" : "Fracaso");
             limpiar();
+            imprimirTabla();
             conexion.cerrarConexion();
         } catch (SQLException e){
             System.out.println("error de conexion: " + e);
@@ -118,20 +125,8 @@ public class ClienteController implements Initializable{
 
     @FXML
     private void cargarDatosCliente(){
-        tbListadoCliente.getItems().clear();
-        try{
-            Statement st = conexion.conectar().createStatement();
-            ResultSet rs = st.executeQuery("SELECT ID, NOMBRE, APELLIDO, DIRECCION, NUMEROTELEFONO FROM tbCLIENTE");
-            while (rs.next()){
-                Cliente cliente = new Cliente(rs.getInt("ID"), rs.getString("NOMBRE"), rs.getString("APELLIDO"), rs.getString("DIRECCION"), rs.getString("NUMEROTELEFONO"));
-                tbListadoCliente.getItems().add(cliente);
-            }
-            conexion.cerrarConexion();
-        } catch (SQLException e){
-            System.out.println("error de conexion: " + e);
-        }
+        imprimirTabla();
     }
-
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) { // 00107233 Manejar validaciones a la hora de iniciar la vista
@@ -140,6 +135,7 @@ public class ClienteController implements Initializable{
         apellido.setCellValueFactory(new PropertyValueFactory<Cliente, String>("apellido")); // 00107223 asignarle una value factory a la columna para que utilize el atributo apellido para guardarlos
         numeroTelefono.setCellValueFactory(new PropertyValueFactory<Cliente, String>("numeroTelefono")); // 00107223 asignarle una value factory a la columna para que utilize el atributo numero telefono para guardarlos
         direccion.setCellValueFactory(new PropertyValueFactory<Cliente, String>("direccion")); // 00107223 asignarle una value factory a la columna para que utilize el atributo direccion para guardarlos
+        identificador.setCellValueFactory(new PropertyValueFactory<Cliente, String>("id")); // 00107223 asignarle una value factory a la columna para que utilize el atributo id para guardarlos
         telefonoValidacion(); // 00107223 llamada a la validacion del txtTelefono
         idValidacion(); // 00107223 llamada a la validacion del txtIDCliente
     }
@@ -163,6 +159,21 @@ public class ClienteController implements Initializable{
         txtNombre.setText("");
         txtDireccion.setText("");
         txtIDCliente.setText("");
+    }
+
+    private void imprimirTabla(){
+        tbListadoCliente.getItems().clear();
+        try{
+            Statement st = conexion.conectar().createStatement();
+            ResultSet rs = st.executeQuery("SELECT ID, NOMBRE, APELLIDO, DIRECCION, NUMEROTELEFONO FROM tbCLIENTE");
+            while (rs.next()){
+                Cliente cliente = new Cliente(rs.getInt("ID"), rs.getString("NOMBRE"), rs.getString("APELLIDO"), rs.getString("DIRECCION"), rs.getString("NUMEROTELEFONO"));
+                tbListadoCliente.getItems().add(cliente);
+            }
+            conexion.cerrarConexion();
+        } catch (SQLException e){
+            System.out.println("error de conexion: " + e);
+        }
     }
 
     private void telefonoValidacion(){ // 00107223 Funcion para la validacion del campo numero telefono, siguiendo el patron XXXX-XXXX, donde cada "X" representa un numero del 0-9

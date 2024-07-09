@@ -118,6 +118,11 @@ public class TarjetaController { //00068223 Clase controladora para manejar la l
             Cliente cliente = cmbNombreCliente.getValue(); //00068223 Obtener el cliente seleccionado
             String tipoTarjeta = cmbTipoTarjeta.getValue(); //00068223 Obtener el tipo de tarjeta seleccionado
 
+            if (tarjetaExiste(numeroTarjeta)){ //00068223 Verifica si la tarjeta ya existe
+                Alerts.showAlert("Error", "Ya existe una tarjeta registrada con este numero", 3); //00068223 Muestra alerta de error si la tarjeta ya existe
+                return; //00068223 Sale del metodo si la tarjeta ya existe
+            }
+
             try { //00068223 Inicio del bloque try para manejar excepciones SQL
                 int result; //00068223 Variable para almacenar el resultado de la ejecucion de la consulta
                 PreparedStatement ps = conexion.conectar().prepareStatement("INSERT INTO tbtarjeta (numeroTarjeta, fechaExpiracion, tipo, idFacilitador, idCliente) VALUES (?,?,?,?,?)"); //00068223 Prepara la consulta SQL para insertar una tarjeta
@@ -145,24 +150,22 @@ public class TarjetaController { //00068223 Clase controladora para manejar la l
             Alerts.showAlert("Campos incompletos", "Favor llenar todos los campos necesarios para la creacion de la tarjeta", 2); //00068223 Muestra alerta de campos incompletos
         }
     }
-
-    private int obtenerClienteId(String nombre) { //00068223 Funcion para obtener el ID del cliente basado en su nombre
-        int id = -1; //00068223 Inicializar el ID del cliente con -1
+    private boolean tarjetaExiste(String numeroTarjeta) { //00068223 Funcion para verificar si una tarjeta ya existe en la base de datos
         try { //00068223 Inicio del bloque try para manejar excepciones SQL
-            PreparedStatement ps = conexion.conectar().prepareStatement("SELECT id FROM tbCliente WHERE CONCAT(nombre, ' ', apellido) = ?"); //00068223 Prepara la consulta SQL para obtener el ID del cliente
-            ps.setString(1, nombre); //00068223 Asigna el nombre del cliente al primer parametro de la consulta
+            PreparedStatement ps = conexion.conectar().prepareStatement("SELECT COUNT(*) FROM tbtarjeta WHERE numeroTarjeta = ?"); //00068223 Prepara la consulta SQL para verificar si la tarjeta ya existe
+            ps.setString(1, numeroTarjeta); //00068223 Asigna el numero de la tarjeta al primer parametro de la consulta
             ResultSet rs = ps.executeQuery(); //00068223 Ejecuta la consulta SQL
-            if (rs.next()){ //00068223 Verifica si se encontraron resultados
-                id = rs.getInt("id"); //00068223 Asigna el ID del cliente al valor obtenido en la consulta
+            if (rs.next() && rs.getInt(1) > 0) { //00068223 Verifica si el resultado de la consulta es mayor a 0
+                return true; //00068223 Retorna verdadero si la tarjeta ya existe
             }
             conexion.cerrarConexion(); //00068223 Cierra la conexion a la base de datos
         } catch (SQLException e) { //00068223 Captura las excepciones SQL que ocurran en el bloque try
-            System.out.println("Error de conexion: " + e); //00068223 Imprime el mensaje de error de conexion en la consola
+            System.out.println("Error de conexion: " + e.getMessage()); //00068223 Imprime el mensaje de error de conexion en la consola
         }
-        return id; //00068223 Retorna el ID del cliente
+        return false; //00068223 Retorna falso si la tarjeta no existe
     }
 
-    private void cargarDatosTarjeta() { //00068223 Funcion para cargar los datos de las tarjetas en la tabla
+        private void cargarDatosTarjeta() { //00068223 Funcion para cargar los datos de las tarjetas en la tabla
         tbListadoTarjetas.getItems().clear(); //00068223 Limpia los elementos de la tabla de tarjetas
         try { //00068223 Inicio del bloque try para manejar excepciones SQL
             Statement st = conexion.conectar().createStatement(); //00068223 Crea una declaracion SQL para ejecutar consultas
@@ -210,10 +213,6 @@ public class TarjetaController { //00068223 Clase controladora para manejar la l
             Alerts.showAlert("Error", "Error de conexion", 3); //00068223 Muestra alerta de error de conexion
             System.out.println("Error de conexion " + e.getMessage()); //00068223 Imprime el mensaje de error de conexion en la consola
         }
-    }
-
-    private void cargarTipoTarjeta(){ //00068223 Funcion para cargar los tipos de tarjeta en el comboBox cmbTipoTarjeta
-        cmbTipoTarjeta.getItems().addAll("Debito", "Credito"); //00068223 Agregar "Debito" y "Credito" al comboBox
     }
 
     private void limpiar() { //00068223 Funcion para limpiar los campos del formulario

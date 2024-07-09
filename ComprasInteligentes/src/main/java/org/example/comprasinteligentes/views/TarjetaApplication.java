@@ -11,6 +11,7 @@ public class TarjetaApplication extends Application {
     public void start(Stage stage) throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(TarjetaApplication.class.getResource("/org/example/comprasinteligentes/tarjeta.fxml"));
         Scene scene = new Scene(fxmlLoader.load(), 700, 500);
+        scene.getStylesheets().add(getClass().getResource("/styles/styles.css").toExternalForm()); //00016623 Cargando estilos css para la vista
         stage.setTitle("Gestion tarjetas de credito");
         stage.setResizable(false);
         stage.setScene(scene);

@@ -7,9 +7,9 @@ import java.sql.SQLException;
 public class Conexion { // 00107223 Creacion de un singleton para la conexion con la base de datos
     private static Connection conexion; // 00107223 Estableciendo el objeto conexion a utilizar
     private static Conexion instance; // 00107223 Estableciendo la instancia de la clase conexion
-    private final String URL = "jdbc:mysql://localhost:33060/dbComprasInteligentes"; // 00107223 Estableciendo el URL para establecer la conexion
+    private final String URL = "jdbc:mysql://localhost:3306/dbComprasInteligentes"; // 00107223 Estableciendo el URL para establecer la conexion
     private final String user = "root";// 00107223 Estableciendo el usuario que hara la conexion
-    private final String password = "Luis1234"; // 00107223 Estableciendo la contraseña del usuario
+    private final String password = "admin123"; // 00107223 Estableciendo la contraseña del usuario
 
     private Conexion(){} // 00107223 constructor privado para que no se pueda llamar afuera de la clase
 

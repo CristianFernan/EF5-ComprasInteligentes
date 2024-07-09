@@ -12,6 +12,7 @@ public class ReporteApplication extends Application { //00083723 Clase principal
     public void start(Stage stage) throws IOException { // Funcion start que configura la ventana principal
         FXMLLoader fxmlLoader = new FXMLLoader(ComprasApplication.class.getResource("/org/example/comprasinteligentes/reportes.fxml")); //00083723 Carga el archivo FXML para la interfaz de usuario
         Scene scene = new Scene(fxmlLoader.load(), 750, 650); //00083723 Crea una nueva escena con el contenido cargado y establece sus dimensiones
+        scene.getStylesheets().add(getClass().getResource("/styles/styles.css").toExternalForm()); //00016623 Cargando estilos css para la vista
         stage.setTitle("Reportes"); //00083723 Establece el titulo de la ventana
         stage.setResizable(false); //00083723 Evita que se le pueda cambiar las dimensiones a la pantalla
         stage.setScene(scene); //00083723 Establece la escena en la ventana

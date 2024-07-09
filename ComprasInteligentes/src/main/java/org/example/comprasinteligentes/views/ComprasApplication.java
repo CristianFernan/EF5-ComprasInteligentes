@@ -12,6 +12,7 @@ public class ComprasApplication extends Application { //00016623 Clase principal
     public void start(Stage stage) throws IOException { //00016623 Función start que configura la ventana principal
         FXMLLoader fxmlLoader = new FXMLLoader(ComprasApplication.class.getResource("/org/example/comprasinteligentes/compra.fxml")); //00016623 Carga el archivo FXML para la interfaz de usuario
         Scene scene = new Scene(fxmlLoader.load(), 575, 430); //00016623 Crea una nueva escena con el contenido cargado y establece sus dimensiones
+        scene.getStylesheets().add(getClass().getResource("/styles/styles.css").toExternalForm()); //00016623 Cargando estilos css para la vista
         stage.setTitle("Gestion Compras"); //00016623 Establece el titulo de la ventana
         stage.setResizable(false); //00016623 Evita que se le pueda cambiar las dimensiones a la pantalla
         stage.setScene(scene); //00016623 Establece la escena en la ventana

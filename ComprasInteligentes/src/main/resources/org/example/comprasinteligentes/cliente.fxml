@@ -70,12 +70,12 @@
                   </HBox>
                   <HBox alignment="BOTTOM_RIGHT" prefHeight="54.0" prefWidth="258.0">
                      <children>
-                        <Button fx:id="btnAgregar" mnemonicParsing="false" onAction="#agregarCliente" text="Agregar Cliente">
+                        <Button fx:id="btnAgregar" mnemonicParsing="false" onAction="#agregarCliente" styleClass="addBtn" text="Agregar Cliente">
                            <HBox.margin>
                               <Insets />
                            </HBox.margin>
                         </Button>
-                        <Button fx:id="btnDatos" mnemonicParsing="false" onAction="#cargarDatosCliente" text="Cargar Clientes">
+                        <Button fx:id="btnDatos" mnemonicParsing="false" onAction="#cargarDatosCliente" styleClass="loadBtn" text="Cargar Clientes">
                            <HBox.margin>
                               <Insets left="15.0" />
                            </HBox.margin>
@@ -95,12 +95,12 @@
                   <Insets left="10.0" />
                </HBox.margin>
             </TextField>
-            <Button fx:id="btnEliminar" mnemonicParsing="false" onAction="#eliminarCliente" text="Eliminar Cliente">
+            <Button fx:id="btnEliminar" mnemonicParsing="false" onAction="#eliminarCliente" styleClass="deleteBtn" text="Eliminar Cliente">
                <HBox.margin>
                   <Insets left="50.0" />
                </HBox.margin>
             </Button>
-            <Button fx:id="btnModificar" mnemonicParsing="false" onAction="#modificarCliente" text="Modificar Cliente">
+            <Button fx:id="btnModificar" mnemonicParsing="false" onAction="#modificarCliente" styleClass="loadBtn" text="Modificar Cliente">
                <HBox.margin>
                   <Insets left="10.0" />
                </HBox.margin>

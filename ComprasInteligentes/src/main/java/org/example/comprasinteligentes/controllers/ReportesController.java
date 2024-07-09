@@ -8,8 +8,14 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
+import javafx.stage.Stage;
+import org.example.comprasinteligentes.Alerts;
 import org.example.comprasinteligentes.Conexion;
+import org.example.comprasinteligentes.OpenWindows;
 import org.example.comprasinteligentes.clases.CompraCustom;
+import org.example.comprasinteligentes.views.ClienteApplication;
+import org.example.comprasinteligentes.views.ReporteApplication;
+import org.example.comprasinteligentes.views.TarjetaApplication;
 
 import java.io.File;
 import java.io.FileWriter;
@@ -344,7 +350,7 @@ public class ReportesController { //00083723 Controlador para gestionar reportes
         }
     }
 
-    private void generarReporteC(String tarjeta, String tipoTajera, ){
+    private void generarReporteC(){
         String fechaHoraActual = new SimpleDateFormat("yyyy_MM_dd_HH_mm_ss").format(Calendar.getInstance().getTime()); // 00107223 obtengo la fecha y hora en el momento que se llama la función para asignársela al nombre
         String rutaArchivo = reportesRuta + "/C"+fechaHoraActual+".txt"; // 00107223 se genera el la ruta junto al nombre completo del archivo
 
@@ -438,4 +444,18 @@ public class ReportesController { //00083723 Controlador para gestionar reportes
         return nombreMes; // 00107223 se retorna la cadena del mes
     }
 
+    @FXML
+    private void onBtnClientesClick() { // 00016623 Método para manejar el evento de click en el botón de btnClientes del menu,
+        OpenWindows.openWindow(tbClientesFacilitadorD, 1);// 00016623 llamando método utilitario para abrir ventanas
+    }
+
+    @FXML
+    private void onBtnTarjetasClick() { // 00016623 Método para manejar el evento de click en el botón de Reporte,
+        OpenWindows.openWindow(tbClientesFacilitadorD, 4);// 00016623 llamando método utilitario para abrir ventanas
+    }
+
+    @FXML
+    private void onBtnComprasClick() { // 00016623 Método para manejar el evento de click en el botón de Reporte,
+        OpenWindows.openWindow(tbClientesFacilitadorD, 2);// 00016623 llamando método utilitario para abrir ventanas
+    }
 }

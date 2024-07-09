@@ -6,11 +6,13 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
 import org.example.comprasinteligentes.Alerts;
 import org.example.comprasinteligentes.Conexion;
+import org.example.comprasinteligentes.OpenWindows;
 import org.example.comprasinteligentes.clases.Cliente;
 import org.example.comprasinteligentes.clases.Facilitador;
 import org.example.comprasinteligentes.clases.Tarjeta;
 import org.example.comprasinteligentes.views.ClienteApplication;
 import org.example.comprasinteligentes.views.ComprasApplication;
+import org.example.comprasinteligentes.views.ReporteApplication;
 
 import java.sql.*;
 import java.util.function.UnaryOperator;
@@ -233,30 +235,18 @@ public class TarjetaController { //00068223 Clase controladora para manejar la l
     private void onBtnCargarDatosTarjetaClick() { //00068223 Funcion para manejar el evento de click en el boton cargar datos
         cargarDatosTarjeta(); //00068223 Llamar al metodo cargarDatosTarjeta para actualizar la tabla de tarjetas
     }
-
     @FXML
-    private void onBtnClientesClick() { //00016623 Metodo para manejar el evento de click en el boton de btnClientes del menu
-        ((Stage) tbListadoTarjetas.getScene().getWindow()).close(); //00016623 Cerrar la ventana actual casteando en stage la ventana de la tabla tbListadoTarjetas
-        try { //00068223 Inicio del bloque try para manejar excepciones al abrir ventana
-            Stage stage = new Stage(); //00016623 Crear una nueva instancia de Stage para la nueva ventana
-            ClienteApplication app = new ClienteApplication(); //00016623 Crear una instancia de la aplicacion de Clientes
-            app.start(stage); //00016623 Iniciar la aplicacion de Clientes en el nuevo Stage
-        } catch (Exception e) { //00016623 Captura las excepciones que ocurran en el bloque try
-            Alerts.showAlert("Error", "Error al intentar abrir ventana", 3); //00016623 Mostrar una alerta en caso de error
-            System.out.println("No se pudo abrir la ventana de tareas, " + e.getMessage()); //00016623 Imprimir el mensaje de error en la consola
-        }
+    private void onBtnClientesClick() { // 00016623 Método para manejar el evento de click en el botón de btnClientes del menu,
+        OpenWindows.openWindow(tbListadoTarjetas, 1);// 00016623 llamando método utilitario para abrir ventanas
     }
 
     @FXML
-    private void onBtnComprasClick() { //00016623 Metodo para manejar el evento de click en el boton de Compras
-        ((Stage) tbListadoTarjetas.getScene().getWindow()).close(); //00016623 Cerrar la ventana actual casteando en stage la ventana de la tabla tbListadoTarjetas
-        try { //00068223 Inicio del bloque try para manejar excepciones al abrir ventana
-            Stage stage = new Stage(); //00016623 Crear una nueva instancia de Stage para la nueva ventana
-            ComprasApplication app = new ComprasApplication(); //00016623 Crear una instancia de la aplicacion de Compras
-            app.start(stage); //00016623 Iniciar la aplicacion de Compras en el nuevo Stage
-        } catch (Exception e) { //00016623 Captura las excepciones que ocurran en el bloque try
-            Alerts.showAlert("Error", "Error al intentar abrir ventana", 3); //00016623 Mostrar una alerta en caso de error
-            System.out.println("No se pudo abrir la ventana de tareas, " + e.getMessage()); //00016623 Imprimir el mensaje de error en la consola
-        }
+    private void onBtnReportesClick() { // 00016623 Método para manejar el evento de click en el botón de Reporte,
+        OpenWindows.openWindow(tbListadoTarjetas, 3);// 00016623 llamando método utilitario para abrir ventanas
+    }
+
+    @FXML
+    private void onBtnComprasClick() { // 00016623 Método para manejar el evento de click en el botón de Reporte,
+        OpenWindows.openWindow(tbListadoTarjetas, 2);// 00016623 llamando método utilitario para abrir ventanas
     }
 }

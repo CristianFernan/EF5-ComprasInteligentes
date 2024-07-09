@@ -8,10 +8,12 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
 import org.example.comprasinteligentes.Alerts;
 import org.example.comprasinteligentes.Conexion;
+import org.example.comprasinteligentes.OpenWindows;
 import org.example.comprasinteligentes.clases.Compra;
 import org.example.comprasinteligentes.clases.CompraCustom;
 import org.example.comprasinteligentes.clases.Tarjeta;
 import org.example.comprasinteligentes.views.ClienteApplication;
+import org.example.comprasinteligentes.views.ReporteApplication;
 import org.example.comprasinteligentes.views.TarjetaApplication;
 
 import java.sql.*;
@@ -131,30 +133,16 @@ public class ComprasController{ //00016623 Clase controladora para manejar la l�
 
     @FXML
     private void onBtnClientesClick() { // 00016623 Método para manejar el evento de click en el botón de btnClientes del menu,
-        // Cerrando ventana actual
-        ((Stage) tbListadoCompra.getScene().getWindow()).close(); //00016623 Cierra la ventana actual casteando en stage la ventana de la tabla tbListadoCompra
-        try {
-            Stage stage = new Stage(); //00016623 Crea una nueva instancia de Stage para la nueva ventana
-            ClienteApplication app = new ClienteApplication(); //00016623 Crea una instancia de la aplicación de Clientes
-            app.start(stage); //00016623 Inicia la aplicación de Clientes en el nuevo Stage
-        } catch (Exception e) {
-            Alerts.showAlert("Error", "Error al intentar abrir ventana", 3); //00016623 Muestra una alerta en caso de error
-            System.out.println("No se pudo abrir la ventana de tareas, " + e.getMessage()); //00016623 Imprime el mensaje de error en la consola
-        }
+        OpenWindows.openWindow(tbListadoCompra, 1);// 00016623 llamando método utilitario para abrir ventanas
     }
 
     @FXML
-    private void onBtnTarjetasClick() { // 00016623 Método para manejar el evento de click en el botón de Clientes,
-        // Cerrando ventana actual
-        ((Stage) tbListadoCompra.getScene().getWindow()).close(); //00016623 Cierra la ventana actual casteando en stage la ventana de la tabla tbListadoCompra
-        //00016623 Abriendo nueva ventana de Tarjetas
-        try {
-            Stage stage = new Stage(); //00016623 Crea una nueva instancia de Stage para la nueva ventana
-            TarjetaApplication app = new TarjetaApplication(); //00016623 Crea una instancia de la aplicación de Tarjetas
-            app.start(stage); //00016623 Inicia la aplicación de Tarjetas en el nuevo Stage
-        } catch (Exception e) {
-            Alerts.showAlert("Error", "Error al intentar abrir ventana", 3); //00016623 Muestra una alerta en caso de error
-            System.out.println("No se pudo abrir la ventana de tareas, " + e.getMessage()); //00016623 Imprime el mensaje de error en la consola
-        }
+    private void onBtnTarjetasClick() { // 00016623 Método para manejar el evento de click en el botón de btnTarjetas del menu,
+        OpenWindows.openWindow(tbListadoCompra, 4);// 00016623 llamando método utilitario para abrir ventanas
+    }
+
+    @FXML
+    private void onBtnReportesClick() { // 00016623 Método para manejar el evento de click en el botón de Reporte,
+        OpenWindows.openWindow(tbListadoCompra, 3);// 00016623 llamando método utilitario para abrir ventanas
     }
 }

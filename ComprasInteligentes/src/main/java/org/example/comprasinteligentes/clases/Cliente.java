@@ -17,6 +17,11 @@ public class Cliente { //00107223 Creación de clase Cliente para poder gestiona
         this.numeroTelefono = numeroTelefono; // 00107223 asignacion del numero telefono
     }
 
+    public Cliente(int id, String apellido) {
+        this.id = id;
+        this.apellido = apellido;
+    }
+
     //Getters
     public int getId() { // 00107223 getter del id para su manejo en el CRUD
         return id; // 00107223 retorno del id
@@ -36,6 +41,27 @@ public class Cliente { //00107223 Creación de clase Cliente para poder gestiona
 
     public String getNumeroTelefono() { // 00107223 getter del número telefono para su manejo en el CRUD
         return numeroTelefono; // 00107223 retorno del número telefono
+    }
+
+    //Setters
+
+    public void setId(int id) { // 00107223 setter del identificador para su manejo en el CRUD: tableview
+        this.id = id; // 00107223 retorno del identificador
+    }
+    public void setNombre(String nombre) { // 00107223 setter del nombre para su manejo en el CRUD: tableview
+        this.nombre = nombre;  // 00107223 retorno del nombre
+    }
+
+    public void setApellido(String apellido) {  // 00107223 setter del apellido para su manejo en el CRUD: tableview
+        this.apellido = apellido; // 00107223 retorno del apellido
+    }
+
+    public void setDireccion(String direccion) { // 00107223 setter del direccion para su manejo en el CRUD: tableview
+        this.direccion = direccion; // 00107223 retorno del direccion
+    }
+
+    public void setNumeroTelefono(String numeroTelefono) { // 00107223 setter del numero telefono para su manejo en el CRUD: tableview
+        this.numeroTelefono = numeroTelefono; // 00107223 retorno del numero telefono
     }
 
     @Override

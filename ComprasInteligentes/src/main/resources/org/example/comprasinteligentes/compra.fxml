@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<VBox alignment="CENTER" prefHeight="552.0" prefWidth="575.0" spacing="20.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.comprasinteligentes.controllers.ComprasController">
+    <padding>
+        <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
+    </padding>
+   <children>
+      <Label text="Gestionar Compra">
+         <font>
+            <Font name="System Bold" size="18.0" />
+         </font>
+      </Label>
+      <HBox prefHeight="151.0" prefWidth="535.0">
+         <children>
+            <VBox prefHeight="139.0" prefWidth="267.0">
+               <children>
+                  <HBox alignment="CENTER_LEFT" prefHeight="67.0" prefWidth="244.0">
+                     <children>
+                        <Label prefHeight="17.0" prefWidth="40.0" text="Monto:" />
+                        <TextField fx:id="txtMonto" prefHeight="26.0" prefWidth="165.0">
+                           <HBox.margin>
+                              <Insets left="20.0" />
+                           </HBox.margin>
+                        </TextField>
+                     </children>
+                  </HBox>
+                  <HBox alignment="CENTER_LEFT" prefHeight="67.0" prefWidth="244.0">
+                     <children>
+                        <Label prefHeight="17.0" prefWidth="60.0" text="Tarjeta:" />
+                        <ComboBox fx:id="cmbTarjeta" prefHeight="25.0" prefWidth="165.0" />
+                     </children>
+                  </HBox>
+                  <HBox alignment="CENTER_LEFT" prefHeight="67.0" prefWidth="244.0">
+                     <children>
+                        <Label prefHeight="18.0" prefWidth="60.0" text="Fecha:" />
+                        <DatePicker fx:id="dpFecha" editable="false" prefHeight="25.0" prefWidth="165.0" showWeekNumbers="true" />
+                     </children>
+                  </HBox>
+               </children>
+            </VBox>
+            <VBox prefHeight="100.0" prefWidth="257.0">
+               <children>
+                  <HBox prefHeight="6.0" prefWidth="258.0" />
+                  <HBox prefHeight="86.0" prefWidth="258.0">
+                     <children>
+                        <Label prefHeight="18.0" prefWidth="101.0" text="Descripcion:">
+                           <HBox.margin>
+                              <Insets />
+                           </HBox.margin>
+                        </Label>
+                        <TextArea fx:id="txtADescripcion" prefHeight="86.0" prefWidth="199.0">
+                           <HBox.margin>
+                              <Insets left="10.0" />
+                           </HBox.margin>
+                        </TextArea>
+                     </children>
+                  </HBox>
+               </children>
+            </VBox>
+         </children>
+      </HBox>
+      <HBox alignment="CENTER" prefHeight="65.0" prefWidth="535.0" spacing="15.0">
+         <children>
+            <Button fx:id="btnAgregar" mnemonicParsing="false" onAction="#onBtnAgregarCompraClick" text="Agregar compra">
+               <HBox.margin>
+                  <Insets />
+               </HBox.margin>
+            </Button>
+            <Button fx:id="btnDatos" mnemonicParsing="false" onAction="#onBtnCargarDatosClick" text="Cargar Datos">
+               <HBox.margin>
+                  <Insets />
+               </HBox.margin>
+            </Button>
+            <Button fx:id="btnLimpiar" layoutX="294.0" layoutY="17.0" mnemonicParsing="false" onAction="#onBtnlimpiarClick" text="Limpiar" />
+         </children>
+      </HBox>
+      <TableView fx:id="tbListadoCompra" prefHeight="200.0" prefWidth="535.0">
+        <columns>
+            <TableColumn fx:id="monto" maxWidth="104.0" minWidth="54.0" prefWidth="70.0" text="Monto" />
+            <TableColumn fx:id="descripcion" minWidth="90.0" prefWidth="131.0" text="Descripción" />
+           <TableColumn fx:id="fecha" maxWidth="106.0" minWidth="80.0" text="Fecha" />
+            <TableColumn fx:id="tarjeta" prefWidth="118.0" text="Tarjeta" />
+            <TableColumn fx:id="cliente" prefWidth="86.4000244140625" text="Cliente" />
+        </columns>
+         <columnResizePolicy>
+            <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
+         </columnResizePolicy>
+      </TableView>
+      <VBox alignment="TOP_RIGHT" prefHeight="24.0" prefWidth="535.0">
+         <children>
+            <MenuButton mnemonicParsing="false" text="Menu">
+              <items>
+                <MenuItem fx:id="btnClientes" mnemonicParsing="false" onAction="#onBtnClientesClick" text="Clientes" />
+                <MenuItem fx:id="btnTarjetas" mnemonicParsing="false" onAction="#onBtnTarjetasClick" text="Tarjetas" />
+              </items>
+            </MenuButton>
+         </children>
+      </VBox>
+   </children>
+</VBox>

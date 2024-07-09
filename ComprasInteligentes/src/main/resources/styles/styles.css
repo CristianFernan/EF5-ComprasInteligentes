@@ -1,0 +1,36 @@
+Button {
+    -fx-text-fill: white; /* 00016623 - Color del texto */
+    -fx-background-radius: 10; /* 00016623 - Radio de borde del fondo */
+    -fx-border-radius: 10; /* 00016623 - Radio de borde del borde */
+    -fx-cursor: hand; /* 00016623 - Cursor al pasar sobre el botón */
+    -fx-padding: 5; /* 00016623 - Espaciado interno */
+    -fx-end-margin: 5; /* 00016623 - Margen final */
+    -fx-start-margin: 5; /* 00016623 - Margen inicial */
+}
+
+.addBtn {
+    -fx-background-color: #519f61; /* 00016623 - Color de fondo */
+}
+
+.addBtn:hover {
+    -fx-background-color:  #fff; /* 00016623 - Color de fondo al pasar */
+    -fx-text-fill: #519f61; /* 00016623 - Color del texto al pasar */
+}
+
+.loadBtn {
+    -fx-background-color: #6096ef; /* 00016623 - Color de fondo */
+}
+
+.loadBtn:hover {
+    -fx-background-color: #fff; /* 00016623 - Color de fondo al pasar */
+    -fx-text-fill: #6096ef; /* 00016623 - Color del texto al pasar */
+}
+
+.deleteBtn {
+    -fx-background-color: #ea7272; /* 00016623 - Color de fondo */
+}
+
+.deleteBtn:hover {
+    -fx-background-color: #fff; /* 00016623 - Color de fondo al pasar */
+    -fx-text-fill: #ea7272; /* 00016623 - Color del texto al pasar */
+}

@@ -1,20 +1,21 @@
 package org.example.comprasinteligentes.controllers; // 00107223 Paquete al que pertenecen todos los controladores de las vistas
 
 import javafx.fxml.FXML; // 00107223 Librería vital para que se puedan llamar elementos FXML al controlador
-import javafx.fxml.Initializable; // 00107223 Librería que permite configurar cosas de la vista al iniciar el programa
 import javafx.scene.control.*; // 00107223 Librería que permite crear objetos de los controles en la vista (button, textField, etc....)
 import javafx.scene.control.cell.PropertyValueFactory; // 00107223 Librería que permite acceder al PropertyValueFactory para insertar datos del objeto cliente a sus respectivas columnas en tableView
 import javafx.collections.ObservableList; // 00107223 Librería que permite acceder a las listas observables útiles para realizar modificaciones a datos ya insertados en tableView
+import javafx.stage.Stage;
+import org.example.comprasinteligentes.Alerts;
 import org.example.comprasinteligentes.Conexion; // 00107223 Importar la clase conexión que maneja la conexión con la base de datos
 import org.example.comprasinteligentes.clases.Cliente; // 00107223 Importar la clase Cliente, para insertar al tableView y manejar operaciones de tipo Cliente.
+import org.example.comprasinteligentes.views.ComprasApplication;
+import org.example.comprasinteligentes.views.TarjetaApplication;
 
-import java.net.URL; // 00107223 Parte de la Override de la función initializable
-import java.util.ResourceBundle; // 00107223 Parte de la Override de la función initializable
 import java.sql.*; // 00107223 Acceder a todas la funciónes tipo SQL
 import java.util.function.UnaryOperator; // 00107223 Función Unaria para la creación de los filtros del textField
 import java.util.regex.Pattern; // 00107223 Acceder al tipo Pattern para crear patrones para los filtros
 
-public class ClienteController implements Initializable{ // 00107223 Controlador de la vista 'cliente.fxml', maneja todas las funciones utilizadas en el CRUD, es initializable para realizar validaciones y cargar elementos.
+public class ClienteController { // 00107223 Controlador de la vista 'cliente.fxml', maneja todas las funciones utilizadas en el CRUD, es initializable para realizar validaciones y cargar elementos.
     private static Conexion conexion = Conexion.getInstance(); // 00107223 llamo una instancia global para la conexión
     @FXML
     private TextField txtNombre; // 00107223 objeto TextField txtNombre para obtener datos
@@ -142,8 +143,8 @@ public class ClienteController implements Initializable{ // 00107223 Controlador
         }
     }
 
-    @Override
-    public void initialize(URL url, ResourceBundle resourceBundle) { // 00107233 Manejar validaciones a la hora de iniciar la vista
+    @FXML
+    public void initialize() { // 00107233 Manejar validaciones a la hora de iniciar la vista
         // Tabla
         nombre.setCellValueFactory(new PropertyValueFactory<Cliente, String>("nombre")); // 00107223 asignarle una value factory a la columna para que utilize el atributo nombre para guardarlos
         apellido.setCellValueFactory(new PropertyValueFactory<Cliente, String>("apellido")); // 00107223 asignarle una value factory a la columna para que utilize el atributo apellido para guardarlos

@@ -9,28 +9,20 @@ public class Conexion { // 00107223 Creacion de un singleton para la conexion co
     private static Conexion instance; // 00107223 Estableciendo la instancia de la clase conexion
     private final String URL = "jdbc:mysql://localhost:3306/dbComprasInteligentes"; // 00107223 Estableciendo el URL para establecer la conexion
     private final String user = "root";// 00107223 Estableciendo el usuario que hara la conexion
-    private final String password = "ganglyPie44311"; // 00107223 Estableciendo la contraseña del usuario
+    private final String password = "admin123"; // 00107223 Estableciendo la contraseña del usuario
 
     private Conexion(){} // 00107223 constructor privado para que no se pueda llamar afuera de la clase
 
-    public Connection conectar(){ // 00107223 funcion que establece la conexión con la base de datos
-        try { // 00107223 Try obligatorio para atrapar cualquier error provocado durante la conexión
-             conexion = DriverManager.getConnection(URL, user, password); // 00107223 asignandole una conexion al objeto conexion
-            return conexion; // 00107223 retornando la conexión
-        } catch (SQLException e) { // 00107223 catch que atrapa los errores durante la conexión
-            System.out.println("error en la base de datos: " + e); // 00107223 mensaje personalizado de error
-        }
-        return conexion; // 00107223 retorna el objeto conexion aun si la conexion no se logra establecer correctamente
+    public Connection conectar() throws SQLException{ // 00107223 funcion que establece la conexión con la base de datos, throws hará que pueda ser atrapapo por try catch en controllers
+        conexion = DriverManager.getConnection(URL, user, password); // 00107223 asignandole una conexion al objeto conexion
+        return conexion; // 00107223 retornando la conexión
     }
 
-    public void cerrarConexion(){ // 00107223 funcion que establece la conexión con la base de datos
-        try { // 00107223 Try obligatorio para atrapar cualquier error provocado durante la conexión
-            if(!conexion.isClosed() && conexion != null){ // 00107223 condicional que verifica si existe una conexión y si dicha conexión no esta ya cerrada
-                conexion.close(); // 00107223 cierra la conexión con la base de datos
-            }
-        } catch (SQLException e){ // 00107223 catch que atrapa los errores durante la conexión
-            System.out.println("error en la base de datos" + e); // 00107223 mensaje personalizado de error
+    public void cerrarConexion() throws SQLException{ // 00107223 funcion que establece la conexión con la base de datos, throw atrapado por catch
+        if(!conexion.isClosed() && conexion != null){ // 00107223 condicional que verifica si existe una conexión y si dicha conexión no esta ya cerrada
+            conexion.close(); // 00107223 cierra la conexión con la base de datos
         }
+
     }
 
     public static Conexion getInstance(){ // 00107223 patron de diseño singleton, obtiene la unica intancia de la conexión

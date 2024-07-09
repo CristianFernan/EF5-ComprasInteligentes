@@ -234,4 +234,32 @@ public class ClienteController implements Initializable{ // 00107223 Controlador
             }
         };
     }
+    @FXML
+    private void onBtnTarjetasClick() { // 00016623 Método para manejar el evento de click en el botón de btnTarjetas del menu,
+        // Cerrando ventana actual
+        ((Stage) tbListadoCliente.getScene().getWindow()).close(); //00016623 Cierra la ventana actual casteando en stage la ventana de la tabla tbListadoCliente
+        try {//00068223 Inicio del bloque try para manejar excepciones al abrir ventana
+            Stage stage = new Stage(); //00016623 Crea una nueva instancia de Stage para la nueva ventana
+            TarjetaApplication app = new TarjetaApplication(); //00016623 Crea una instancia de la aplicación de Tarjetas
+            app.start(stage); //00016623 Inicia la aplicación de Tarjetas en el nuevo Stage
+        } catch (Exception e) {//00016623 Captura las excepciones que ocurran en el bloque try
+            Alerts.showAlert("Error", "Error al intentar abrir ventana", 3); //00016623 Muestra una alerta en caso de error
+            System.out.println("No se pudo abrir la ventana de tareas, " + e.getMessage()); //00016623 Imprime el mensaje de error en la consola
+        }
+    }
+
+    @FXML
+    private void onBtnComprasClick() { // 00016623 Método para manejar el evento de click en el botón de Compras,
+        // Cerrando ventana actual
+        ((Stage) tbListadoCliente.getScene().getWindow()).close(); //00016623 Cierra la ventana actual casteando en stage la ventana de la tabla tbListadoCliente
+        //00016623 Abriendo nueva ventana de Compras
+        try {//00068223 Inicio del bloque try para manejar excepciones al abrir ventana
+            Stage stage = new Stage(); //00016623 Crea una nueva instancia de Stage para la nueva ventana
+            ComprasApplication app = new ComprasApplication(); //00016623 Crea una instancia de la aplicación de Compras
+            app.start(stage); //00016623 Inicia la aplicación de Compras en el nuevo Stage
+        } catch (Exception e) {//00016623 Captura las excepciones que ocurran en el bloque try
+            Alerts.showAlert("Error", "Error al intentar abrir ventana", 3); //00016623 Muestra una alerta en caso de error
+            System.out.println("No se pudo abrir la ventana de tareas, " + e.getMessage()); //00016623 Imprime el mensaje de error en la consola
+        }
+    }
 }

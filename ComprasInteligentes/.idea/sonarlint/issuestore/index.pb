@@ -11,7 +11,5 @@ q
 Asrc/main/java/org/example/comprasinteligentes/clases/Tarjeta.java,d\e\de33ebafbe4b30ce2f15b747e92ad597145c7b4d
 p
 @src/main/java/org/example/comprasinteligentes/clases/Compra.java,f\5\f5bb2efdebc83232dde42a9ee83f092544262126
-i
-9src/main/java/org/example/comprasinteligentes/Alerts.java,7\6\76a3cac78f98dadfbbbdb3749af6a1f1c5c1899d
 v
 Fsrc/main/java/org/example/comprasinteligentes/clases/CompraCustom.java,9\d\9d532f6c1600813983120bd19e29bf56fe01de79

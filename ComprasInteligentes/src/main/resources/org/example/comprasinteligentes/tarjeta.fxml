@@ -107,8 +107,9 @@
             <children> <!-- 00016623 Contenedor para los elementos hijos del VBox -->
                 <MenuButton mnemonicParsing="false" text="Menu"> <!-- 00016623 Botón de menú -->
                     <items> <!-- 00016623 Contenedor para los elementos del menú -->
-                        <MenuItem fx:id="btnClientes" mnemonicParsing="false" onAction="#onBtnClientesClick" text="Clientes" /> <!-- 00016623 Opción del menú para "Clientes" -->
-                        <MenuItem fx:id="btnCompras" mnemonicParsing="false" onAction="#onBtnComprasClick" text="Compras" /> <!-- 00016623 Opción del menú para "Compras" -->
+                        <MenuItem fx:id="btnClientes" mnemonicParsing="false" onAction="#onBtnClientesClick" text="Clientes" /> <!-- 00016623 Opción del menú para Clientes -->
+                        <MenuItem fx:id="btnCompras" mnemonicParsing="false" onAction="#onBtnComprasClick" text="Compras" /> <!-- 00016623 Opción del menú para Compras -->
+                        <MenuItem fx:id="btnReportes" mnemonicParsing="false" onAction="#onBtnReportesClick" text="Reportes" /><!-- 00016623 Opción del menú para Reportes -->
                     </items>
                 </MenuButton>
             </children>

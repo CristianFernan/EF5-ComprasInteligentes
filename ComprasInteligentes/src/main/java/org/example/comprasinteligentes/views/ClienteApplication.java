@@ -12,6 +12,7 @@ public class ClienteApplication extends Application { // 00107223 Clase cuyo ún
     public void start(Stage stage) throws IOException { // 00107223 Función que corre el programa
         FXMLLoader fxmlLoader = new FXMLLoader(ClienteApplication.class.getResource("/org/example/comprasinteligentes/cliente.fxml")); //00107223 Se obtiene la vista, mediante su ruta
         Scene scene = new Scene(fxmlLoader.load(), 575, 430); // 00107223 Se crea la escena y se define sus dimensiones
+        scene.getStylesheets().add(getClass().getResource("/styles/styles.css").toExternalForm()); //00016623 Cargando estilos css para la vista
         stage.setTitle("Gestion Clientes"); // 00107223 Se le asigna un titulo a la ventana
         stage.setResizable(false); // 00107223 Se le quita el atributo de poderse modificar el tamaño
         stage.setScene(scene); // 00107223 Se le asigna la escena a la ventana

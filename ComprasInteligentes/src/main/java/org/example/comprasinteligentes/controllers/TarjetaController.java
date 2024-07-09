@@ -56,7 +56,7 @@ public class TarjetaController { //00068223 Clase controladora para manejar la l
         facilitador.setCellValueFactory(new PropertyValueFactory<>("facilitador")); //00068223 asignar una value factory a la columna para que utilice el atributo facilitador para guardarlos
         cliente.setCellValueFactory(new PropertyValueFactory<>("cliente")); //00068223 asignar una value factory a la columna para que utilice el atributo cliente para guardarlos
         cargarFacilitadores(); //00068223 llamado de funcion para rellenar cmb de facilitadores
-        cargarDatosTarjeta(); //00068223 llamado de funcion para rellenar la tabla de tarjetas
+        //cargarDatosTarjeta(); //00068223 llamado de funcion para rellenar la tabla de tarjetas
         cargarClientes(); //00068223 llamado de funcion para rellenar el cmb de clientes
         tarjetaValidacion(); //00068223 llamado de funcion de validacion de numero de tarjeta
         cargarTiposTarjeta(); //00068223 llamado de funcion de tipos de tarjeta

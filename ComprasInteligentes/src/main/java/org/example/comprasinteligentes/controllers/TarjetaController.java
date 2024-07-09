@@ -13,8 +13,6 @@ import org.example.comprasinteligentes.views.ClienteApplication;
 import org.example.comprasinteligentes.views.ComprasApplication;
 
 import java.sql.*;
-import java.util.function.UnaryOperator;
-import java.util.regex.Pattern;
 
 public class TarjetaController { //00068223 Clase controladora para manejar la logica de las tarjetas
     private static Conexion conexion = Conexion.getInstance(); //00068223 Obtenemos instancia unica singleton de conexion
@@ -63,46 +61,24 @@ public class TarjetaController { //00068223 Clase controladora para manejar la l
     }
 
     private void tarjetaValidacion() { // 00068223 Funcion para la validacion del campo numero tarjeta, siguiendo el patron XXXX-XXXX-XXXX-XXXX
-        Pattern pattern = Pattern.compile("\\d{0,4}-?\\d{0,4}-?\\d{0,4}-?\\d{0,4}"); //00068223 Crear un patron para el textField del numero de tarjeta
-
-        UnaryOperator<TextFormatter.Change> filtro = generarFiltro(pattern); //00068223 Obtener el filtro en base al patron que se busca implementar
-
-        TextFormatter<String> formatter = new TextFormatter<>(filtro); //00068223 Crear un objeto textFormatter para aplicarlo en el txtNumeroTarjeta, este contiene el formato de filtro, que contiene el patron XXXX-XXXX-XXXX-XXXX
-        txtNumeroTarjeta.setTextFormatter(formatter); //00068223 Asignacion del formato ya validado.
-
-        txtNumeroTarjeta.textProperty().addListener((observable, oldValue, newValue) -> { //00068223 Asignacion de un addListener para cada vez que haya un input del teclado aplicar validaciones
-            if ((newValue.length() == 4 || newValue.length() == 9 || newValue.length() == 14) && !newValue.endsWith("-")) { //00068223 Condicional donde si la cadena en el textField ya tiene 4, 9 o 14 digitos, le agrega automaticamente el "-"
-                txtNumeroTarjeta.setText(newValue + "-"); //00068223 insertarle al textField los digitos ya ingresados + el nuevo "-"
-            } else if ((newValue.length() > 4 && newValue.length() < 9 && !newValue.contains("-")) ||
-                    (newValue.length() > 9 && newValue.length() < 14 && !newValue.substring(5).contains("-")) ||
-                    (newValue.length() > 14 && !newValue.substring(10).contains("-"))) { //00068223 Condicional donde valida la entrada
-                txtNumeroTarjeta.setText(formatearNumeroTarjeta(newValue)); //00068223 insertarle al textField los digitos ya ingresados + "-" + los posibles digitos que le sigan
+        txtNumeroTarjeta.setOnKeyReleased(event -> { // 00068223 Añade un listener para cambios en el texto
+            String newValue = txtNumeroTarjeta.getText().replaceAll("-", ""); // 00068223 Elimina los guiones del texto
+            if (!newValue.matches("\\d*")){// 00068223 Verifica si el nuevo valor contiene solo numeros
+                Alerts.showAlert("Error", "Ingrese valores válidos", 3);// 00068223 Muestra un mensaje de error si se ingresan letras
+                txtNumeroTarjeta.clear(); // 00068223 Limpia el campo de numero de tarjeta
+                return; // 00068223 sale del metodo si se ingresan caracteres no validos
             }
+            if (newValue.length() > 16) {
+                Alerts.showAlert("Error", "Usted ha sobrepasado el máximo de dígitos permitidos.", 3); // 00068223 Muestra un mensaje de error si se excede el maximo de digitos permitidos
+                newValue = newValue.substring(0, 16); // 00068223 Elimina los caracteres extra
+            }
+            if (newValue.length() > 4) newValue = newValue.substring(0, 4) + "-" + newValue.substring(4); // 00068223 Añade un guion después de 4 caracteres
+            if (newValue.length() > 9) newValue = newValue.substring(0, 9) + "-" + newValue.substring(9); // 00068223 Añade un guion después de 9 caracteres
+            if (newValue.length() > 14) newValue = newValue.substring(0, 14) + "-" + newValue.substring(14); // 00068223 Añade un guion después de 14 caracteres
+            txtNumeroTarjeta.setText(newValue); // 00068223 Actualiza el texto del campo de texto
+            txtNumeroTarjeta.positionCaret(newValue.length()); // 00068223 Posiciona el cursor al final del texto);
+
         });
-    }
-
-    private UnaryOperator<TextFormatter.Change> generarFiltro(Pattern pattern) { //00068223 Generar filtro para el patron especificado
-        return change -> { //00068223 Crear un objeto de cambio
-            String newText = change.getControlNewText(); //00068223 Obtener el nuevo texto del control
-            if (pattern.matcher(newText).matches()) { //00068223 Validar si el nuevo texto coincide con el patron
-                return change; //00068223 Retornar el cambio si coincide
-            }
-            return null; //00068223 Retornar null si no coincide
-        };
-    }
-
-    private String formatearNumeroTarjeta(String numero) { //00068223 Funcion para formatear el numero de tarjeta
-        StringBuilder sb = new StringBuilder(numero); //00068223 Crear un StringBuilder con el numero de tarjeta
-        if (sb.length() > 4 && sb.charAt(4) != '-') { //00068223 Validar si la longitud es mayor a 4 y el caracter en la posicion 4 no es '-'
-            sb.insert(4, '-'); //00068223 Insertar '-' en la posicion 4
-        }
-        if (sb.length() > 9 && sb.charAt(9) != '-') { //00068223 Validar si la longitud es mayor a 9 y el caracter en la posicion 9 no es '-'
-            sb.insert(9, '-'); //00068223 Insertar '-' en la posicion 9
-        }
-        if (sb.length() > 14 && sb.charAt(14) != '-') { //00068223 Validar si la longitud es mayor a 14 y el caracter en la posicion 14 no es '-'
-            sb.insert(14, '-'); //00068223 Insertar '-' en la posicion 14
-        }
-        return sb.toString(); //00068223 Retornar el numero formateado
     }
 
     private void cargarTiposTarjeta() { //00068223 Funcion para cargar los tipos de tarjeta en el comboBox cmbTipoTarjeta

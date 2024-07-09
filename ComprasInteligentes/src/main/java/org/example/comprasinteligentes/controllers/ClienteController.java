@@ -3,7 +3,6 @@ package org.example.comprasinteligentes.controllers;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
-import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
@@ -14,22 +13,20 @@ import org.example.comprasinteligentes.views.ClienteApplication;
 import org.example.comprasinteligentes.views.ComprasApplication;
 import org.example.comprasinteligentes.views.TarjetaApplication;
 
-import java.net.URL;
 import java.sql.*;
-import java.util.ResourceBundle;
-import java.util.function.UnaryOperator;
 import java.util.regex.Pattern;
 
-public class ClienteController{
-    private static final Conexion conexion = Conexion.getInstance();
+public class ClienteController {
+    private static final Conexion conexion = Conexion.getInstance(); // 00107223 Obtenemos instancia unica singleton de conexion
+
     @FXML
     private TextField txtNombre; // 00107223 objeto TextField txtNombre para obtener datos
     @FXML
-    private TextField txtApellido;// 00107223 objeto TextField txtApellido para obtener datos
+    private TextField txtApellido; // 00107223 objeto TextField txtApellido para obtener datos
     @FXML
     private TextField txtTelefono; // 00107223 objeto TextField txtTelefono para obtener datos y aplicar validaciones
     @FXML
-    private TextField txtIDCliente; // 00107223  objeto TextField txtIDCliente obtener dato para operaciones en BD
+    private TextField txtIDCliente; // 00107223 objeto TextField txtIDCliente obtener dato para operaciones en BD
     @FXML
     private TextArea txtDireccion; // 00107223 objeto TextArea txtDireccion para obtener datos
     @FXML
@@ -44,195 +41,197 @@ public class ClienteController{
     private TableColumn<Cliente, String> direccion; // 00107223 objeto TableColumn para acceder en el controller
 
     @FXML
-    private void agregarCliente(){
-        Cliente cliente = new Cliente(0, txtNombre.getText(), txtApellido.getText(), txtDireccion.getText(), txtTelefono.getText());
-        try{
-            int result;
-            PreparedStatement ps = conexion.conectar().prepareStatement("INSERT INTO tbCLIENTE (NOMBRE, APELLIDO, NUMEROTELEFONO, DIRECCION) VALUES (?,?,?,?)");
-            ps.setString(1, cliente.getNombre());
-            ps.setString(2, cliente.getApellido());
-            ps.setString(3, cliente.getNumeroTelefono());
-            ps.setString(4, cliente.getDireccion());
-            result = ps.executeUpdate();
+    private void agregarCliente() { // 00107223 Metodo para agregar un nuevo cliente
+        if (camposIncompletos()) { // 00068223 Verifica si hay campos incompletos
+            Alerts.showAlert("Campos incompletos", "Favor llenar todos los campos necesarios para la creacion del cliente", 2); // 00068223 Muestra alerta de campos incompletos
+            return; // 00068223 Sale del metodo si hay campos incompletos
+        }
+        Cliente cliente = new Cliente(0, txtNombre.getText(), txtApellido.getText(), txtDireccion.getText(), txtTelefono.getText()); // 00107223 Crea un nuevo cliente con los datos ingresados
+        try {
+            int result; // 00107223 Variable para almacenar el resultado de la ejecucion de la consulta
+            PreparedStatement ps = conexion.conectar().prepareStatement("INSERT INTO tbCLIENTE (NOMBRE, APELLIDO, NUMEROTELEFONO, DIRECCION) VALUES (?,?,?,?)"); // 00107223 Prepara la consulta SQL para insertar un cliente
+            ps.setString(1, cliente.getNombre()); // 00107223 Asigna el nombre del cliente al primer parametro de la consulta
+            ps.setString(2, cliente.getApellido()); // 00107223 Asigna el apellido del cliente al segundo parametro de la consulta
+            ps.setString(3, cliente.getNumeroTelefono()); // 00107223 Asigna el numero de telefono del cliente al tercer parametro de la consulta
+            ps.setString(4, cliente.getDireccion()); // 00107223 Asigna la direccion del cliente al cuarto parametro de la consulta
+            result = ps.executeUpdate(); // 00107223 Ejecuta la consulta SQL
 
-            //PlaceHolder creo que lo cambiaremos a un alert
-            if (result > 0) tbListadoCliente.getItems().add(cliente);
-            System.out.println(result>0 ? "Exito" : "Fracaso");
-            limpiar();
-            conexion.cerrarConexion();
-        } catch (SQLException e){
-            System.out.println("error de conexion: " + e);
+            if (result > 0) tbListadoCliente.getItems().add(cliente); // 00107223 Si la insercion fue exitosa, agrega el cliente a la tabla
+            System.out.println(result > 0 ? "Exito" : "Fracaso"); // 00107223 Imprime el resultado de la insercion en la consola
+            limpiar(); // 00107223 Limpia los campos del formulario
+            conexion.cerrarConexion(); // 00107223 Cierra la conexion a la base de datos
+        } catch (SQLException e) {
+            System.out.println("error de conexion: " + e); // 00107223 Imprime el mensaje de error de conexion en la consola
         }
     }
-    @FXML
-    private void eliminarCliente(){
-        try{
-            int result;
-            PreparedStatement ps = conexion.conectar().prepareStatement("DELETE FROM tbCLIENTE WHERE ID=?");
-            ps.setInt(1, Integer.parseInt(txtIDCliente.getText()));
-            result = ps.executeUpdate();
 
-            if (result > 0){
-                int id = buscarCliente(Integer.parseInt(txtIDCliente.getText()));
+    @FXML
+    private void eliminarCliente() { // 00107223 Metodo para eliminar un cliente
+        if (txtIDCliente.getText().isEmpty()) { // 00068223 Verifica si el campo ID del cliente esta vacio
+            Alerts.showAlert("Error", "Debe indicar un ID primero", 2); // 00068223 Muestra alerta de error si el campo ID esta vacio
+            return; // 00068223 Sale del metodo si el campo ID esta vacio
+        }
+        try {
+            int result; // 00107223 Variable para almacenar el resultado de la ejecucion de la consulta
+            PreparedStatement ps = conexion.conectar().prepareStatement("DELETE FROM tbCLIENTE WHERE ID=?"); // 00107223 Prepara la consulta SQL para eliminar un cliente
+            ps.setInt(1, Integer.parseInt(txtIDCliente.getText())); // 00107223 Asigna el ID del cliente al primer parametro de la consulta
+            result = ps.executeUpdate(); // 00107223 Ejecuta la consulta SQL
+
+            if (result > 0) {
+                int id = buscarCliente(Integer.parseInt(txtIDCliente.getText())); // 00107223 Busca el cliente en la tabla
                 if (id != -1) {
-                    tbListadoCliente.getItems().remove(id);
-                    tbListadoCliente.refresh(); // 00107223 Refrescar la tabla para mostrar los cambios de la tabl
+                    tbListadoCliente.getItems().remove(id); // 00107223 Remueve el cliente de la tabla
+                    tbListadoCliente.refresh(); // 00107223 Refresca la tabla para mostrar los cambios
                 }
             }
-            //PlaceHolder creo que lo cambiaremos a un alert
-            System.out.println(result>0 ? "Exito" : "Fracaso");
-            limpiar();
-            conexion.cerrarConexion();
-        } catch (SQLException e){
-            System.out.println("error de conexion: " + e);
+            System.out.println(result > 0 ? "Exito" : "Fracaso"); // 00107223 Imprime el resultado de la eliminacion en la consola
+            limpiar(); // 00107223 Limpia los campos del formulario
+            conexion.cerrarConexion(); // 00107223 Cierra la conexion a la base de datos
+        } catch (SQLException e) {
+            System.out.println("error de conexion: " + e); // 00107223 Imprime el mensaje de error de conexion en la consola
         }
     }
 
     @FXML
-    private void modificarCliente(){
-        try{
-            int result;
-            PreparedStatement ps = conexion.conectar().prepareStatement("UPDATE tbCLIENTE SET NOMBRE=?, APELLIDO=?, NUMEROTELEFONO=?, DIRECCION=? WHERE ID=?");
-            ps.setString(1, txtNombre.getText());
-            ps.setString(2, txtApellido.getText());
-            ps.setString(3, txtTelefono.getText());
-            ps.setString(4, txtDireccion.getText());
-            ps.setInt(5, Integer.parseInt(txtIDCliente.getText()));
-            result = ps.executeUpdate();
+    private void modificarCliente() { // 00107223 Metodo para modificar un cliente
+        if (txtIDCliente.getText().isEmpty()) { // 00068223 Verifica si el campo ID del cliente esta vacio
+            Alerts.showAlert("Error", "Debe indicar un ID primero", 2); // 00068223 Muestra alerta de error si el campo ID esta vacio
+            return; // 00068223 Sale del metodo si el campo ID esta vacio
+        }
+        try {
+            int result; // 00107223 Variable para almacenar el resultado de la ejecucion de la consulta
+            PreparedStatement ps = conexion.conectar().prepareStatement("UPDATE tbCLIENTE SET NOMBRE=?, APELLIDO=?, NUMEROTELEFONO=?, DIRECCION=? WHERE ID=?"); // 00107223 Prepara la consulta SQL para modificar un cliente
+            ps.setString(1, txtNombre.getText()); // 00107223 Asigna el nombre del cliente al primer parametro de la consulta
+            ps.setString(2, txtApellido.getText()); // 00107223 Asigna el apellido del cliente al segundo parametro de la consulta
+            ps.setString(3, txtTelefono.getText()); // 00107223 Asigna el numero de telefono del cliente al tercer parametro de la consulta
+            ps.setString(4, txtDireccion.getText()); // 00107223 Asigna la direccion del cliente al cuarto parametro de la consulta
+            ps.setInt(5, Integer.parseInt(txtIDCliente.getText())); // 00107223 Asigna el ID del cliente al quinto parametro de la consulta
+            result = ps.executeUpdate(); // 00107223 Ejecuta la consulta SQL
 
-            if (result > 0){
-                int id = buscarCliente(Integer.parseInt(txtIDCliente.getText()));
-                if (id != -1){
-                    Cliente cliente = tbListadoCliente.getItems().get(id);
-                    cliente.setNombre(txtNombre.getText());
-                    cliente.setApellido(txtApellido.getText());
-                    cliente.setNumeroTelefono(txtTelefono.getText());
-                    cliente.setDireccion(txtDireccion.getText());
-                    tbListadoCliente.refresh(); // 00107223 Refrescar la tabla para mostrar los cambios de la tabla
+            if (result > 0) {
+                int id = buscarCliente(Integer.parseInt(txtIDCliente.getText())); // 00107223 Busca el cliente en la tabla
+                if (id != -1) {
+                    Cliente cliente = tbListadoCliente.getItems().get(id); // 00107223 Obtiene el cliente de la tabla
+                    cliente.setNombre(txtNombre.getText()); // 00107223 Actualiza el nombre del cliente en la tabla
+                    cliente.setApellido(txtApellido.getText()); // 00107223 Actualiza el apellido del cliente en la tabla
+                    cliente.setNumeroTelefono(txtTelefono.getText()); // 00107223 Actualiza el numero de telefono del cliente en la tabla
+                    cliente.setDireccion(txtDireccion.getText()); // 00107223 Actualiza la direccion del cliente en la tabla
+                    tbListadoCliente.refresh(); // 00107223 Refresca la tabla para mostrar los cambios
                 }
             }
-
-            //PlaceHolder creo que lo cambiaremos a un alert
-            System.out.println(result>0 ? "Exito" : "Fracaso");
-            limpiar();
-            conexion.cerrarConexion();
-        } catch (SQLException e){
-            System.out.println("error de conexion: " + e);
+            System.out.println(result > 0 ? "Exito" : "Fracaso"); // 00107223 Imprime el resultado de la modificacion en la consola
+            limpiar(); // 00107223 Limpia los campos del formulario
+            conexion.cerrarConexion(); // 00107223 Cierra la conexion a la base de datos
+        } catch (SQLException e) {
+            System.out.println("error de conexion: " + e); // 00107223 Imprime el mensaje de error de conexion en la consola
         }
     }
 
     @FXML
-    private void cargarDatosCliente(){
-        tbListadoCliente.getItems().clear();
-        try{
-            Statement st = conexion.conectar().createStatement();
-            ResultSet rs = st.executeQuery("SELECT ID, NOMBRE, APELLIDO, DIRECCION, NUMEROTELEFONO FROM tbCLIENTE");
-            while (rs.next()){
-                Cliente cliente = new Cliente(rs.getInt("ID"), rs.getString("NOMBRE"), rs.getString("APELLIDO"), rs.getString("DIRECCION"), rs.getString("NUMEROTELEFONO"));
-                tbListadoCliente.getItems().add(cliente);
+    private void cargarDatosCliente() { // 00107223 Metodo para cargar los datos de los clientes en la tabla
+        tbListadoCliente.getItems().clear(); // 00107223 Limpia los elementos de la tabla de clientes
+        try {
+            Statement st = conexion.conectar().createStatement(); // 00107223 Crea una declaracion SQL para ejecutar consultas
+            ResultSet rs = st.executeQuery("SELECT ID, NOMBRE, APELLIDO, DIRECCION, NUMEROTELEFONO FROM tbCLIENTE"); // 00107223 Ejecuta una consulta SQL para obtener los datos de los clientes
+            if (!rs.isBeforeFirst()) { // 00068223 Verifica si hay datos en la base de datos
+                Alerts.showAlert("Sin datos", "No hay datos en la base de datos", 2); // 00068223 Muestra una alerta si no hay datos en la base de datos
+                return; // 00068223 Sale del metodo si no hay datos en la base de datos
             }
-            conexion.cerrarConexion();
-        } catch (SQLException e){
-            System.out.println("error de conexion: " + e);
+            while (rs.next()) {
+                Cliente cliente = new Cliente(rs.getInt("ID"), rs.getString("NOMBRE"), rs.getString("APELLIDO"), rs.getString("DIRECCION"), rs.getString("NUMEROTELEFONO")); // 00107223 Crea una nueva instancia de Cliente con los datos obtenidos
+                tbListadoCliente.getItems().add(cliente); // 00107223 Agrega el cliente a la tabla
+            }
+            conexion.cerrarConexion(); // 00107223 Cierra la conexion a la base de datos
+        } catch (SQLException e) {
+            System.out.println("error de conexion: " + e); // 00107223 Imprime el mensaje de error de conexion en la consola
         }
     }
-
 
     @FXML
-    public void initialize() { // 00107233 Manejar validaciones a la hora de iniciar la vista
-        // Tabla
-        nombre.setCellValueFactory(new PropertyValueFactory<Cliente, String>("nombre")); // 00107223 asignarle una value factory a la columna para que utilize el atributo nombre para guardarlos
-        apellido.setCellValueFactory(new PropertyValueFactory<Cliente, String>("apellido")); // 00107223 asignarle una value factory a la columna para que utilize el atributo apellido para guardarlos
-        numeroTelefono.setCellValueFactory(new PropertyValueFactory<Cliente, String>("numeroTelefono")); // 00107223 asignarle una value factory a la columna para que utilize el atributo numero telefono para guardarlos
-        direccion.setCellValueFactory(new PropertyValueFactory<Cliente, String>("direccion")); // 00107223 asignarle una value factory a la columna para que utilize el atributo direccion para guardarlos
-        telefonoValidacion(); // 00107223 llamada a la validacion del txtTelefono
-        idValidacion(); // 00107223 llamada a la validacion del txtIDCliente
+    public void initialize() { // 00107223 Manejar validaciones a la hora de iniciar la vista
+        nombre.setCellValueFactory(new PropertyValueFactory<Cliente, String>("nombre")); // 00107223 Asignarle una value factory a la columna para que utilice el atributo nombre para guardarlos
+        apellido.setCellValueFactory(new PropertyValueFactory<Cliente, String>("apellido")); // 00107223 Asignarle una value factory a la columna para que utilice el atributo apellido para guardarlos
+        numeroTelefono.setCellValueFactory(new PropertyValueFactory<Cliente, String>("numeroTelefono")); // 00107223 Asignarle una value factory a la columna para que utilice el atributo numero telefono para guardarlos
+        direccion.setCellValueFactory(new PropertyValueFactory<Cliente, String>("direccion")); // 00107223 Asignarle una value factory a la columna para que utilice el atributo direccion para guardarlos
+        telefonoValidacion(); // 00107223 Llamada a la validacion del txtTelefono
+        idValidacion(); // 00107223 Llamada a la validacion del txtIDCliente
     }
 
+    private int buscarCliente(int ID) { // 00107223 Metodo para buscar un cliente en la tabla por su ID
+        ObservableList<Cliente> clientes = tbListadoCliente.getItems(); // 00107223 Obtiene la lista de clientes de la tabla
 
-    private int buscarCliente(int ID){
-        ObservableList<Cliente> clientes = tbListadoCliente.getItems();
-
-        for (Cliente cliente : clientes){
-            if (cliente.getId() == ID){
-                return clientes.indexOf(cliente); // 00107223 se devuelve el indice de la fila del cliente
+        for (Cliente cliente : clientes) {
+            if (cliente.getId() == ID) {
+                return clientes.indexOf(cliente); // 00107223 Retorna el indice de la fila del cliente
             }
         }
-        return -1; // 00107223 se devuelve un indice fuera de los limites, por lo que no removeria nada
+        return -1; // 00107223 Retorna un indice fuera de los limites, por lo que no removeria nada
     }
 
-    private void limpiar(){
-        txtTelefono.setText("");
-        txtTelefono.setPromptText("XXXX-XXXX");
-        txtApellido.setText("");
-        txtNombre.setText("");
-        txtDireccion.setText("");
-        txtIDCliente.setText("");
+    private void limpiar() { // 00107223 Metodo para limpiar los campos del formulario
+        txtTelefono.setText(""); // 00107223 Limpia el campo de texto del numero de telefono
+        txtTelefono.setPromptText("XXXX-XXXX"); // 00107223 Establece el texto de sugerencia para el campo de texto del numero de telefono
+        txtApellido.setText(""); // 00107223 Limpia el campo de texto del apellido
+        txtNombre.setText(""); // 00107223 Limpia el campo de texto del nombre
+        txtDireccion.setText(""); // 00107223 Limpia el campo de texto de la direccion
+        txtIDCliente.setText(""); // 00107223 Limpia el campo de texto del ID del cliente
     }
 
-    private void telefonoValidacion(){ // 00107223 Funcion para la validacion del campo numero telefono, siguiendo el patron XXXX-XXXX, donde cada "X" representa un numero del 0-9
-        Pattern pattern = Pattern.compile("\\d{0,4}-?\\d{0,4}"); // 00107223 Crear un patron para el textField del numero de telefono, \\d representa los numeros 0-9 {0,4} que deben ser 4 digitos, es separado por un "-"
+    private void telefonoValidacion() { // 00068223 Funcion para la validacion del campo numero telefono, siguiendo el patron XXXX-XXXX
+        txtTelefono.setOnKeyReleased(event -> { // 00068223 Añade un listener para cambios en el texto
+            String newValue = txtTelefono.getText().replaceAll("-", ""); // 00107223 Elimina los guiones del texto
+            if (!newValue.matches("\\d*")) { // 00068223 Verifica si el nuevo valor contiene solo números
+                Alerts.showAlert("Error", "Ingrese valores válidos.", 3); // 00068223 Muestra un mensaje de error si se ingresan letras
+                txtTelefono.clear(); // 00068223 Borra el contenido del campo de texto
+                return; // 00068223 Sale del método si se ingresan caracteres no válidos
+            }
+            if (newValue.length() > 8) { // 00068223 Verifica si el nuevo valor excede los 8 caracteres permitidos
+                Alerts.showAlert("Error", "Usted ha sobrepasado el máximo de dígitos permitidos (8).", 3); // 00068223 Muestra un mensaje de error si se excede el maximo de digitos permitidos
+                newValue = newValue.substring(0, 8); // 00068223 Elimina los caracteres extra
+            }
+            if (newValue.length() > 4) newValue = newValue.substring(0, 4) + "-" + newValue.substring(4); // 00068223 Añade un guion despues de 4 caracteres
+            txtTelefono.setText(newValue); // 00068223 Actualiza el texto del campo de texto
+            txtTelefono.positionCaret(newValue.length()); // 00068223 Posiciona el cursor al final del texto
+        });
+    }
 
-        UnaryOperator<TextFormatter.Change> filtro  = generarFiltro(pattern); // 00107223 Se obtiene el filtro en base al patron que se busca implementar
-
-        TextFormatter<String> formatter = new TextFormatter<>(filtro); // 00107223 Crear un objeto textFormatter para aplicarlo en el txtTelefono, este contiene el formato de filtro, que contiene el patron XXXX-XXXX
-        txtTelefono.setTextFormatter(formatter); // 00107723 Asignacion del formato ya validado.
-
-        txtTelefono.textProperty().addListener((observable, oldValue, newValue) -> { // 00107223 Asignacion de un addListener para cada vez que haya un input del teclado aplicar validaciones
-            if ((newValue.length() == 4) && !newValue.contains("-")) { // 00107223 Condicional donde si la cadena en el textfield ya tiene 4 digitos, le agrege automaticamente el "-"
-                txtTelefono.setText(newValue + "-"); // 00107223 insertarle al textField los 4 digitos ya ingresados + el nuevo "-"
-            } else if (newValue.length() > 4 && !newValue.contains("-")) { // 00107223 Condicional donde valida la entrada
-                txtTelefono.setText(newValue.substring(0,4) + "-" + newValue.substring(4)); // 00107223 insertarle al textField los 4 digitos ya ingresados + "-" + los posibles 4 digitos que le sigan
+    private void idValidacion() { // 00068223 Funcion para la validacion del campo ID, siguiendo el patron de solo numeros
+        txtIDCliente.setOnKeyReleased(event -> { // 00068223 Añade un listener para cambios en el texto
+            String newValue = txtIDCliente.getText(); // 00068223 Obtiene el nuevo valor del campo de texto
+            if (!newValue.matches("\\d*")) { // 00068223 Verifica si el nuevo valor contiene solo numeros
+                Alerts.showAlert("Error", "Ingrese valores válidos. Solo se permiten dígitos.", 3); // 00068223 Muestra un mensaje de error si se ingresan letras
+                txtIDCliente.clear(); // 00068223 Borra el contenido del campo de texto
             }
         });
     }
 
-    private void idValidacion(){
-        Pattern pattern = Pattern.compile("\\d*"); // 00107223 Crear un patron para el textField del ID, \\d representa los numeros 0-9
-
-        UnaryOperator<TextFormatter.Change> filtro =  generarFiltro(pattern); // 00107223 Se obtiene el filtro en base al patron que se busca implementar
-
-        TextFormatter<String> formatter = new TextFormatter<>(filtro); // 00107223 Crear un objeto textFormatter para aplicarlo en el txtIDCliente, este contiene el formato de filtro, que contiene el patron de solo enteros
-        txtIDCliente.setTextFormatter(formatter); // 00107723 Asignacion del formato ya validado.
-
+    private boolean camposIncompletos() { // 00107223 Funcion para verificar si hay campos incompletos en el formulario
+        return txtNombre.getText().isEmpty() || txtApellido.getText().isEmpty() || txtTelefono.getText().isEmpty() || txtDireccion.getText().isEmpty(); // 00107223 Verifica si alguno de los campos esta vacio
     }
 
-    private UnaryOperator<TextFormatter.Change> generarFiltro(Pattern pattern) { // 00107223 Funcion unaria que sirve para filtrar los cambios hechos dentro del textField, recibe TextFormatter.Change que chequea cada vez que hay una modificacion en cada input del textField.
-        return change -> { // 00107223 retornara si el cambio que se produjo es valido o no
-            String nuevoTexto = change.getControlNewText(); // 00107223 captura y convierte en cadena el texto escrito en el textField para poder procesarlo
-            if (pattern.matcher(nuevoTexto).matches()){ // 00107223 condicional que verifica si el texto escrito coincide con el patron ya definido
-                return change; // 00107223 Si el texto coincide con el patron permite los cambios al textField
-            } else {
-                return null; // 00107223 Si se cumple, envia un nulo por lo que nada se escribe en el textField
-            }
-        };
-    }
     @FXML
-    private void onBtnTarjetasClick() { // 00016623 Método para manejar el evento de click en el botón de btnTarjetas del menu,
-        // Cerrando ventana actual
-        ((Stage) tbListadoCliente.getScene().getWindow()).close(); //00016623 Cierra la ventana actual casteando en stage la ventana de la tabla tbListadoCliente
-        try {//00068223 Inicio del bloque try para manejar excepciones al abrir ventana
-            Stage stage = new Stage(); //00016623 Crea una nueva instancia de Stage para la nueva ventana
-            TarjetaApplication app = new TarjetaApplication(); //00016623 Crea una instancia de la aplicación de Tarjetas
-            app.start(stage); //00016623 Inicia la aplicación de Tarjetas en el nuevo Stage
-        } catch (Exception e) {//00016623 Captura las excepciones que ocurran en el bloque try
-            Alerts.showAlert("Error", "Error al intentar abrir ventana", 3); //00016623 Muestra una alerta en caso de error
-            System.out.println("No se pudo abrir la ventana de tareas, " + e.getMessage()); //00016623 Imprime el mensaje de error en la consola
+    private void onBtnTarjetasClick() { // 00016623 Metodo para manejar el evento de click en el boton de btnTarjetas del menu
+        ((Stage) tbListadoCliente.getScene().getWindow()).close(); // 00016623 Cierra la ventana actual casteando en stage la ventana de la tabla tbListadoCliente
+        try { // 00068223 Inicio del bloque try para manejar excepciones al abrir ventana
+            Stage stage = new Stage(); // 00016623 Crea una nueva instancia de Stage para la nueva ventana
+            TarjetaApplication app = new TarjetaApplication(); // 00016623 Crea una instancia de la aplicacion de Tarjetas
+            app.start(stage); // 00016623 Inicia la aplicacion de Tarjetas en el nuevo Stage
+        } catch (Exception e) { // 00016623 Captura las excepciones que ocurran en el bloque try
+            Alerts.showAlert("Error", "Error al intentar abrir ventana", 3); // 00068223 Muestra una alerta en caso de error
+            System.out.println("No se pudo abrir la ventana de tareas, " + e.getMessage()); // 00068223 Imprime el mensaje de error en la consola
         }
     }
 
     @FXML
-    private void onBtnComprasClick() { // 00016623 Método para manejar el evento de click en el botón de Compras,
-        // Cerrando ventana actual
-        ((Stage) tbListadoCliente.getScene().getWindow()).close(); //00016623 Cierra la ventana actual casteando en stage la ventana de la tabla tbListadoCliente
-        //00016623 Abriendo nueva ventana de Compras
-        try {//00068223 Inicio del bloque try para manejar excepciones al abrir ventana
-            Stage stage = new Stage(); //00016623 Crea una nueva instancia de Stage para la nueva ventana
-            ComprasApplication app = new ComprasApplication(); //00016623 Crea una instancia de la aplicación de Compras
-            app.start(stage); //00016623 Inicia la aplicación de Compras en el nuevo Stage
-        } catch (Exception e) {//00016623 Captura las excepciones que ocurran en el bloque try
-            Alerts.showAlert("Error", "Error al intentar abrir ventana", 3); //00016623 Muestra una alerta en caso de error
-            System.out.println("No se pudo abrir la ventana de tareas, " + e.getMessage()); //00016623 Imprime el mensaje de error en la consola
+    private void onBtnComprasClick() { // 00016623 Metodo para manejar el evento de click en el boton de Compras
+        ((Stage) tbListadoCliente.getScene().getWindow()).close(); // 00016623 Cierra la ventana actual casteando en stage la ventana de la tabla tbListadoCliente
+        try { // 00068223 Inicio del bloque try para manejar excepciones al abrir ventana
+            Stage stage = new Stage(); // 00016623 Crea una nueva instancia de Stage para la nueva ventana
+            ComprasApplication app = new ComprasApplication(); // 00016623 Crea una instancia de la aplicacion de Compras
+            app.start(stage); // 00016623 Inicia la aplicacion de Compras en el nuevo Stage
+        } catch (Exception e) { // 00016623 Captura las excepciones que ocurran en el bloque try
+            Alerts.showAlert("Error", "Error al intentar abrir ventana", 3); // 00068223 Muestra una alerta en caso de error
+            System.out.println("No se pudo abrir la ventana de tareas, " + e.getMessage()); // 00068223 Imprime el mensaje de error en la consola
         }
     }
 }

@@ -1,0 +1,5 @@
+=== REPORTE B ====
+===========================
+Fecha(2025/7) Cliente: Samuel Rodrigo Gomez Huezo
+Monto Total Gastado en el mes de Julio: $699.99
+===========================

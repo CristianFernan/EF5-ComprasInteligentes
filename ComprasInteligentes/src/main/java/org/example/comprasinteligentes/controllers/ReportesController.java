@@ -11,16 +11,21 @@ import javafx.scene.control.*;
 import org.example.comprasinteligentes.Conexion;
 import org.example.comprasinteligentes.clases.CompraCustom;
 
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.sql.Connection;
 import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.text.SimpleDateFormat;
 import java.time.LocalDate;
+import java.util.Calendar;
 
 public class ReportesController { //00083723 Controlador para gestionar reportes
     private static Conexion conexion = Conexion.getInstance(); //00083723 Obtiene la instancia de conexion a la base de datos
-
+    private final  String reportesRuta = "./src/main/java/org/example/comprasinteligentes/reportes"; // 00107223 se declara la ruta hacia la carpeta reportes, debido a que todos los reportes se encontraran en la misma carpeta
     @FXML //00083723 Inyecta el ComboBox de clientes para el reporte A
     private ComboBox<String> cmbClienteA; //00083723 ComboBox para seleccionar el cliente en el reporte A
     @FXML //00083723 Inyecta el DatePicker para la fecha inicial en el reporte A
@@ -152,6 +157,7 @@ public class ReportesController { //00083723 Controlador para gestionar reportes
                         rs.getDate("fechaCompra") //00083723 Fecha de la compra
                 ));
             }
+            generarReporteA(compras); // 00107223 Llamar la función que imprime los resultados en un .txt
         } catch (SQLException e) { //00083723 Captura las excepciones SQL
             e.printStackTrace(); //00083723 Imprime la pila de errores
         }
@@ -163,6 +169,8 @@ public class ReportesController { //00083723 Controlador para gestionar reportes
     private void onBtnGastosClienteClick() {
         String mesStr = txtMesB.getText(); //00083723 Obtiene el mes ingresado
         String anioStr = txtAnioB.getText(); //00083723 Obtiene el año ingresado
+        String nombreCliente = "";
+        String apellidoCliente = "";
 
         if (mesStr.isEmpty() || anioStr.isEmpty() || mesStr.length() > 2 || anioStr.length() != 4) { //00083723 Verifica que los campos no esten vacios y tengan el formato correcto
             lblTotalGastadoB.setText("Total Gastado: $ Error: Mes debe ser 1-12 y Año debe tener 4 digitos"); //00083723 Muestra un mensaje de error
@@ -182,10 +190,12 @@ public class ReportesController { //00083723 Controlador para gestionar reportes
         double totalGastado = 0; //00083723 Inicializa el total gastado
 
         try (Connection connection = conexion.conectar()) { //00083723 Conecta a la base de datos
-            String query = "SELECT SUM(c.montoTotal) as totalGastado " +
-                    "FROM tbCompra c " +
-                    "JOIN tbTarjeta t ON c.idTarjeta = t.id " +
-                    "WHERE t.idCliente = ? AND MONTH(c.fechaCompra) = ? AND YEAR(c.fechaCompra) = ?"; //00083723 Consulta SQL para obtener el total gastado por el cliente
+            String query = "SELECT SUM(c.montoTotal) as totalGastado, cl.nombre as nombre, cl.apellido as apellido "+
+            "FROM tbCompra c " +
+            "JOIN tbTarjeta t ON c.idTarjeta = t.id " +
+            "JOIN tbCliente cl ON cl.id = t.idCliente " +
+            "WHERE t.idCliente = ? AND MONTH(c.fechaCompra) = ? AND YEAR(c.fechaCompra) = ? " +
+            "order by cl.nombre, cl.apellido;"; //00083723 Consulta SQL para obtener el total gastado, el nombre y el apellido por el cliente
             PreparedStatement ps = connection.prepareStatement(query); //00083723 Prepara la consulta
             ps.setInt(1, clientId); //00083723 Asigna el ID del cliente
             ps.setInt(2, mes); //00083723 Asigna el mes
@@ -194,12 +204,16 @@ public class ReportesController { //00083723 Controlador para gestionar reportes
 
             if (rs.next()) { //00083723 Verifica si hay resultados
                 totalGastado = rs.getDouble("totalGastado"); //00083723 Obtiene el total gastado
+                nombreCliente = rs.getString("nombre");
+                apellidoCliente = rs.getString("apellido");
             }
+
         } catch (SQLException e) { //00083723 Captura las excepciones SQL
             e.printStackTrace(); //00083723 Imprime la pila de errores
         }
 
         lblTotalGastadoB.setText("Total Gastado: $" + totalGastado); //00083723 Muestra el total gastado
+        generarReporteB(anio, mes, totalGastado, nombreCliente, apellidoCliente);
     }
 
     @FXML //00083723 Metodo para mostrar las tarjetas asociadas en el reporte C
@@ -225,7 +239,6 @@ public class ReportesController { //00083723 Controlador para gestionar reportes
                     tarjetasDebito.append(tarjetaOcultada).append("\n"); //00083723 Agrega la tarjeta al StringBuilder de tarjetas de debito
                 }
             }
-
             if (tarjetasCredito.length() == 0) { //00083723 Si no hay tarjetas de credito
                 tarjetasCredito.append("N/A"); //00083723 Agrega N/A
             }
@@ -267,10 +280,162 @@ public class ReportesController { //00083723 Controlador para gestionar reportes
                         rs.getInt("cantidadCompras") //00083723 Cantidad de compras
                 ));
             }
+            generarReporteD(compras);
         } catch (SQLException e) { //00083723 Captura las excepciones SQL
             e.printStackTrace(); //00083723 Imprime la pila de errores
         }
 
         tbClientesFacilitadorD.setItems(compras); //00083723 Asigna la lista de compras al TableView
     }
+
+    private void generarReporteA(ObservableList<CompraCustom> compras){ // 00107223 Función que genera los reportes A, recibe el listado de compras que va a estar Imprimiendo.
+        String fechaHoraActual = new SimpleDateFormat("yyyy_MM_dd_HH_mm_ss").format(Calendar.getInstance().getTime()); // 00107223 obtengo la fecha y hora en el momento que se llama la función para asignársela al nombre
+        String rutaArchivo = reportesRuta + "/A"+fechaHoraActual+".txt"; // 00107223 se genera el la ruta junto al nombre completo del archivo
+        int contador = 1; // 00107223 contador que servirá para diferenciar con más facilidad las diferentes compras
+        try{ // 00107223 Try necesario para la creación de archivos
+            File reporteA = new File(rutaArchivo); // 00107223 se crea el objeto File y se le asigna la ruta en la que este operará
+
+            reporteA.createNewFile(); // 00107223 se crea el archivo
+
+            FileWriter escritor = new FileWriter(rutaArchivo); // 00107223 se crea el objeto FileWriter que modificara el archivo
+
+            escritor.write("=== REPORTE A ====\n"); // 00107223 se le da un título al reporte
+            for (CompraCustom compra : compras){ // 00107223 un bucle foreach para que se imprima la información pertinente de cada compra
+                escritor.write("=================\n"); // 00107223 separador entre compras
+                escritor.write("Numero Cliente #"+contador+":\n"); // 00107223 se imprime el numero de la compra
+                escritor.write("N° de compra: #"+compra.getIdCompra()+"\n"); // 00107223 se imprime el ID de la compra
+                escritor.write("Monto total: $"+compra.getMonto()+"\n"); // 00107223 se imprime el monto total de la compra
+                escritor.write("Fecha de compra: "+compra.getFecha()+"\n"); // 00107223 se imprime la fecha en que se realizó la compra
+                escritor.write("Descripción de compra:"+compra.getDescripcion()+"\n"); // 00107223 se imprime la descripción de la compra
+                escritor.write("=================\n"); // 00107223 separador entre compras
+
+                contador++; // 00107223 se aumenta al contador
+            }
+
+            escritor.close(); // 00107223 Se cierra el escritor
+
+        } catch (IOException e){ // 00107223 catch necesario para la creación de archivos, captura todos los errores a la hora de manejar el archivo
+            System.out.println("Error al crear el generar reporte:" + e); // 00107223 se imprime el mensaje de error
+        }
+    }
+
+    private void generarReporteB(int anio, int mes, double monto ,String nombre, String apellido){
+        String fechaHoraActual = new SimpleDateFormat("yyyy_MM_dd_HH_mm_ss").format(Calendar.getInstance().getTime()); // 00107223 obtengo la fecha y hora en el momento que se llama la función para asignársela al nombre
+        String rutaArchivo = reportesRuta + "/B"+fechaHoraActual+".txt"; // 00107223 se genera el la ruta junto al nombre completo del archivo
+        String nombreMes = stringifyMes(mes); // 00107223 el nombre del mes para mejor legibilidad
+
+        try{ // 00107223 Try necesario para la creación de archivos
+            File reporteA = new File(rutaArchivo); // 00107223 se crea el objeto File y se le asigna la ruta en la que este operará
+
+            reporteA.createNewFile(); // 00107223 se crea el archivo
+
+            FileWriter escritor = new FileWriter(rutaArchivo); // 00107223 se crea el objeto FileWriter que modificara el archivo
+
+            escritor.write("=== REPORTE B ====\n"); // 00107223 se le da un título al reporte
+            escritor.write("===========================\n"); // 00107223 separador estetico
+            escritor.write("Fecha("+anio+"/"+mes+")" + " Cliente: " + nombre + " " + apellido + "\n"); //00107223 impresion de datos del cliente
+            escritor.write("Monto Total Gastado en el mes de "+nombreMes+": $" +monto +"\n"); //00107223 impresion de los gatos por el mes
+            escritor.write("===========================\n"); // 00107223 separador estetico
+
+            escritor.close(); // 00107223 Se cierra el escritor
+
+        } catch (IOException e){ // 00107223 catch necesario para la creación de archivos, captura todos los errores a la hora de manejar el archivo
+            System.out.println("Error al crear el generar reporte:" + e); // 00107223 se imprime el mensaje de error
+        }
+    }
+
+    private void generarReporteC(String tarjeta, String tipoTajera, ){
+        String fechaHoraActual = new SimpleDateFormat("yyyy_MM_dd_HH_mm_ss").format(Calendar.getInstance().getTime()); // 00107223 obtengo la fecha y hora en el momento que se llama la función para asignársela al nombre
+        String rutaArchivo = reportesRuta + "/C"+fechaHoraActual+".txt"; // 00107223 se genera el la ruta junto al nombre completo del archivo
+
+        try{ // 00107223 Try necesario para la creación de archivos
+            File reporteA = new File(rutaArchivo); // 00107223 se crea el objeto File y se le asigna la ruta en la que este operará
+
+            reporteA.createNewFile(); // 00107223 se crea el archivo
+
+            FileWriter escritor = new FileWriter(rutaArchivo); // 00107223 se crea el objeto FileWriter que modificara el archivo
+
+            escritor.write("=== REPORTE C ====\n"); // 00107223 se le da un título al reporte
+
+
+        } catch (IOException e){ // 00107223 catch necesario para la creación de archivos, captura todos los errores a la hora de manejar el archivo
+            System.out.println("Error al crear el generar reporte:" + e); // 00107223 se imprime el mensaje de error
+        }
+    }
+
+    private void generarReporteD(ObservableList<CompraCustom> compras){
+        String fechaHoraActual = new SimpleDateFormat("yyyy_MM_dd_HH_mm_ss").format(Calendar.getInstance().getTime()); // 00107223 obtengo la fecha y hora en el momento que se llama la función para asignársela al nombre
+        String rutaArchivo = reportesRuta + "/D"+fechaHoraActual+".txt"; // 00107223 se genera el la ruta junto al nombre completo del archivo
+        int contador = 1; // 00107223 contador que servirá para diferenciar con más facilidad las diferentes compras
+        try{ // 00107223 Try necesario para la creación de archivos
+            File reporteA = new File(rutaArchivo); // 00107223 se crea el objeto File y se le asigna la ruta en la que este operará
+
+            reporteA.createNewFile(); // 00107223 se crea el archivo
+
+            FileWriter escritor = new FileWriter(rutaArchivo); // 00107223 se crea el objeto FileWriter que modificara el archivo
+
+            escritor.write("=== REPORTE D ====\n"); // 00107223 se le da un título al reporte
+
+            for (CompraCustom compra : compras){
+                escritor.write("=================\n"); // 00107223 separador entre compras
+                escritor.write("Cliente #"+contador+":\n"); // 00107223 se imprime el numero del cliente
+                escritor.write("N° de Cliente: #"+compra.getIdCliente()+"\n"); // 00107223 se imprime el ID del cliente
+                escritor.write("Nombre del Cliente: "+compra.getDescripcion()+"\n"); // 00107223 se imprime el nombre del cliente
+                escritor.write("Total gastado: "+compra.getMonto()+"\n"); // 00107223 se imprime el monto total gastado por el cliente
+                escritor.write("Cantidad de compras:"+compra.getCantidadCompras()+"\n"); // 00107223 se imprime la descripción de la compra
+                escritor.write("=================\n"); // 00107223 separador entre compras
+
+                contador++; // 00107223 se aumenta al contador
+            }
+
+            escritor.close(); // 00107223 Se cierra el escritor
+
+        } catch (IOException e){ // 00107223 catch necesario para la creación de archivos, captura todos los errores a la hora de manejar el archivo
+            System.out.println("Error al crear el generar reporte:" + e); // 00107223 se imprime el mensaje de error
+        }
+    }
+
+    private String stringifyMes(int mes){ // 00107223 el mes de entero a cadena para la impresion en txt
+        String nombreMes; // 00107223 variable cadena que retornara con el nombre del mes
+        switch (mes){ // 00107223 switch para evaluar que mes es mediante su valor numérico
+            case 1:
+                nombreMes = "Enero"; // 00107223 asignarle al mes 1 "Enero"
+                break;
+            case 2:
+                nombreMes = "Febrero"; // 00107223 asignarle al mes 2 "Febrero"
+                break;
+            case 3:
+                nombreMes = "Marzo"; // 00107223 asignarle al mes 3 "Marzo"
+                break;
+            case 4:
+                nombreMes = "Abril"; // 00107223 asignarle al mes 4 "Abril"
+                break;
+            case 5:
+                nombreMes = "Mayo"; // 00107223 asignarle al mes 5 "Mayo"
+                break;
+            case 6:
+                nombreMes = "Junio"; // 00107223 asignarle al mes 6 "Junio"
+                break;
+            case 7:
+                nombreMes = "Julio"; // 00107223 asignarle al mes 7 "Julio"
+                break;
+            case 8:
+                nombreMes = "Agosto"; // 00107223 asignarle al mes 8 "Agosto"
+                break;
+            case 9:
+                nombreMes = "Septiembre"; // 00107223 asignarle al mes 9 "Septiembre"
+                break;
+            case 10:
+                nombreMes = "Octubre"; // 00107223 asignarle al mes 10 "Octubre"
+                break;
+            case 11:
+                nombreMes = "Noviembre"; // 00107223 asignarle al mes 11 "Noviembre"
+                break;
+            default:
+                nombreMes = "Diciembre"; // 00107223 asignarle al mes restante (12) "Diciembre"
+                break;
+        }
+        return nombreMes; // 00107223 se retorna la cadena del mes
+    }
+
 }

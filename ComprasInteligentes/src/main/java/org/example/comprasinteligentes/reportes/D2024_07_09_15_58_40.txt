@@ -1,0 +1,15 @@
+=== REPORTE D ====
+=================
+Cliente #1:
+N° de Cliente: #1
+Nombre del Cliente: Daniel Manuel Martinez Lopez
+Total gastado: 250.0
+Cantidad de compras:2
+=================
+=================
+Cliente #1:
+N° de Cliente: #3
+Nombre del Cliente: Marco Luis Lopez Reyes
+Total gastado: 8.56
+Cantidad de compras:1
+=================

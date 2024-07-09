@@ -1,4 +1,5 @@
 create database dbComprasInteligentes;
+drop database dbComprasInteligentes;
 
 use dbComprasInteligentes;
 
@@ -18,7 +19,7 @@ create table tbCliente(
 
 create table tbTarjeta(
 	id int primary key auto_increment,
-    numeroTarjeta char(15) not null,
+    numeroTarjeta char(19) not null,
     fechaExpiracion date not null,
     tipo varchar(10) not null,    
     idFacilitador int not null,
@@ -38,3 +39,6 @@ create table tbCompra(
     index(idTarjeta),
     foreign key (idTarjeta) references tbTarjeta(id)
 );
+
+
+insert into tbFacilitador (facilitador) values ("mastercard"), ("visa"), ("promerica")

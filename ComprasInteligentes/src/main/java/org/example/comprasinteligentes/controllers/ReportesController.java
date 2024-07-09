@@ -8,8 +8,14 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
+import javafx.stage.Stage;
+import org.example.comprasinteligentes.Alerts;
 import org.example.comprasinteligentes.Conexion;
+import org.example.comprasinteligentes.OpenWindows;
 import org.example.comprasinteligentes.clases.CompraCustom;
+import org.example.comprasinteligentes.views.ClienteApplication;
+import org.example.comprasinteligentes.views.ReporteApplication;
+import org.example.comprasinteligentes.views.TarjetaApplication;
 
 import java.sql.Connection;
 import java.sql.Date;
@@ -272,5 +278,20 @@ public class ReportesController { //00083723 Controlador para gestionar reportes
         }
 
         tbClientesFacilitadorD.setItems(compras); //00083723 Asigna la lista de compras al TableView
+    }
+
+    @FXML
+    private void onBtnClientesClick() { // 00016623 Método para manejar el evento de click en el botón de btnClientes del menu,
+        OpenWindows.openWindow(tbClientesFacilitadorD, 1);// 00016623 llamando método utilitario para abrir ventanas
+    }
+
+    @FXML
+    private void onBtnTarjetasClick() { // 00016623 Método para manejar el evento de click en el botón de Reporte,
+        OpenWindows.openWindow(tbClientesFacilitadorD, 4);// 00016623 llamando método utilitario para abrir ventanas
+    }
+
+    @FXML
+    private void onBtnComprasClick() { // 00016623 Método para manejar el evento de click en el botón de Reporte,
+        OpenWindows.openWindow(tbClientesFacilitadorD, 2);// 00016623 llamando método utilitario para abrir ventanas
     }
 }

@@ -26,6 +26,11 @@ public class Tarjeta { // 00068223 Creacion de la clase Tarjeta para poder gesti
         this.tipo = tipo; // 00016623 Asigna el tipo de tarjeta
     }
 
+    public Tarjeta(String numeroTarjeta, String tipo){ // 00107723 Constructor para su aplicación en la generación del Reporte C
+        this.numeroTarjeta = numeroTarjeta; // 00017223 Asigna el número censurado de la tarjeta
+        this.tipo = tipo; // 00107223 asigna el tipo de tarjeta
+    }
+
     public int getId() {
         return id; // 00068223 Retorna el valor del atributo id
     }

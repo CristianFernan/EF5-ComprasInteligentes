@@ -13,6 +13,7 @@ import org.example.comprasinteligentes.Alerts;
 import org.example.comprasinteligentes.Conexion;
 import org.example.comprasinteligentes.OpenWindows;
 import org.example.comprasinteligentes.clases.CompraCustom;
+import org.example.comprasinteligentes.clases.Tarjeta;
 import org.example.comprasinteligentes.views.ClienteApplication;
 import org.example.comprasinteligentes.views.ReporteApplication;
 import org.example.comprasinteligentes.views.TarjetaApplication;
@@ -219,7 +220,7 @@ public class ReportesController { //00083723 Controlador para gestionar reportes
         }
 
         lblTotalGastadoB.setText("Total Gastado: $" + totalGastado); //00083723 Muestra el total gastado
-        generarReporteB(anio, mes, totalGastado, nombreCliente, apellidoCliente);
+        generarReporteB(anio, mes, totalGastado, nombreCliente, apellidoCliente); // 00107223 Llamar la función que imprime los resultados en un .txt
     }
 
     @FXML //00083723 Metodo para mostrar las tarjetas asociadas en el reporte C
@@ -227,6 +228,8 @@ public class ReportesController { //00083723 Controlador para gestionar reportes
         int clientId = Integer.parseInt(cmbClienteC.getValue().split(" - ")[0]); //00083723 Obtiene el ID del cliente seleccionado
         StringBuilder tarjetasCredito = new StringBuilder(); //00083723 Inicializa el StringBuilder para tarjetas de credito
         StringBuilder tarjetasDebito = new StringBuilder(); //00083723 Inicializa el StringBuilder para tarjetas de debito
+
+        ObservableList<Tarjeta> tarjetas = FXCollections.observableArrayList();;
 
         try (Connection connection = conexion.conectar()) { //00083723 Conecta a la base de datos
             String query = "SELECT numeroTarjeta, tipo FROM tbTarjeta WHERE idCliente = ?"; //00083723 Consulta SQL para obtener las tarjetas del cliente
@@ -239,11 +242,14 @@ public class ReportesController { //00083723 Controlador para gestionar reportes
                 String tipo = rs.getString("tipo"); //00083723 Obtiene el tipo de la tarjeta
                 String tarjetaOcultada = "XXXX XXXX XXXX " + tarjeta.substring(tarjeta.length() - 4); //00083723 Oculta parte del numero de la tarjeta
 
+                tarjetas.add( new Tarjeta(tarjetaOcultada, tipo));
+
                 if (tipo.equals("Credito")) { //00083723 Si la tarjeta es de credito
                     tarjetasCredito.append(tarjetaOcultada).append("\n"); //00083723 Agrega la tarjeta al StringBuilder de tarjetas de credito
                 } else { //00083723 Si la tarjeta es de debito
                     tarjetasDebito.append(tarjetaOcultada).append("\n"); //00083723 Agrega la tarjeta al StringBuilder de tarjetas de debito
                 }
+
             }
             if (tarjetasCredito.length() == 0) { //00083723 Si no hay tarjetas de credito
                 tarjetasCredito.append("N/A"); //00083723 Agrega N/A
@@ -252,6 +258,8 @@ public class ReportesController { //00083723 Controlador para gestionar reportes
             if (tarjetasDebito.length() == 0) { //00083723 Si no hay tarjetas de debito
                 tarjetasDebito.append("N/A"); //00083723 Agrega N/A
             }
+
+            generarReporteC(tarjetas); // 00107223 Llamar la función que imprime los resultados en un .txt
 
             txtAreaTarjetasClienteC.setText("Tarjetas de credito:\n" + tarjetasCredito + "\nTarjetas de debito:\n" + tarjetasDebito); //00083723 Muestra las tarjetas en el TextArea
         } catch (SQLException e) { //00083723 Captura las excepciones SQL
@@ -286,7 +294,7 @@ public class ReportesController { //00083723 Controlador para gestionar reportes
                         rs.getInt("cantidadCompras") //00083723 Cantidad de compras
                 ));
             }
-            generarReporteD(compras);
+            generarReporteD(compras); // 00107223 Llamar la función que imprime los resultados en un .txt
         } catch (SQLException e) { //00083723 Captura las excepciones SQL
             e.printStackTrace(); //00083723 Imprime la pila de errores
         }
@@ -325,7 +333,7 @@ public class ReportesController { //00083723 Controlador para gestionar reportes
         }
     }
 
-    private void generarReporteB(int anio, int mes, double monto ,String nombre, String apellido){
+    private void generarReporteB(int anio, int mes, double monto ,String nombre, String apellido){ // 00107223  Función que genera los reportes B, recibe, el año y mes de la consulta, el nombre y apellido del cliente y el monto total que ha gastado en ese periodo de tiempo
         String fechaHoraActual = new SimpleDateFormat("yyyy_MM_dd_HH_mm_ss").format(Calendar.getInstance().getTime()); // 00107223 obtengo la fecha y hora en el momento que se llama la función para asignársela al nombre
         String rutaArchivo = reportesRuta + "/B"+fechaHoraActual+".txt"; // 00107223 se genera el la ruta junto al nombre completo del archivo
         String nombreMes = stringifyMes(mes); // 00107223 el nombre del mes para mejor legibilidad
@@ -350,10 +358,11 @@ public class ReportesController { //00083723 Controlador para gestionar reportes
         }
     }
 
-    private void generarReporteC(){
+    private void generarReporteC(ObservableList<Tarjeta> tarjetas){
         String fechaHoraActual = new SimpleDateFormat("yyyy_MM_dd_HH_mm_ss").format(Calendar.getInstance().getTime()); // 00107223 obtengo la fecha y hora en el momento que se llama la función para asignársela al nombre
         String rutaArchivo = reportesRuta + "/C"+fechaHoraActual+".txt"; // 00107223 se genera el la ruta junto al nombre completo del archivo
-
+        int contadorCredito = 0; // 00107223 Contador de las tarjetas de crédito que posee el cliente
+        int contadorDebito = 0; // 00107223 Contador de las tarjetas de dédito que posee el cliente
         try{ // 00107223 Try necesario para la creación de archivos
             File reporteA = new File(rutaArchivo); // 00107223 se crea el objeto File y se le asigna la ruta en la que este operará
 
@@ -362,8 +371,30 @@ public class ReportesController { //00083723 Controlador para gestionar reportes
             FileWriter escritor = new FileWriter(rutaArchivo); // 00107223 se crea el objeto FileWriter que modificara el archivo
 
             escritor.write("=== REPORTE C ====\n"); // 00107223 se le da un título al reporte
+            escritor.write("Tárjetas de Crédito:\n"); // 00107223 Imprime el título de las tarjetas de crédito
+            for (Tarjeta tarjeta : tarjetas){ // 00107223 un bucle foreach para evaluar si el cliente posee una tarjeta de crédito y si es asi que la imprima
+                if (tarjeta.getTipo().equalsIgnoreCase("CREDITO")){ // 00107223 condicional que evaluá si el tipo coincide con crédito el ignoreCase es para que no le importe si el tipo posee Mayúsculas o Minúsculas
+                    contadorCredito++; // 00107223 se aumenta en uno el contador de tarjeta de crédito
+                    escritor.write("\t"+tarjeta.getNumeroTarjeta()+"\n"); // 00107223 se le da un título al reporte
+                }
+            }
+            if (contadorCredito == 0){ // 00107223 si no hubo ninguna tarjeta de ese tipo entonces se imprime N/A
+                escritor.write("\tN/A\n"); // 00107223 Impresion  de N/A
 
+            }
+            escritor.write("Tárjetas de Dédito:\n"); // 00107223 Imprime el título de las tarjetas de dédito
+            for (Tarjeta tarjeta : tarjetas){ // 00107223 un bucle foreach para evaluar si el cliente posee una tarjeta de crédito y si es asi que la imprima
+                if (tarjeta.getTipo().equalsIgnoreCase("DEBITO")){  // 00107223 condicional que evaluá si el tipo coincide con crédito el ignoreCase es para que no le importe si el tipo posee Mayúsculas o Minúsculas
+                    contadorDebito++; // 00107223 se aumenta en uno el contador de tarjeta de débito
+                    escritor.write("\t"+tarjeta.getNumeroTarjeta()+"\n"); // 00107223 se le da un título al reporte
+                }
+            }
+            if (contadorDebito == 0){ // 00107223 si no hubo ninguna tarjeta de ese tipo entonces se imprime N/A
+                escritor.write("\tN/A\n"); // 00107223 Impresion  de N/A
 
+            }
+
+            escritor.close(); // 00107223 Se cierra el escritor
         } catch (IOException e){ // 00107223 catch necesario para la creación de archivos, captura todos los errores a la hora de manejar el archivo
             System.out.println("Error al crear el generar reporte:" + e); // 00107223 se imprime el mensaje de error
         }

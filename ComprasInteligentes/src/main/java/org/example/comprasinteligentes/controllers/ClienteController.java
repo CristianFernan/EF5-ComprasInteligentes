@@ -155,6 +155,7 @@ public class ClienteController {
         apellido.setCellValueFactory(new PropertyValueFactory<Cliente, String>("apellido")); // 00107223 Asignarle una value factory a la columna para que utilice el atributo apellido para guardarlos
         numeroTelefono.setCellValueFactory(new PropertyValueFactory<Cliente, String>("numeroTelefono")); // 00107223 Asignarle una value factory a la columna para que utilice el atributo numero telefono para guardarlos
         direccion.setCellValueFactory(new PropertyValueFactory<Cliente, String>("direccion")); // 00107223 Asignarle una value factory a la columna para que utilice el atributo direccion para guardarlos
+        identificador.setCellValueFactory(new PropertyValueFactory<Cliente, String>("id")); // 00107223 asignarle una value factory a la columna para que utilize el atributo id para guardarlos
         telefonoValidacion(); // 00107223 Llamada a la validacion del txtTelefono
         idValidacion(); // 00107223 Llamada a la validacion del txtIDCliente
     }

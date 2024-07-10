@@ -1,122 +1,115 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.geometry.Insets?>
-<?import javafx.scene.control.Button?>
-<?import javafx.scene.control.ComboBox?>
-<?import javafx.scene.control.DatePicker?>
-<?import javafx.scene.control.Label?>
-<?import javafx.scene.control.MenuButton?>
-<?import javafx.scene.control.MenuItem?>
-<?import javafx.scene.control.TableColumn?>
-<?import javafx.scene.control.TableView?>
-<?import javafx.scene.control.TextField?>
-<?import javafx.scene.layout.HBox?>
-<?import javafx.scene.layout.VBox?>
-<?import javafx.scene.text.Font?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
 
-<VBox fx:id="vBoxID" alignment="CENTER" prefHeight="552.0" prefWidth="575.0" spacing="20.0" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.comprasinteligentes.controllers.TarjetaController">
-    <padding>
-        <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
+<VBox fx:id="vBoxID" alignment="CENTER" prefHeight="552.0" prefWidth="575.0" spacing="20.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.comprasinteligentes.controllers.TarjetaController"> <!-- 00016623 Define un VBox con alineación central, altura y anchura preferidas, espacio entre nodos, y el controlador -->
+    <padding> <!-- 00016623 Define el padding del VBox -->
+        <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" /> <!-- 00016623 Define los márgenes internos del VBox -->
     </padding>
-    <children>
-        <Label text="Gestionar Tarjeta">
-            <font>
-                <Font name="System Bold" size="18.0" />
+    <children> <!-- 00016623 Contenedor para los elementos hijos del VBox -->
+        <Label text="Gestionar Tarjeta"> <!-- 00016623 Etiqueta de texto "Gestionar Tarjeta" -->
+            <font> <!-- 00016623 Define la fuente para la etiqueta -->
+                <Font name="System Bold" size="18.0" /> <!-- 00016623 Fuente en negrita de tamaño 18 -->
             </font>
         </Label>
-        <HBox fx:id="hBoxID" prefHeight="151.0" prefWidth="535.0">
-            <children>
-                <VBox fx:id="vBoxID1" prefHeight="139.0" prefWidth="267.0">
-                    <children>
-                        <HBox fx:id="hBoxId1" alignment="CENTER_LEFT" prefHeight="67.0" prefWidth="244.0">
-                            <children>
-                                <Label fx:id="lblNumTarjeta" prefHeight="17.0" prefWidth="113.0" text="Número Tarjeta:" />
-                                <TextField fx:id="txtNumeroTarjeta" prefHeight="26.0" prefWidth="165.0" promptText="XXXX-XXXX-XXXX-XXXX">
-                                    <HBox.margin>
-                                        <Insets left="20.0" />
+        <HBox fx:id="hBoxID" prefHeight="151.0" prefWidth="535.0"> <!-- 00016623 Define un HBox con altura y anchura preferidas -->
+            <children> <!-- 00016623 Contenedor para los elementos hijos del HBox -->
+                <VBox fx:id="vBoxID1" prefHeight="139.0" prefWidth="267.0"> <!-- 00016623 Define un VBox con altura y anchura preferidas -->
+                    <children> <!-- 00016623 Contenedor para los elementos hijos del VBox -->
+                        <HBox fx:id="hBoxId1" alignment="CENTER_LEFT" prefHeight="67.0" prefWidth="244.0"> <!-- 00016623 Define un HBox con alineación a la izquierda y altura y anchura preferidas -->
+                            <children> <!-- 00016623 Contenedor para los elementos hijos del HBox -->
+                                <Label fx:id="lblNumTarjeta" prefHeight="17.0" prefWidth="113.0" text="Número Tarjeta:" /> <!-- 00016623 Etiqueta de texto "Número Tarjeta:" con altura y anchura preferidas -->
+                                <TextField fx:id="txtNumeroTarjeta" prefHeight="26.0" prefWidth="165.0" promptText="XXXX-XXXX-XXXX-XXXX"> <!-- 00016623 Campo de texto para el número de tarjeta con altura y anchura preferidas y texto de sugerencia -->
+                                    <HBox.margin> <!-- 00016623 Define los márgenes del HBox -->
+                                        <Insets left="20.0" /> <!-- 00016623 Define un margen izquierdo de 20 -->
                                     </HBox.margin>
                                 </TextField>
                             </children>
                         </HBox>
-                        <HBox fx:id="hBoxId2" alignment="CENTER_LEFT" prefHeight="67.0" prefWidth="244.0">
-                            <children>
-                                <Label fx:id="lblfechaExpiracion" prefHeight="17.0" prefWidth="120.0" text="Fecha Expiración:" />
-                                <DatePicker fx:id="dpFechaExpiracion" editable="false" prefHeight="25.0" prefWidth="165.0" />
+                        <HBox fx:id="hBoxId2" alignment="CENTER_LEFT" prefHeight="67.0" prefWidth="244.0"> <!-- 00016623 Define un HBox con alineación a la izquierda y altura y anchura preferidas -->
+                            <children> <!-- 00016623 Contenedor para los elementos hijos del HBox -->
+                                <Label fx:id="lblfechaExpiracion" prefHeight="17.0" prefWidth="120.0" text="Fecha Expiración:" /> <!-- 00016623 Etiqueta de texto "Fecha Expiración:" con altura y anchura preferidas -->
+                                <DatePicker fx:id="dpFechaExpiracion" editable="false" prefHeight="25.0" prefWidth="165.0" /> <!-- 00016623 DatePicker para seleccionar la fecha de expiración con altura y anchura preferidas y no editable -->
                             </children>
                         </HBox>
-                        <HBox fx:id="hBoxId3" alignment="CENTER_LEFT" prefHeight="67.0" prefWidth="244.0">
-                            <children>
-                                <Label prefHeight="17.0" prefWidth="90.0" text="Facilitador:" />
-                                <ComboBox fx:id="cmbFacilitador" prefHeight="25.0" prefWidth="165.0">
-                                    <HBox.margin>
-                                        <Insets left="20.0" />
+                        <HBox fx:id="hBoxId3" alignment="CENTER_LEFT" prefHeight="67.0" prefWidth="244.0"> <!-- 00016623 Define un HBox con alineación a la izquierda y altura y anchura preferidas -->
+                            <children> <!-- 00016623 Contenedor para los elementos hijos del HBox -->
+                                <Label prefHeight="17.0" prefWidth="90.0" text="Facilitador:" /> <!-- 00016623 Etiqueta de texto "Facilitador:" con altura y anchura preferidas -->
+                                <ComboBox fx:id="cmbFacilitador" prefHeight="25.0" prefWidth="165.0"> <!-- 00016623 ComboBox para seleccionar facilitador con altura y anchura preferidas -->
+                                    <HBox.margin> <!-- 00016623 Define los márgenes del HBox -->
+                                        <Insets left="20.0" /> <!-- 00016623 Define un margen izquierdo de 20 -->
                                     </HBox.margin>
                                 </ComboBox>
                             </children>
                         </HBox>
                     </children>
                 </VBox>
-                <VBox fx:id="vBoxId2" prefHeight="100.0" prefWidth="257.0">
-                    <children>
-                        <HBox alignment="CENTER_LEFT" minWidth="-Infinity" prefHeight="67.0" prefWidth="286.0">
-                            <children>
-                                <Label fx:id="lblNombreCliente" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="17.0" prefWidth="117.0" text="Nombre del cliente:">
-                           <HBox.margin>
-                              <Insets left="20.0" top="-20.0" />
-                           </HBox.margin></Label>
-                        <ComboBox fx:id="cmbNombreCliente" prefHeight="25.0" prefWidth="133.0">
-                           <HBox.margin>
-                              <Insets left="-2.0" top="-15.0" />
-                           </HBox.margin>
-                        </ComboBox>
+                <VBox fx:id="vBoxId2" prefHeight="100.0" prefWidth="257.0"> <!-- 00016623 Define un VBox con altura y anchura preferidas -->
+                    <children> <!-- 00016623 Contenedor para los elementos hijos del VBox -->
+                        <HBox alignment="CENTER_LEFT" minWidth="-Infinity" prefHeight="67.0" prefWidth="286.0"> <!-- 00016623 Define un HBox con alineación a la izquierda, altura y anchura preferidas -->
+                            <children> <!-- 00016623 Contenedor para los elementos hijos del HBox -->
+                                <Label fx:id="lblNombreCliente" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="17.0" prefWidth="117.0" text="Nombre del cliente:"> <!-- 00016623 Etiqueta de texto "Nombre del cliente:" con altura y anchura preferidas -->
+                                    <HBox.margin> <!-- 00016623 Define los márgenes del HBox -->
+                                        <Insets left="20.0" top="-20.0" /> <!-- 00016623 Define un margen izquierdo de 20 y superior de -20 -->
+                                    </HBox.margin>
+                                </Label>
+                                <ComboBox fx:id="cmbNombreCliente" prefHeight="25.0" prefWidth="133.0"> <!-- 00016623 ComboBox para seleccionar nombre del cliente con altura y anchura preferidas -->
+                                    <HBox.margin> <!-- 00016623 Define los márgenes del HBox -->
+                                        <Insets left="-2.0" top="-15.0" /> <!-- 00016623 Define un margen izquierdo de -2 y superior de -15 -->
+                                    </HBox.margin>
+                                </ComboBox>
                             </children>
                         </HBox>
-                  <Label fx:id="lblTipoTarjeta" prefHeight="17.0" prefWidth="90.0" text="Tipo de tarjeta:">
-                     <VBox.margin>
-                        <Insets left="20.0" top="-5.0" />
-                     </VBox.margin>
-                  </Label>
-                  <ComboBox fx:id="cmbTipoTarjeta" prefHeight="25.0" prefWidth="134.0">
-                     <VBox.margin>
-                        <Insets left="135.0" top="-20.0" />
-                     </VBox.margin>
-                  </ComboBox>
+                        <Label fx:id="lblTipoTarjeta" prefHeight="17.0" prefWidth="90.0" text="Tipo de tarjeta:"> <!-- 00016623 Etiqueta de texto "Tipo de tarjeta:" con altura y anchura preferidas -->
+                            <VBox.margin> <!-- 00016623 Define los márgenes del VBox -->
+                                <Insets left="20.0" top="-5.0" /> <!-- 00016623 Define un margen izquierdo de 20 y superior de -5 -->
+                            </VBox.margin>
+                        </Label>
+                        <ComboBox fx:id="cmbTipoTarjeta" prefHeight="25.0" prefWidth="134.0"> <!-- 00016623 ComboBox para seleccionar tipo de tarjeta con altura y anchura preferidas -->
+                            <VBox.margin> <!-- 00016623 Define los márgenes del VBox -->
+                                <Insets left="135.0" top="-20.0" /> <!-- 00016623 Define un margen izquierdo de 135 y superior de -20 -->
+                            </VBox.margin>
+                        </ComboBox>
                     </children>
                 </VBox>
             </children>
         </HBox>
-        <HBox fx:id="hBoxId4" alignment="CENTER" prefHeight="65.0" prefWidth="535.0" spacing="15.0">
-            <children>
-                <Button fx:id="btnGuardarTarjeta" mnemonicParsing="false" onAction="#onBtnGuardarTarjetaClick" text="Guardar Tarjeta">
-                    <HBox.margin>
-                        <Insets />
+        <HBox fx:id="hBoxId4" alignment="CENTER" prefHeight="65.0" prefWidth="535.0" spacing="15.0"> <!-- 00016623 Define un HBox con alineación central, altura y anchura preferidas, y espacio entre nodos -->
+            <children> <!-- 00016623 Contenedor para los elementos hijos del HBox -->
+                <Button fx:id="btnGuardarTarjeta" mnemonicParsing="false" onAction="#onBtnGuardarTarjetaClick" styleClass="addBtn" text="Guardar Tarjeta"> <!-- 00016623 Botón para guardar tarjeta -->
+                    <HBox.margin> <!-- 00016623 Define los márgenes del HBox -->
+                        <Insets /> <!-- 00016623 Define márgenes vacíos -->
                     </HBox.margin>
                 </Button>
-                <Button fx:id="btnCargarDatosTarjeta" mnemonicParsing="false" onAction="#onBtnCargarDatosTarjetaClick" text="Cargar Datos">
-                    <HBox.margin>
-                        <Insets />
+                <Button fx:id="btnCargarDatosTarjeta" mnemonicParsing="false" onAction="#onBtnCargarDatosTarjetaClick" styleClass="loadBtn" text="Cargar Datos"> <!-- 00016623 Botón para cargar datos -->
+                    <HBox.margin> <!-- 00016623 Define los márgenes del HBox -->
+                        <Insets /> <!-- 00016623 Define márgenes vacíos -->
                     </HBox.margin>
                 </Button>
-                <Button fx:id="btnLimpiarTarjeta" layoutX="294.0" layoutY="17.0" mnemonicParsing="false" onAction="#onBtnLimpiarTarjetaClick" text="Limpiar" />
+                <Button fx:id="btnLimpiarTarjeta" layoutX="294.0" layoutY="17.0" mnemonicParsing="false" onAction="#onBtnLimpiarTarjetaClick" styleClass="deleteBtn" text="Limpiar" /> <!-- 00016623 Botón para limpiar campos -->
             </children>
         </HBox>
-        <TableView fx:id="tbListadoTarjetas" prefHeight="200.0" prefWidth="535.0">
-            <columns>
-                <TableColumn fx:id="numeroTarjeta" minWidth="90.0" prefWidth="142.6666259765625" text="Número Tarjeta" />
-                <TableColumn fx:id="fechaExpiracion" minWidth="90.0" prefWidth="142.6666259765625" text="Fecha Expiración" />
-                <TableColumn fx:id="facilitador" minWidth="90.0" prefWidth="142.6666259765625" text="Facilitador" />
-                <TableColumn fx:id="cliente" minWidth="90.0" prefWidth="142.6666259765625" text="Cliente" />
+        <TableView fx:id="tbListadoTarjetas" prefHeight="200.0" prefWidth="535.0"> <!-- 00016623 Tabla para listar tarjetas con altura y anchura preferidas -->
+            <columns> <!-- 00016623 Contenedor para las columnas de la tabla -->
+                <TableColumn fx:id="numeroTarjeta" minWidth="90.0" prefWidth="142.6666259765625" text="Número Tarjeta" /> <!-- 00016623 Columna para número de tarjeta con anchura mínima y preferida -->
+                <TableColumn fx:id="fechaExpiracion" minWidth="90.0" prefWidth="142.6666259765625" text="Fecha Expiración" /> <!-- 00016623 Columna para fecha de expiración con anchura mínima y preferida -->
+                <TableColumn fx:id="facilitador" minWidth="90.0" prefWidth="142.6666259765625" text="Facilitador" /> <!-- 00016623 Columna para facilitador con anchura mínima y preferida -->
+                <TableColumn fx:id="cliente" minWidth="90.0" prefWidth="142.6666259765625" text="Cliente" /> <!-- 00016623 Columna para cliente con anchura mínima y preferida -->
             </columns>
-            <columnResizePolicy>
-                <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
+            <columnResizePolicy> <!-- 00016623 Define la política de redimensionamiento de columnas -->
+                <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" /> <!-- 00016623 Política de redimensionamiento restringido para la tabla -->
             </columnResizePolicy>
         </TableView>
-        <VBox fx:id="vBoxId3" alignment="TOP_RIGHT" prefHeight="24.0" prefWidth="535.0">
-            <children>
-                <MenuButton mnemonicParsing="false" text="Menu">
-                    <items>
-                        <MenuItem fx:id="btnClientes" mnemonicParsing="false" onAction="#onBtnClientesClick" text="Clientes" />
-                        <MenuItem fx:id="btnCompras" mnemonicParsing="false" onAction="#onBtnComprasClick" text="Compras" />
+        <VBox fx:id="vBoxId3" alignment="TOP_RIGHT" prefHeight="24.0" prefWidth="535.0"> <!-- 00016623 Define un VBox con alineación a la derecha, altura y anchura preferidas -->
+            <children> <!-- 00016623 Contenedor para los elementos hijos del VBox -->
+                <MenuButton mnemonicParsing="false" text="Menu"> <!-- 00016623 Botón de menú -->
+                    <items> <!-- 00016623 Contenedor para los elementos del menú -->
+                        <MenuItem fx:id="btnClientes" mnemonicParsing="false" onAction="#onBtnClientesClick" text="Clientes" /> <!-- 00016623 Opción del menú para Clientes -->
+                        <MenuItem fx:id="btnCompras" mnemonicParsing="false" onAction="#onBtnComprasClick" text="Compras" /> <!-- 00016623 Opción del menú para Compras -->
+                        <MenuItem fx:id="btnReportes" mnemonicParsing="false" onAction="#onBtnReportesClick" text="Reportes" /><!-- 00016623 Opción del menú para Reportes -->
                     </items>
                 </MenuButton>
             </children>

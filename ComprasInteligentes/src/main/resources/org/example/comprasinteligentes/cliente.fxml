@@ -6,13 +6,13 @@
 <?import javafx.scene.text.*?>
 
 <VBox alignment="CENTER" prefHeight="486.0" prefWidth="575.0" spacing="20.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.comprasinteligentes.controllers.ClienteController">
-    <padding>
-        <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
-    </padding>
+   <padding>
+      <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" /> <!-- 00016623 - Espaciado interior -->
+   </padding>
    <children>
-      <Label text="Gestionar Cliente">
+      <Label text="Gestionar Cliente"> <!-- 00016623 - Título -->
          <font>
-            <Font name="System Bold" size="18.0" />
+            <Font name="System Bold" size="18.0" /> <!-- 00016623 - Fuente y tamaño -->
          </font>
       </Label>
       <HBox prefHeight="201.0" prefWidth="488.0">
@@ -21,30 +21,30 @@
                <children>
                   <HBox alignment="CENTER_LEFT" prefHeight="67.0" prefWidth="244.0">
                      <children>
-                        <Label text="Nombre:" />
+                        <Label text="Nombre:" /> <!-- 00016623 - Etiqueta para nombre -->
                         <TextField fx:id="txtNombre" prefHeight="26.0" prefWidth="165.0">
                            <HBox.margin>
-                              <Insets left="20.0" />
+                              <Insets left="20.0" /> <!-- 00016623 - Margen izquierdo -->
                            </HBox.margin>
                         </TextField>
                      </children>
                   </HBox>
                   <HBox alignment="CENTER_LEFT" prefHeight="67.0" prefWidth="244.0">
                      <children>
-                        <Label text="Apellido:" />
+                        <Label text="Apellido:" /> <!-- 00016623 - Etiqueta para apellido -->
                         <TextField fx:id="txtApellido" prefHeight="26.0" prefWidth="165.0">
                            <HBox.margin>
-                              <Insets left="20.0" />
+                              <Insets left="20.0" /> <!-- 00016623 - Margen izquierdo -->
                            </HBox.margin>
                         </TextField>
                      </children>
                   </HBox>
                   <HBox alignment="CENTER_LEFT" prefHeight="67.0" prefWidth="244.0">
                      <children>
-                        <Label prefHeight="18.0" prefWidth="68.0" text="Telefono:" />
+                        <Label prefHeight="18.0" prefWidth="68.0" text="Telefono:" /> <!-- 00016623 - Etiqueta para teléfono -->
                         <TextField fx:id="txtTelefono" prefHeight="26.0" prefWidth="165.0" promptText="XXXX-XXXX">
                            <HBox.margin>
-                              <Insets />
+                              <Insets /> <!-- 00016623 - Margen -->
                            </HBox.margin>
                         </TextField>
                      </children>
@@ -53,31 +53,31 @@
             </VBox>
             <VBox prefHeight="154.0" prefWidth="278.0">
                <children>
-                  <HBox prefHeight="12.0" prefWidth="258.0" />
+                  <HBox prefHeight="12.0" prefWidth="258.0" /> <!-- 00016623 - Espacio vacío -->
                   <HBox prefHeight="86.0" prefWidth="258.0">
                      <children>
-                        <Label prefHeight="18.0" prefWidth="101.0" text="Direccion:">
+                        <Label prefHeight="18.0" prefWidth="101.0" text="Direccion:"> <!-- 00016623 - Etiqueta para dirección -->
                            <HBox.margin>
-                              <Insets />
+                              <Insets /> <!-- 00016623 - Margen -->
                            </HBox.margin>
                         </Label>
                         <TextArea fx:id="txtDireccion" prefHeight="86.0" prefWidth="243.0">
                            <HBox.margin>
-                              <Insets left="10.0" />
+                              <Insets left="10.0" /> <!-- 00016623 - Margen izquierdo -->
                            </HBox.margin>
                         </TextArea>
                      </children>
                   </HBox>
                   <HBox alignment="BOTTOM_RIGHT" prefHeight="54.0" prefWidth="258.0">
                      <children>
-                        <Button fx:id="btnAgregar" mnemonicParsing="false" onAction="#agregarCliente" text="Agregar Cliente">
+                        <Button fx:id="btnAgregar" mnemonicParsing="false" onAction="#agregarCliente" styleClass="addBtn" text="Agregar Cliente"> <!-- 00016623 - Botón para agregar cliente -->
                            <HBox.margin>
-                              <Insets />
+                              <Insets /> <!-- 00016623 - Margen -->
                            </HBox.margin>
                         </Button>
-                        <Button fx:id="btnDatos" mnemonicParsing="false" onAction="#cargarDatosCliente" text="Cargar Clientes">
+                        <Button fx:id="btnDatos" mnemonicParsing="false" onAction="#cargarDatosCliente" styleClass="loadBtn" text="Cargar Clientes"> <!-- 00016623 - Botón para cargar clientes -->
                            <HBox.margin>
-                              <Insets left="15.0" />
+                              <Insets left="15.0" /> <!-- 00016623 - Margen izquierdo -->
                            </HBox.margin>
                         </Button>
                      </children>
@@ -86,44 +86,46 @@
             </VBox>
          </children>
       </HBox>
-      <Separator prefWidth="200.0" />
+      <Separator prefWidth="200.0" /> <!-- 00016623 - Separador -->
       <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0">
          <children>
-            <Label text="Identificador Cliente:" />
+            <Label text="Identificador Cliente:" /> <!-- 00016623 - Etiqueta para identificador -->
             <TextField fx:id="txtIDCliente">
                <HBox.margin>
-                  <Insets left="10.0" />
+                  <Insets left="10.0" /> <!-- 00016623 - Margen izquierdo -->
                </HBox.margin>
             </TextField>
-            <Button fx:id="btnEliminar" mnemonicParsing="false" onAction="#eliminarCliente" text="Eliminar Cliente">
+            <Button fx:id="btnEliminar" mnemonicParsing="false" onAction="#eliminarCliente" styleClass="deleteBtn" text="Eliminar Cliente"> <!-- 00016623 - Botón para eliminar cliente -->
                <HBox.margin>
-                  <Insets left="50.0" />
+                  <Insets left="50.0" /> <!-- 00016623 - Margen izquierdo -->
                </HBox.margin>
             </Button>
-            <Button fx:id="btnModificar" mnemonicParsing="false" onAction="#modificarCliente" text="Modificar Cliente">
+            <Button fx:id="btnModificar" mnemonicParsing="false" onAction="#modificarCliente" styleClass="loadBtn" text="Modificar Cliente"> <!-- 00016623 - Botón para modificar cliente -->
                <HBox.margin>
-                  <Insets left="10.0" />
+                  <Insets left="10.0" /> <!-- 00016623 - Margen izquierdo -->
                </HBox.margin>
             </Button>
          </children>
       </HBox>
       <TableView fx:id="tbListadoCliente" prefHeight="200.0" prefWidth="200.0">
-        <columns>
-          <TableColumn fx:id="nombre" prefWidth="86.4000244140625" text="Nombre" />
-            <TableColumn fx:id="apellido" prefWidth="75.0" text="Apellido" />
-            <TableColumn fx:id="numeroTelefono" prefWidth="101.5999755859375" text="Num Telefono" />
-           <TableColumn fx:id="direccion" prefWidth="170.4000244140625" text="Direccion" />
-        </columns>
+         <columns>
+            <TableColumn fx:id="identificador" prefWidth="67.19997787475586" text="N Cliente" /> <!-- 00016623 - Columna para identificador -->
+            <TableColumn fx:id="nombre" prefWidth="104.0" text="Nombre" /> <!-- 00016623 - Columna para nombre -->
+            <TableColumn fx:id="apellido" prefWidth="75.0" text="Apellido" /> <!-- 00016623 - Columna para apellido -->
+            <TableColumn fx:id="numeroTelefono" prefWidth="101.5999755859375" text="Num Telefono" /> <!-- 00016623 - Columna para teléfono -->
+            <TableColumn fx:id="direccion" prefWidth="170.4000244140625" text="Direccion" /> <!-- 00016623 - Columna para dirección -->
+         </columns>
          <columnResizePolicy>
-            <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
+            <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" /> <!-- 00016623 - Política de redimensionamiento -->
          </columnResizePolicy>
       </TableView>
       <VBox alignment="TOP_RIGHT" prefHeight="24.0" prefWidth="535.0">
          <children>
             <MenuButton mnemonicParsing="false" text="Menu">
                <items>
-                  <MenuItem fx:id="btnCompras" mnemonicParsing="false" onAction="#onBtnComprasClick" text="Compras" />
-                  <MenuItem fx:id="btnTarjetas" mnemonicParsing="false" onAction="#onBtnTarjetasClick" text="Tarjetas" />
+                  <MenuItem fx:id="btnCompras" mnemonicParsing="false" onAction="#onBtnComprasClick" text="Compras" /> <!-- 00016623 - Elemento de menú para compras -->
+                  <MenuItem fx:id="btnTarjetas" mnemonicParsing="false" onAction="#onBtnTarjetasClick" text="Tarjetas" /> <!-- 00016623 - Elemento de menú para tarjetas -->
+                  <MenuItem fx:id="btnReportes" mnemonicParsing="false" onAction="#onBtnReportesClick" text="Reportes" /> <!-- 00016623 - Elemento de menú para reportes -->
                </items>
             </MenuButton>
          </children>

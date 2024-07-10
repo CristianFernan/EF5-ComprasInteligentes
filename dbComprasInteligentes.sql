@@ -1,4 +1,5 @@
 create database dbComprasInteligentes;
+drop database dbComprasInteligentes;
 
 use dbComprasInteligentes;
 
@@ -46,3 +47,4 @@ create table tbCompra(
 ('Discover'),
 ('JCB'),
 ('Diners Club');
+

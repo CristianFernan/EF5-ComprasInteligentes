@@ -2,23 +2,23 @@ package org.example.comprasinteligentes.controllers;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.fxml.FXML;
-import javafx.scene.control.*;
-import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.fxml.FXML; // 00107223 Librería vital para que se puedan llamar elementos FXML al controlador
+import javafx.scene.control.*; // 00107223 Librería que permite crear objetos de los controles en la vista (button, textField, etc....)
+import javafx.scene.control.cell.PropertyValueFactory; // 00107223 Librería que permite acceder al PropertyValueFactory para insertar datos del objeto cliente a sus respectivas columnas en tableView
+import javafx.collections.ObservableList; // 00107223 Librería que permite acceder a las listas observables útiles para realizar modificaciones a datos ya insertados en tableView
 import javafx.stage.Stage;
 import org.example.comprasinteligentes.Alerts;
-import org.example.comprasinteligentes.Conexion;
-import org.example.comprasinteligentes.clases.Cliente;
-import org.example.comprasinteligentes.views.ClienteApplication;
+import org.example.comprasinteligentes.Conexion; // 00107223 Importar la clase conexión que maneja la conexión con la base de datos
+import org.example.comprasinteligentes.OpenWindows;
+import org.example.comprasinteligentes.clases.Cliente; // 00107223 Importar la clase Cliente, para insertar al tableView y manejar operaciones de tipo Cliente.
 import org.example.comprasinteligentes.views.ComprasApplication;
+import org.example.comprasinteligentes.views.ReporteApplication;
 import org.example.comprasinteligentes.views.TarjetaApplication;
-
 import java.sql.*;
 import java.util.regex.Pattern;
 
 public class ClienteController {
     private static final Conexion conexion = Conexion.getInstance(); // 00107223 Obtenemos instancia unica singleton de conexion
-
     @FXML
     private TextField txtNombre; // 00107223 objeto TextField txtNombre para obtener datos
     @FXML
@@ -39,6 +39,8 @@ public class ClienteController {
     private TableColumn<Cliente, String> numeroTelefono; // 00107223 objeto TableColumn para acceder en el controller
     @FXML
     private TableColumn<Cliente, String> direccion; // 00107223 objeto TableColumn para acceder en el controller
+    @FXML
+    private TableColumn<Cliente, String> identificador; // 00107223 objeto TableColumn para identificar en el controller
 
     @FXML
     private void agregarCliente() { // 00107223 Metodo para agregar un nuevo cliente
@@ -159,7 +161,6 @@ public class ClienteController {
 
     private int buscarCliente(int ID) { // 00107223 Metodo para buscar un cliente en la tabla por su ID
         ObservableList<Cliente> clientes = tbListadoCliente.getItems(); // 00107223 Obtiene la lista de clientes de la tabla
-
         for (Cliente cliente : clientes) {
             if (cliente.getId() == ID) {
                 return clientes.indexOf(cliente); // 00107223 Retorna el indice de la fila del cliente
@@ -210,28 +211,17 @@ public class ClienteController {
     }
 
     @FXML
-    private void onBtnTarjetasClick() { // 00016623 Metodo para manejar el evento de click en el boton de btnTarjetas del menu
-        ((Stage) tbListadoCliente.getScene().getWindow()).close(); // 00016623 Cierra la ventana actual casteando en stage la ventana de la tabla tbListadoCliente
-        try { // 00068223 Inicio del bloque try para manejar excepciones al abrir ventana
-            Stage stage = new Stage(); // 00016623 Crea una nueva instancia de Stage para la nueva ventana
-            TarjetaApplication app = new TarjetaApplication(); // 00016623 Crea una instancia de la aplicacion de Tarjetas
-            app.start(stage); // 00016623 Inicia la aplicacion de Tarjetas en el nuevo Stage
-        } catch (Exception e) { // 00016623 Captura las excepciones que ocurran en el bloque try
-            Alerts.showAlert("Error", "Error al intentar abrir ventana", 3); // 00068223 Muestra una alerta en caso de error
-            System.out.println("No se pudo abrir la ventana de tareas, " + e.getMessage()); // 00068223 Imprime el mensaje de error en la consola
-        }
+    private void onBtnTarjetasClick() { // 00016623 Método para manejar el evento de click en el botón de btnTarjetas del menu,
+        OpenWindows.openWindow(tbListadoCliente, 4);// 00016623 llamando método utilitario para abrir ventanas
     }
 
     @FXML
-    private void onBtnComprasClick() { // 00016623 Metodo para manejar el evento de click en el boton de Compras
-        ((Stage) tbListadoCliente.getScene().getWindow()).close(); // 00016623 Cierra la ventana actual casteando en stage la ventana de la tabla tbListadoCliente
-        try { // 00068223 Inicio del bloque try para manejar excepciones al abrir ventana
-            Stage stage = new Stage(); // 00016623 Crea una nueva instancia de Stage para la nueva ventana
-            ComprasApplication app = new ComprasApplication(); // 00016623 Crea una instancia de la aplicacion de Compras
-            app.start(stage); // 00016623 Inicia la aplicacion de Compras en el nuevo Stage
-        } catch (Exception e) { // 00016623 Captura las excepciones que ocurran en el bloque try
-            Alerts.showAlert("Error", "Error al intentar abrir ventana", 3); // 00068223 Muestra una alerta en caso de error
-            System.out.println("No se pudo abrir la ventana de tareas, " + e.getMessage()); // 00068223 Imprime el mensaje de error en la consola
-        }
+    private void onBtnComprasClick() { // 00016623 Método para manejar el evento de click en el botón de Compras,
+        OpenWindows.openWindow(tbListadoCliente, 2);// 00016623 llamando método utilitario para abrir ventanas
+    }
+
+    @FXML
+    private void onBtnReportesClick() { // 00016623 Método para manejar el evento de click en el botón de Reporte,
+        OpenWindows.openWindow(tbListadoCliente, 3);// 00016623 llamando método utilitario para abrir ventanas
     }
 }

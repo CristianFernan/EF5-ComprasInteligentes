@@ -15,8 +15,6 @@ import org.example.comprasinteligentes.views.ComprasApplication;
 import org.example.comprasinteligentes.views.ReporteApplication;
 
 import java.sql.*;
-import java.util.function.UnaryOperator;
-import java.util.regex.Pattern;
 
 public class TarjetaController { //00068223 Clase controladora para manejar la logica de las tarjetas
     private static Conexion conexion = Conexion.getInstance(); //00068223 Obtenemos instancia unica singleton de conexion
@@ -65,46 +63,24 @@ public class TarjetaController { //00068223 Clase controladora para manejar la l
     }
 
     private void tarjetaValidacion() { // 00068223 Funcion para la validacion del campo numero tarjeta, siguiendo el patron XXXX-XXXX-XXXX-XXXX
-        Pattern pattern = Pattern.compile("\\d{0,4}-?\\d{0,4}-?\\d{0,4}-?\\d{0,4}"); //00068223 Crear un patron para el textField del numero de tarjeta
-
-        UnaryOperator<TextFormatter.Change> filtro = generarFiltro(pattern); //00068223 Obtener el filtro en base al patron que se busca implementar
-
-        TextFormatter<String> formatter = new TextFormatter<>(filtro); //00068223 Crear un objeto textFormatter para aplicarlo en el txtNumeroTarjeta, este contiene el formato de filtro, que contiene el patron XXXX-XXXX-XXXX-XXXX
-        txtNumeroTarjeta.setTextFormatter(formatter); //00068223 Asignacion del formato ya validado.
-
-        txtNumeroTarjeta.textProperty().addListener((observable, oldValue, newValue) -> { //00068223 Asignacion de un addListener para cada vez que haya un input del teclado aplicar validaciones
-            if ((newValue.length() == 4 || newValue.length() == 9 || newValue.length() == 14) && !newValue.endsWith("-")) { //00068223 Condicional donde si la cadena en el textField ya tiene 4, 9 o 14 digitos, le agrega automaticamente el "-"
-                txtNumeroTarjeta.setText(newValue + "-"); //00068223 insertarle al textField los digitos ya ingresados + el nuevo "-"
-            } else if ((newValue.length() > 4 && newValue.length() < 9 && !newValue.contains("-")) ||
-                    (newValue.length() > 9 && newValue.length() < 14 && !newValue.substring(5).contains("-")) ||
-                    (newValue.length() > 14 && !newValue.substring(10).contains("-"))) { //00068223 Condicional donde valida la entrada
-                txtNumeroTarjeta.setText(formatearNumeroTarjeta(newValue)); //00068223 insertarle al textField los digitos ya ingresados + "-" + los posibles digitos que le sigan
+        txtNumeroTarjeta.setOnKeyReleased(event -> { // 00068223 Añade un listener para cambios en el texto
+            String newValue = txtNumeroTarjeta.getText().replaceAll("-", ""); // 00068223 Elimina los guiones del texto
+            if (!newValue.matches("\\d*")){// 00068223 Verifica si el nuevo valor contiene solo numeros
+                Alerts.showAlert("Error", "Ingrese valores válidos", 3);// 00068223 Muestra un mensaje de error si se ingresan letras
+                txtNumeroTarjeta.clear(); // 00068223 Limpia el campo de numero de tarjeta
+                return; // 00068223 sale del metodo si se ingresan caracteres no validos
             }
+            if (newValue.length() > 16) {
+                Alerts.showAlert("Error", "Usted ha sobrepasado el máximo de dígitos permitidos.", 3); // 00068223 Muestra un mensaje de error si se excede el maximo de digitos permitidos
+                newValue = newValue.substring(0, 16); // 00068223 Elimina los caracteres extra
+            }
+            if (newValue.length() > 4) newValue = newValue.substring(0, 4) + "-" + newValue.substring(4); // 00068223 Añade un guion después de 4 caracteres
+            if (newValue.length() > 9) newValue = newValue.substring(0, 9) + "-" + newValue.substring(9); // 00068223 Añade un guion después de 9 caracteres
+            if (newValue.length() > 14) newValue = newValue.substring(0, 14) + "-" + newValue.substring(14); // 00068223 Añade un guion después de 14 caracteres
+            txtNumeroTarjeta.setText(newValue); // 00068223 Actualiza el texto del campo de texto
+            txtNumeroTarjeta.positionCaret(newValue.length()); // 00068223 Posiciona el cursor al final del texto);
+
         });
-    }
-
-    private UnaryOperator<TextFormatter.Change> generarFiltro(Pattern pattern) { //00068223 Generar filtro para el patron especificado
-        return change -> { //00068223 Crear un objeto de cambio
-            String newText = change.getControlNewText(); //00068223 Obtener el nuevo texto del control
-            if (pattern.matcher(newText).matches()) { //00068223 Validar si el nuevo texto coincide con el patron
-                return change; //00068223 Retornar el cambio si coincide
-            }
-            return null; //00068223 Retornar null si no coincide
-        };
-    }
-
-    private String formatearNumeroTarjeta(String numero) { //00068223 Funcion para formatear el numero de tarjeta
-        StringBuilder sb = new StringBuilder(numero); //00068223 Crear un StringBuilder con el numero de tarjeta
-        if (sb.length() > 4 && sb.charAt(4) != '-') { //00068223 Validar si la longitud es mayor a 4 y el caracter en la posicion 4 no es '-'
-            sb.insert(4, '-'); //00068223 Insertar '-' en la posicion 4
-        }
-        if (sb.length() > 9 && sb.charAt(9) != '-') { //00068223 Validar si la longitud es mayor a 9 y el caracter en la posicion 9 no es '-'
-            sb.insert(9, '-'); //00068223 Insertar '-' en la posicion 9
-        }
-        if (sb.length() > 14 && sb.charAt(14) != '-') { //00068223 Validar si la longitud es mayor a 14 y el caracter en la posicion 14 no es '-'
-            sb.insert(14, '-'); //00068223 Insertar '-' en la posicion 14
-        }
-        return sb.toString(); //00068223 Retornar el numero formateado
     }
 
     private void cargarTiposTarjeta() { //00068223 Funcion para cargar los tipos de tarjeta en el comboBox cmbTipoTarjeta
@@ -119,6 +95,11 @@ public class TarjetaController { //00068223 Clase controladora para manejar la l
             Facilitador facilitador = cmbFacilitador.getValue(); //00068223 Obtener el facilitador seleccionado
             Cliente cliente = cmbNombreCliente.getValue(); //00068223 Obtener el cliente seleccionado
             String tipoTarjeta = cmbTipoTarjeta.getValue(); //00068223 Obtener el tipo de tarjeta seleccionado
+
+            if (tarjetaExiste(numeroTarjeta)){ //00068223 Verifica si la tarjeta ya existe
+                Alerts.showAlert("Error", "Ya existe una tarjeta registrada con este numero", 3); //00068223 Muestra alerta de error si la tarjeta ya existe
+                return; //00068223 Sale del metodo si la tarjeta ya existe
+            }
 
             try { //00068223 Inicio del bloque try para manejar excepciones SQL
                 int result; //00068223 Variable para almacenar el resultado de la ejecucion de la consulta
@@ -147,24 +128,22 @@ public class TarjetaController { //00068223 Clase controladora para manejar la l
             Alerts.showAlert("Campos incompletos", "Favor llenar todos los campos necesarios para la creacion de la tarjeta", 2); //00068223 Muestra alerta de campos incompletos
         }
     }
-
-    private int obtenerClienteId(String nombre) { //00068223 Funcion para obtener el ID del cliente basado en su nombre
-        int id = -1; //00068223 Inicializar el ID del cliente con -1
+    private boolean tarjetaExiste(String numeroTarjeta) { //00068223 Funcion para verificar si una tarjeta ya existe en la base de datos
         try { //00068223 Inicio del bloque try para manejar excepciones SQL
-            PreparedStatement ps = conexion.conectar().prepareStatement("SELECT id FROM tbCliente WHERE CONCAT(nombre, ' ', apellido) = ?"); //00068223 Prepara la consulta SQL para obtener el ID del cliente
-            ps.setString(1, nombre); //00068223 Asigna el nombre del cliente al primer parametro de la consulta
+            PreparedStatement ps = conexion.conectar().prepareStatement("SELECT COUNT(*) FROM tbtarjeta WHERE numeroTarjeta = ?"); //00068223 Prepara la consulta SQL para verificar si la tarjeta ya existe
+            ps.setString(1, numeroTarjeta); //00068223 Asigna el numero de la tarjeta al primer parametro de la consulta
             ResultSet rs = ps.executeQuery(); //00068223 Ejecuta la consulta SQL
-            if (rs.next()){ //00068223 Verifica si se encontraron resultados
-                id = rs.getInt("id"); //00068223 Asigna el ID del cliente al valor obtenido en la consulta
+            if (rs.next() && rs.getInt(1) > 0) { //00068223 Verifica si el resultado de la consulta es mayor a 0
+                return true; //00068223 Retorna verdadero si la tarjeta ya existe
             }
             conexion.cerrarConexion(); //00068223 Cierra la conexion a la base de datos
         } catch (SQLException e) { //00068223 Captura las excepciones SQL que ocurran en el bloque try
-            System.out.println("Error de conexion: " + e); //00068223 Imprime el mensaje de error de conexion en la consola
+            System.out.println("Error de conexion: " + e.getMessage()); //00068223 Imprime el mensaje de error de conexion en la consola
         }
-        return id; //00068223 Retorna el ID del cliente
+        return false; //00068223 Retorna falso si la tarjeta no existe
     }
 
-    private void cargarDatosTarjeta() { //00068223 Funcion para cargar los datos de las tarjetas en la tabla
+        private void cargarDatosTarjeta() { //00068223 Funcion para cargar los datos de las tarjetas en la tabla
         tbListadoTarjetas.getItems().clear(); //00068223 Limpia los elementos de la tabla de tarjetas
         try { //00068223 Inicio del bloque try para manejar excepciones SQL
             Statement st = conexion.conectar().createStatement(); //00068223 Crea una declaracion SQL para ejecutar consultas
@@ -212,10 +191,6 @@ public class TarjetaController { //00068223 Clase controladora para manejar la l
             Alerts.showAlert("Error", "Error de conexion", 3); //00068223 Muestra alerta de error de conexion
             System.out.println("Error de conexion " + e.getMessage()); //00068223 Imprime el mensaje de error de conexion en la consola
         }
-    }
-
-    private void cargarTipoTarjeta(){ //00068223 Funcion para cargar los tipos de tarjeta en el comboBox cmbTipoTarjeta
-        cmbTipoTarjeta.getItems().addAll("Debito", "Credito"); //00068223 Agregar "Debito" y "Credito" al comboBox
     }
 
     private void limpiar() { //00068223 Funcion para limpiar los campos del formulario

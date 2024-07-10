@@ -40,5 +40,11 @@ create table tbCompra(
     foreign key (idTarjeta) references tbTarjeta(id)
 );
 
+ INSERT INTO tbFacilitador (facilitador) VALUES
+('Visa'),
+('MasterCard'),
+('American Express'),
+('Discover'),
+('JCB'),
+('Diners Club');
 
-insert into tbFacilitador (facilitador) values ("mastercard"), ("visa"), ("promerica")

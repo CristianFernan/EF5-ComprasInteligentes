@@ -133,43 +133,49 @@ public class ReportesController { //00083723 Controlador para gestionar reportes
 
     @FXML //00083723 Metodo para buscar compras en el reporte A
     private void onBtnBuscarComprasClick() {
-        int clientId = Integer.parseInt(cmbClienteA.getValue().split(" - ")[0]); //00083723 Obtiene el ID del cliente seleccionado
-        LocalDate fechaInicial = dpFechaInicialA.getValue(); //00083723 Obtiene la fecha inicial
-        LocalDate fechaFinal = dpFechaFinalA.getValue(); //00083723 Obtiene la fecha final
 
-        System.out.println("Cliente ID: " + clientId); //00083723 Imprime el ID del cliente para depuracion
-        System.out.println("Fecha Inicial: " + fechaInicial); //00083723 Imprime la fecha inicial para depuracion
-        System.out.println("Fecha Final: " + fechaFinal); //00083723 Imprime la fecha final para depuracion
+        if(!(dpFechaFinalA.getValue() == null || dpFechaInicialA == null)) {//00083723 Validamos que los datePicker tengan valores
+            int clientId = Integer.parseInt(cmbClienteA.getValue().split(" - ")[0]); //00083723 Obtiene el ID del cliente seleccionado
+            LocalDate fechaInicial = dpFechaInicialA.getValue(); //00083723 Obtiene la fecha inicial
+            LocalDate fechaFinal = dpFechaFinalA.getValue(); //00083723 Obtiene la fecha final
 
-        ObservableList<CompraCustom> compras = FXCollections.observableArrayList(); //00083723 Crea una lista observable para las compras
+            System.out.println("Cliente ID: " + clientId); //00083723 Imprime el ID del cliente para depuracion
+            System.out.println("Fecha Inicial: " + fechaInicial); //00083723 Imprime la fecha inicial para depuracion
+            System.out.println("Fecha Final: " + fechaFinal); //00083723 Imprime la fecha final para depuracion
 
-        try (Connection connection = conexion.conectar()) { //00083723 Conecta a la base de datos
-            String query = "SELECT c.id, c.montoTotal, c.descripcion, c.fechaCompra " +
-                    "FROM tbCompra c " +
-                    "JOIN tbTarjeta t ON c.idTarjeta = t.id " +
-                    "JOIN tbCliente cl ON t.idCliente = cl.id " +
-                    "WHERE t.idCliente = ? AND c.fechaCompra BETWEEN ? AND ?"; //00083723 Consulta SQL para obtener las compras del cliente
-            PreparedStatement ps = connection.prepareStatement(query); //00083723 Prepara la consulta
-            ps.setInt(1, clientId); //00083723 Asigna el ID del cliente
-            ps.setDate(2, Date.valueOf(fechaInicial)); //00083723 Asigna la fecha inicial
-            ps.setDate(3, Date.valueOf(fechaFinal)); //00083723 Asigna la fecha final
-            ResultSet rs = ps.executeQuery(); //00083723 Ejecuta la consulta
+            ObservableList<CompraCustom> compras = FXCollections.observableArrayList(); //00083723 Crea una lista observable para las compras
 
-            while (rs.next()) { //00083723 Recorre los resultados
-                System.out.println("Resultado: " + rs.getInt("id") + ", " + rs.getDouble("montoTotal") + ", " + rs.getString("descripcion") + ", " + rs.getDate("fechaCompra")); //00083723 Imprime los resultados para depuracion
-                compras.add(new CompraCustom( //00083723 Agrega una nueva compra a la lista
-                        rs.getInt("id"), //00083723 ID de la compra
-                        rs.getDouble("montoTotal"), //00083723 Monto de la compra
-                        rs.getString("descripcion"), //00083723 Descripcion de la compra
-                        rs.getDate("fechaCompra") //00083723 Fecha de la compra
-                ));
+            try (Connection connection = conexion.conectar()) { //00083723 Conecta a la base de datos
+                String query = "SELECT c.id, c.montoTotal, c.descripcion, c.fechaCompra " +
+                        "FROM tbCompra c " +
+                        "JOIN tbTarjeta t ON c.idTarjeta = t.id " +
+                        "JOIN tbCliente cl ON t.idCliente = cl.id " +
+                        "WHERE t.idCliente = ? AND c.fechaCompra BETWEEN ? AND ?"; //00083723 Consulta SQL para obtener las compras del cliente
+                PreparedStatement ps = connection.prepareStatement(query); //00083723 Prepara la consulta
+                ps.setInt(1, clientId); //00083723 Asigna el ID del cliente
+                ps.setDate(2, Date.valueOf(fechaInicial)); //00083723 Asigna la fecha inicial
+                ps.setDate(3, Date.valueOf(fechaFinal)); //00083723 Asigna la fecha final
+                ResultSet rs = ps.executeQuery(); //00083723 Ejecuta la consulta
+
+                while (rs.next()) { //00083723 Recorre los resultados
+                    System.out.println("Resultado: " + rs.getInt("id") + ", " + rs.getDouble("montoTotal") + ", " + rs.getString("descripcion") + ", " + rs.getDate("fechaCompra")); //00083723 Imprime los resultados para depuracion
+                    compras.add(new CompraCustom( //00083723 Agrega una nueva compra a la lista
+                            rs.getInt("id"), //00083723 ID de la compra
+                            rs.getDouble("montoTotal"), //00083723 Monto de la compra
+                            rs.getString("descripcion"), //00083723 Descripcion de la compra
+                            rs.getDate("fechaCompra") //00083723 Fecha de la compra
+                    ));
+                }
+                generarReporteA(compras); // 00107223 Llamar la función que imprime los resultados en un .txt
+            } catch (SQLException e) { //00083723 Captura las excepciones SQL
+                e.printStackTrace(); //00083723 Imprime la pila de errores
             }
-            generarReporteA(compras); // 00107223 Llamar la función que imprime los resultados en un .txt
-        } catch (SQLException e) { //00083723 Captura las excepciones SQL
-            e.printStackTrace(); //00083723 Imprime la pila de errores
+
+            tbComprasClienteA.setItems(compras); //00083723 Asigna la lista de compras al TableView
+        } else {
+            Alerts.showAlert("Campos incompletos", "Favor llenar todos los campos necesarios para la generación del Reporte A", 2); //00083723 Muestra alerta de campos incompletos
         }
 
-        tbComprasClienteA.setItems(compras); //00083723 Asigna la lista de compras al TableView
     }
 
     @FXML //00083723 Metodo para calcular el total gastado en el reporte B

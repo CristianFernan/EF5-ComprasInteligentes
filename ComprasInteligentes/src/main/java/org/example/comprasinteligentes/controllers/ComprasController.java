@@ -56,7 +56,15 @@ public class ComprasController{ //00016623 Clase controladora para manejar la l�
     @FXML
     private void onBtnAgregarCompraClick() { //00016623 Función para manejar el evento de click en el botón agregar compra
         if (!txtMonto.getText().isBlank() || !txtADescripcion.getText().isBlank() || cmbTarjeta.getValue() != null || dpFecha.getValue() != null) { // 00016623 Verifica si los campos no están vacíos
-            Compra compra = new Compra(Date.valueOf(dpFecha.getValue()), Double.parseDouble(txtMonto.getText()), txtADescripcion.getText(), cmbTarjeta.getValue()); // 00016623 Crea una nueva instancia de Compra de los datos ingresados
+            Compra compra = null; // 00016623 try para manejar excepciones en valores de textFields
+            try {
+                compra = new Compra(Date.valueOf(dpFecha.getValue()), Double.parseDouble(txtMonto.getText()), txtADescripcion.getText(), cmbTarjeta.getValue()); // 00016623 Crea una nueva instancia de Compra de los datos ingresados
+            } catch (Exception e){//00016623 Captura las excepciones que ocurran en el bloque try
+                Alerts.showAlert("Error", "Datos inválidos, favor verifique que los datos ingresados sean correctos ", 3); //00016623 Muestra alerta de error de datos
+                System.out.println("Error de parsing " + e.getMessage()); // 00016623 Imprime el mensaje de error en la consola
+                limpiar();//00016623 limpiamos los campos de los textfields
+                return;// 00016623 no dejamos que se siga ejecutando el resto del código
+            }
             try { //00016623 Inicio del bloque try para manejar excepciones SQL
                 int result; //00016623 Variable para almacenar el resultado de la ejecución de la consulta
                 PreparedStatement ps = conexion.conectar().prepareStatement("INSERT INTO tbCompra (fechaCompra, montoTotal, descripcion, idTarjeta) VALUES (?,?,?,?)"); // 00016623 Prepara la consulta SQL para insertar una compra
@@ -66,7 +74,7 @@ public class ComprasController{ //00016623 Clase controladora para manejar la l�
                 ps.setInt(4, compra.getTarjeta().getId()); //00016623 Asigna el ID de la tarjeta al cuarto parámetro de la consulta
 
                 result = ps.executeUpdate(); //00016623 Ejecuta la consulta SQL
-                if (result > 0) {
+                if (result > 0) {//00016623 validando ejecución satisfactoria de la consulta mediante el numero de columnas actualizadas
                     Alerts.showAlert("Éxito", "Se ha ingresado la compra satisfactoriamente", 1); //00016623 Muestra alerta de éxito si la inserción fue exitosa
                 } else {
                     Alerts.showAlert("Fracaso", "Ocurrió un error al ingresar la compra", 3); //00016623 Muestra alerta de fracaso si la inserción falló

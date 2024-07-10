@@ -88,8 +88,7 @@ public class ClienteController {
             ps.setInt(1, Integer.parseInt(txtIDCliente.getText())); // 00107223 Asigna el ID del cliente al primer parametro de la consulta
             result = ps.executeUpdate(); // 00107223 Ejecuta la consulta SQL
 
-
-            if (result > 0) {
+            if (result > 0) {//00016623 validando ejecución satisfactoria de la consulta mediante el numero de columnas actualizadas
                 int id = buscarCliente(Integer.parseInt(txtIDCliente.getText())); // 00107223 Busca el cliente en la tabla
                 if (id != -1) {
                     tbListadoCliente.getItems().remove(id); // 00107223 Remueve el cliente de la tabla
@@ -122,7 +121,7 @@ public class ClienteController {
             ps.setInt(5, Integer.parseInt(txtIDCliente.getText())); // 00107223 Asigna el ID del cliente al quinto parametro de la consulta
             result = ps.executeUpdate(); // 00107223 Ejecuta la consulta SQL
 
-            if (result > 0) {
+            if (result > 0) {//00016623 validando ejecución satisfactoria de la consulta mediante el numero de columnas actualizadas
                 int id = buscarCliente(Integer.parseInt(txtIDCliente.getText())); // 00107223 Busca el cliente en la tabla
                 if (id != -1) {
                     Cliente cliente = tbListadoCliente.getItems().get(id); // 00107223 Obtiene el cliente de la tabla
@@ -176,7 +175,7 @@ public class ClienteController {
 
     private int buscarCliente(int ID) { // 00107223 Metodo para buscar un cliente en la tabla por su ID
         ObservableList<Cliente> clientes = tbListadoCliente.getItems(); // 00107223 Obtiene la lista de clientes de la tabla
-        for (Cliente cliente : clientes) {
+        for (Cliente cliente : clientes) { //00107223 recorremos cada cliente de la lista
             if (cliente.getId() == ID) {
                 return clientes.indexOf(cliente); // 00107223 Retorna el indice de la fila del cliente
             }
@@ -185,20 +184,24 @@ public class ClienteController {
     }
     @FXML
     private void obtenerCliente() { // 00107223 Función void, obtiene un ID digitado y realiza una consulta para buscar los datos del cliente relacionado con ese ID.
-        int ID = Integer.parseInt(txtIDCliente.getText());// 00107223 Obtener y convertir a int id de cliente del textField
-        try { // 00107223 try necesario para la conexión a la base de datos
-            Statement st = conexion.conectar().createStatement(); // 00107223 Se crea una sentencia para obtener los datos del cliente por su ID
-            ResultSet rs = st.executeQuery("SELECT ID, NOMBRE, APELLIDO, DIRECCION, NUMEROTELEFONO FROM tbCLIENTE WHERE ID =" + ID + ";"); // 00107223 se obtienen todos los datos del cliente por medio de la ID digitada en txtIDCliente.
+        if(txtIDCliente.getText().isBlank()){
+            Alerts.showAlert("Error", "Debe de ingresar el ID de un cliente para poder obtener su información", 2);// 00016623 mostramos alerta si txtIdCliente esta vacio
+        } else{// 00016623 txtIDCliente sí tiene información
+            int ID = Integer.parseInt(txtIDCliente.getText());// 00107223 Obtener y convertir a int id de cliente del textField
+            try { // 00107223 try necesario para la conexión a la base de datos
+                Statement st = conexion.conectar().createStatement(); // 00107223 Se crea una sentencia para obtener los datos del cliente por su ID
+                ResultSet rs = st.executeQuery("SELECT ID, NOMBRE, APELLIDO, DIRECCION, NUMEROTELEFONO FROM tbCLIENTE WHERE ID =" + ID + ";"); // 00107223 se obtienen todos los datos del cliente por medio de la ID digitada en txtIDCliente.
 
-            if (rs.next()) { // 00107223 Si el resultSet obtuvo un registro entonces realizara las siguientes instrucciones
-                txtNombre.setText(rs.getString("NOMBRE")); // 00107223 colocar el nombre obtenido de la base datos al txtNombre
-                txtApellido.setText(rs.getString("APELLIDO"));  // 00107223 colocar el apellido obtenido de la base datos al txtApellido
-                txtTelefono.setText(rs.getString("NUMEROTELEFONO"));  // 00107223 colocar el número de teléfono obtenido de la base datos al txtTelefono
-                txtDireccion.setText(rs.getString("DIRECCION"));  // 00107223 colocar la dirección obtenida de la base datos al txtDireccion
+                if (rs.next()) { // 00107223 Si el resultSet obtuvo un registro entonces realizara las siguientes instrucciones
+                    txtNombre.setText(rs.getString("NOMBRE")); // 00107223 colocar el nombre obtenido de la base datos al txtNombre
+                    txtApellido.setText(rs.getString("APELLIDO"));  // 00107223 colocar el apellido obtenido de la base datos al txtApellido
+                    txtTelefono.setText(rs.getString("NUMEROTELEFONO"));  // 00107223 colocar el número de teléfono obtenido de la base datos al txtTelefono
+                    txtDireccion.setText(rs.getString("DIRECCION"));  // 00107223 colocar la dirección obtenida de la base datos al txtDireccion
+                }
+                conexion.cerrarConexion(); // 00107223 Cierra la conexion a la base de datos
+            } catch (SQLException e) {
+                System.out.println("error de conexion: " + e); // 00107223 Imprime el mensaje de error de conexion en la consola
             }
-            conexion.cerrarConexion(); // 00107223 Cierra la conexion a la base de datos
-        } catch (SQLException e) {
-            System.out.println("error de conexion: " + e); // 00107223 Imprime el mensaje de error de conexion en la consola
         }
     }
 

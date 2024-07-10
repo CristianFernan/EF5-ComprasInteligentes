@@ -15,18 +15,22 @@
     </properties>
 
     <dependencies>
-        <dependency>
+        <dependency><!-- Dependencia para los controles de javafx-->
             <groupId>org.openjfx</groupId>
             <artifactId>javafx-controls</artifactId>
             <version>17.0.6</version>
         </dependency>
-        <dependency>
+        <dependency><!-- Dependencia para los archivos javax fxml-->
             <groupId>org.openjfx</groupId>
             <artifactId>javafx-fxml</artifactId>
             <version>17.0.6</version>
         </dependency>
 
-
+        <dependency><!-- Dependencia del driver para conexion con mysql-->
+            <groupId>mysql</groupId>
+            <artifactId>mysql-connector-java</artifactId>
+            <version>8.0.25</version>
+        </dependency>
 
         <dependency>
             <groupId>org.junit.jupiter</groupId>

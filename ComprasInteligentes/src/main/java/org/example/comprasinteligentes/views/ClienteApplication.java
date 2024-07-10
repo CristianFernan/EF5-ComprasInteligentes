@@ -7,7 +7,7 @@ import javafx.stage.Stage; // 00107223 Stage para armar la ventana de la escena
 
 import java.io.IOException; // 00107223 Excepciones que puede dar el programa al tratar de correr.
 
-public class ClienteApplication extends Application { // 00107223 Clase cuyo único propósito es correr el programa
+public class ClienteApplication extends Application { // 00107223 Clase principal que extiende de Application para iniciar la aplicación JavaFX
     @Override
     public void start(Stage stage) throws IOException { // 00107223 Función que corre el programa
         FXMLLoader fxmlLoader = new FXMLLoader(ClienteApplication.class.getResource("/org/example/comprasinteligentes/cliente.fxml")); //00107223 Se obtiene la vista, mediante su ruta

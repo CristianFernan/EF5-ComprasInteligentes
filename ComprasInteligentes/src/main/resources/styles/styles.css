@@ -8,29 +8,29 @@ Button {
     -fx-start-margin: 5; /* 00016623 - Margen inicial */
 }
 
-.addBtn {
+.addBtn {/* 00016623 - clase css para botones del tipo agregar */
     -fx-background-color: #519f61; /* 00016623 - Color de fondo */
 }
 
-.addBtn:hover {
+.addBtn:hover {/* 00016623 - hover para botones del tipo agregar */
     -fx-background-color:  #fff; /* 00016623 - Color de fondo al pasar */
     -fx-text-fill: #519f61; /* 00016623 - Color del texto al pasar */
 }
 
-.loadBtn {
+.loadBtn {/* 00016623 - clase css para botones del tipo cargar */
     -fx-background-color: #6096ef; /* 00016623 - Color de fondo */
 }
 
-.loadBtn:hover {
+.loadBtn:hover {/* 00016623 - hover para botones del tipo cargar */
     -fx-background-color: #fff; /* 00016623 - Color de fondo al pasar */
     -fx-text-fill: #6096ef; /* 00016623 - Color del texto al pasar */
 }
 
-.deleteBtn {
+.deleteBtn {/* 00016623 - clase css para botones del tipo borrar o limpiar */
     -fx-background-color: #ea7272; /* 00016623 - Color de fondo */
 }
 
-.deleteBtn:hover {
+.deleteBtn:hover {/* 00016623 - hover para botones del tipo borrar o limpiar */
     -fx-background-color: #fff; /* 00016623 - Color de fondo al pasar */
     -fx-text-fill: #ea7272; /* 00016623 - Color del texto al pasar */
 }

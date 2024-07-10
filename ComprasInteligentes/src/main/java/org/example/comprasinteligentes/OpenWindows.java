@@ -18,19 +18,19 @@ public class OpenWindows { //00016623 Clase utilitaria para mostrar alertas
         //00016623 Abriendo nueva ventana de Compras
         try {//00068223 Inicio del bloque try para manejar excepciones al abrir ventana
             Stage stage = new Stage(); //00016623 Crea una nueva instancia de Stage para la nueva ventana
-            Application app = null;
+            Application app = null; //00016623 seteamos null la application para luego definir el tipo de aplicacion que abriremos
             switch (application){
-                case 1:
-                    app = new ClienteApplication();
+                case 1://00016623 bloque para application 1
+                    app = new ClienteApplication(); //00016623 instancia de ClienteApplication
                     break;
-                case 2:
-                    app = new ComprasApplication();
+                case 2://00016623 bloque para application 2
+                    app = new ComprasApplication();//00016623 instancia de ClienteApplication
                     break;
-                case 3:
-                    app = new ReporteApplication();
+                case 3://00016623 bloque para application 3
+                    app = new ReporteApplication();//00016623 instancia de ClienteApplication
                     break;
-                case 4:
-                    app = new TarjetaApplication();
+                case 4://00016623 bloque para application 1
+                    app = new TarjetaApplication();//00016623 instancia de ClienteApplication
                     break;
             }
             app.start(stage); //00016623 Inicia la aplicación de Compras en el nuevo Stage

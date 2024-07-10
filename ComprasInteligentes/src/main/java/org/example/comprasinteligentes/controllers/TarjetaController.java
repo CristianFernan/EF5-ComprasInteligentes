@@ -70,7 +70,7 @@ public class TarjetaController { //00068223 Clase controladora para manejar la l
                 txtNumeroTarjeta.clear(); // 00068223 Limpia el campo de numero de tarjeta
                 return; // 00068223 sale del metodo si se ingresan caracteres no validos
             }
-            if (newValue.length() > 16) {
+            if (newValue.length() > 16) { // 00068223 Condicional donde se revisa el maximo de digitos posibles
                 Alerts.showAlert("Error", "Usted ha sobrepasado el máximo de dígitos permitidos.", 3); // 00068223 Muestra un mensaje de error si se excede el maximo de digitos permitidos
                 newValue = newValue.substring(0, 16); // 00068223 Elimina los caracteres extra
             }
@@ -166,8 +166,8 @@ public class TarjetaController { //00068223 Clase controladora para manejar la l
             Statement st = conexion.conectar().createStatement(); //00068223 Crea una declaracion SQL para ejecutar consultas
             ResultSet rs = st.executeQuery("SELECT id, nombre, apellido FROM tbCliente"); //00068223 Ejecuta una consulta SQL para obtener los datos de los clientes
             while (rs.next()) { //00068223 Itera sobre los resultados de la consulta
-                String nombre = rs.getString("nombre");
-                String apellido = rs.getString("apellido");
+                String nombre = rs.getString("nombre"); // 00068223 Obtener el nombre del cliente del resultado de la consulta SQL
+                String apellido = rs.getString("apellido"); // 00068223 Obtener el apellido del cliente del resultado de la consulta SQL
                 Cliente cliente = new Cliente(rs.getInt("id"), nombre != null ? nombre : "", apellido != null ? apellido : "", "", ""); //00068223 Crea una nueva instancia de Cliente con los datos obtenidos
                 cmbNombreCliente.getItems().add(cliente); //00068223 Agrega cada cliente al comboBox
             }

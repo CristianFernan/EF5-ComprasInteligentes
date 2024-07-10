@@ -6,7 +6,7 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 import java.io.IOException;
 
-public class TarjetaApplication extends Application {
+public class TarjetaApplication extends Application { // 00068223 Clase principal que extiende de Application para iniciar la aplicacion JavaFX
     @Override // 00068223 Anotacion para sobrescribir el metodo start de la clase Application
     public void start(Stage stage) throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(TarjetaApplication.class.getResource("/org/example/comprasinteligentes/tarjeta.fxml")); // 00068223 Carga el archivo FXML para la interfaz de tarjetas de credito

@@ -58,7 +58,14 @@ public class ClienteController {
             ps.setString(4, cliente.getDireccion()); // 00107223 Asigna la direccion del cliente al cuarto parametro de la consulta
             result = ps.executeUpdate(); // 00107223 Ejecuta la consulta SQL
 
-            if (result > 0) tbListadoCliente.getItems().add(cliente); // 00107223 Si la insercion fue exitosa, agrega el cliente a la tabla
+            if (result > 0){
+                tbListadoCliente.getItems().add(cliente); // 00107223 Si la insercion fue exitosa, agrega el cliente a la tabla
+                Statement st = conexion.conectar().createStatement(); // 00107223 Se crea una sentencia para obtener el identificador del cliente que se acaba de agregar
+                ResultSet rs = st.executeQuery("SELECT ID FROM tbCliente order by ID desc limit 1"); // 00107223 Se obtiene el ID del cliente más reciente (el que colocamos en el CRUD)
+                if (rs.next()){ // 00107223 si se obtuvo ID entonces se ejecuta estas instrucciones
+                    cliente.setId(rs.getInt("ID")); // 00107223 modificar ID del cliente local con el ID de la BD
+                }
+            }
             System.out.println(result > 0 ? "Exito" : "Fracaso"); // 00107223 Imprime el resultado de la insercion en la consola
             limpiar(); // 00107223 Limpia los campos del formulario
             conexion.cerrarConexion(); // 00107223 Cierra la conexion a la base de datos
@@ -155,7 +162,7 @@ public class ClienteController {
         apellido.setCellValueFactory(new PropertyValueFactory<Cliente, String>("apellido")); // 00107223 Asignarle una value factory a la columna para que utilice el atributo apellido para guardarlos
         numeroTelefono.setCellValueFactory(new PropertyValueFactory<Cliente, String>("numeroTelefono")); // 00107223 Asignarle una value factory a la columna para que utilice el atributo numero telefono para guardarlos
         direccion.setCellValueFactory(new PropertyValueFactory<Cliente, String>("direccion")); // 00107223 Asignarle una value factory a la columna para que utilice el atributo direccion para guardarlos
-        identificador.setCellValueFactory(new PropertyValueFactory<Cliente, String>("id")); // 00107223 asignarle una value factory a la columna para que utilize el atributo id para guardarlos
+        identificador.setCellValueFactory(new  PropertyValueFactory<Cliente, String>("id"));// 00107223 Asignarle una value factory a la columna para que utilice el atributo identificador para guardarlos
         telefonoValidacion(); // 00107223 Llamada a la validacion del txtTelefono
         idValidacion(); // 00107223 Llamada a la validacion del txtIDCliente
     }
@@ -169,6 +176,24 @@ public class ClienteController {
         }
         return -1; // 00107223 Retorna un indice fuera de los limites, por lo que no removeria nada
     }
+
+    private void obtenerCliente(int ID) { // 00107223 Función void, obtiene un ID digitado y realiza una consulta para buscar los datos del cliente relacionado con ese ID.
+        try { // 00107223 try necesario para la conexión a la base de datos
+            Statement st = conexion.conectar().createStatement(); // 00107223 Se crea una sentencia para obtener los datos del cliente por su ID
+            ResultSet rs = st.executeQuery("SELECT ID, NOMBRE, APELLIDO, DIRECCION, NUMEROTELEFONO FROM tbCLIENTE WHERE ID =" + ID + ";"); // 00107223 se obtienen todos los datos del cliente por medio de la ID digitada en txtIDCliente.
+
+            if (rs.next()) { // 00107223 Si el resultSet obtuvo un registro entonces realizara las siguientes instrucciones
+                txtNombre.setText(rs.getString("NOMBRE")); // 00107223 colocar el nombre obtenido de la base datos al txtNombre
+                txtApellido.setText(rs.getString("APELLIDO"));  // 00107223 colocar el apellido obtenido de la base datos al txtApellido
+                txtTelefono.setText(rs.getString("NUMEROTELEFONO"));  // 00107223 colocar el número de teléfono obtenido de la base datos al txtTelefono
+                txtDireccion.setText(rs.getString("DIRECCION"));  // 00107223 colocar la dirección obtenida de la base datos al txtDireccion
+            }
+            conexion.cerrarConexion(); // 00107223 Cierra la conexion a la base de datos
+        } catch (SQLException e) {
+            System.out.println("error de conexion: " + e); // 00107223 Imprime el mensaje de error de conexion en la consola
+        }
+    }
+
 
     private void limpiar() { // 00107223 Metodo para limpiar los campos del formulario
         txtTelefono.setText(""); // 00107223 Limpia el campo de texto del numero de telefono
@@ -204,6 +229,9 @@ public class ClienteController {
                 Alerts.showAlert("Error", "Ingrese valores válidos. Solo se permiten dígitos.", 3); // 00068223 Muestra un mensaje de error si se ingresan letras
                 txtIDCliente.clear(); // 00068223 Borra el contenido del campo de texto
             }
+        });
+        txtIDCliente.textProperty().addListener((observable, oldValue, newValue) -> { // 00107223 Crear un addListener que al ingresar un numero llame a la función de obtenerCliente
+            obtenerCliente(Integer.parseInt(txtIDCliente.getText())); // 00107223 se llama a la función que busca al cliente en la Base de datos y llenar los campos para comodidad al modificar/borrar
         });
     }
 

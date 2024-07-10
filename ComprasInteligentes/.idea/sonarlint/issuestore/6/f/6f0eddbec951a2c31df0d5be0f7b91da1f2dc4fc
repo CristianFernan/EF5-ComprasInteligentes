@@ -1,0 +1,57 @@
+
+r
+java:S1192¸"TDefine a constant instead of duplicating this literal "yyyy_MM_dd_HH_mm_ss" 4 times.(ı¯×Ï8Ï”¥×‰2
+
+java:S1192Ò"cDefine a constant instead of duplicating this literal "Error al crear el generar reporte:" 4 times.(µ¹³‘8Ğ”¥×‰2
+d
+java:S1192l"GDefine a constant instead of duplicating this literal "nombre" 3 times.(¹™ó¸8Ğ”¥×‰2
+f
+java:S1192l"IDefine a constant instead of duplicating this literal "apellido" 3 times.(¹™ó¸8Ğ”¥×‰2
+v
+java:S1192Ä"SDefine a constant instead of duplicating this literal "=================
+" 4 times.(ıÄ±‘üÿÿÿÿ8Ğ”¥×‰2
+m
+java:S2095Ô"OUse try-with-resources or close this "PreparedStatement" in a "finally" clause.(€ıóá8µ–¥×‰2
+q
+java:S2095h"OUse try-with-resources or close this "PreparedStatement" in a "finally" clause.(Ğ•ıŞúÿÿÿÿ8Ÿ¦×‰2
+m
+java:S2095š"OUse try-with-resources or close this "PreparedStatement" in a "finally" clause.(€ıóá8µ–¥×‰2
+k
+java:S2095à"HUse try-with-resources or close this "FileWriter" in a "finally" clause.(Ğ°»áûÿÿÿÿ8µ–¥×‰2
+m
+java:S2095ò"OUse try-with-resources or close this "PreparedStatement" in a "finally" clause.(€ıóá8µ–¥×‰2
+k
+java:S2095À"HUse try-with-resources or close this "FileWriter" in a "finally" clause.(Ğ°»áûÿÿÿÿ8µ–¥×‰2
+q
+java:S2095z"OUse try-with-resources or close this "PreparedStatement" in a "finally" clause.(Ğ•ıŞúÿÿÿÿ8µ–¥×‰2
+k
+java:S2095¢"HUse try-with-resources or close this "FileWriter" in a "finally" clause.(Ğ°»áûÿÿÿÿ8µ–¥×‰2
+k
+java:S2095ù"HUse try-with-resources or close this "FileWriter" in a "finally" clause.(Ğ°»áûÿÿÿÿ8µ–¥×‰2
+m
+java:S2095¡"OUse try-with-resources or close this "PreparedStatement" in a "finally" clause.(€ıóá8µ–¥×‰2
+C
+java:S1170#"!Make this final field static too.(‘…ø‹ıÿÿÿÿ8¶–¥×‰2
+U	java:S106~"9Replace this use of System.out or System.err by a logger.(…Ëª8¼–¥×‰2
+U	java:S106"9Replace this use of System.out or System.err by a logger.(×ğï8Æ–¥×‰2
+V	java:S106"9Replace this use of System.out or System.err by a logger.(ƒ…‘ƒ8Ç–¥×‰2
+[	java:S106"9Replace this use of System.out or System.err by a logger.(¥èÇğøÿÿÿÿ8É–¥×‰2
+V	java:S106¡"9Replace this use of System.out or System.err by a logger.(²Åµ8Ê–¥×‰2
+:
+java:S1116î"Remove this empty statement.(Ôá±à8Á–¥×‰2
+d	java:S899¾"BDo something with the "boolean" value returned by "createNewFile".(âùƒ³úÿÿÿÿ8Å–¥×‰2
+V	java:S106Ò"9Replace this use of System.out or System.err by a logger.(µ¹³‘8±¦×‰2
+d	java:S899Ş"BDo something with the "boolean" value returned by "createNewFile".(âùƒ³úÿÿÿÿ8Æ–¥×‰2
+V	java:S106ë"9Replace this use of System.out or System.err by a logger.(µ¹³‘8²¦×‰2
+d	java:S899÷"BDo something with the "boolean" value returned by "createNewFile".(âùƒ³úÿÿÿÿ8È–¥×‰2
+V	java:S106•"9Replace this use of System.out or System.err by a logger.(µ¹³‘8´¦×‰2
+d	java:S899 "BDo something with the "boolean" value returned by "createNewFile".(âùƒ³úÿÿÿÿ8É–¥×‰2
+V	java:S106µ"9Replace this use of System.out or System.err by a logger.(µ¹³‘8µ¦×‰2
+Q
+java:S1128"/Remove this unused import 'javafx.stage.Stage'.(æÄ¸²úÿÿÿÿ8Ë–¥×‰2
+w
+java:S1128"URemove this unused import 'org.example.comprasinteligentes.views.ClienteApplication'.(ïóóùÿÿÿÿ8Ë–¥×‰2
+r
+java:S1128"URemove this unused import 'org.example.comprasinteligentes.views.ReporteApplication'.(¤»Š8Ë–¥×‰2
+r
+java:S1128"URemove this unused import 'org.example.comprasinteligentes.views.TarjetaApplication'.(ó—¶ï8Ë–¥×‰2

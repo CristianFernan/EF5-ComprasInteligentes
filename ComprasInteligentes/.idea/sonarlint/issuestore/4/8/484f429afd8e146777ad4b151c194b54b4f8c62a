@@ -1,0 +1,18 @@
+
+9
+java:S1700"Rename field "conexion"(Œ†¡³üÿÿÿÿ8„”ÅÅ‰2
+Y
+java:S2589"7Remove this expression which always evaluates to "true"(ì•–Óûÿÿÿÿ8ˆ”ÅÅ‰2
+j	java:S116
+"NRename this field "URL" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(ã¬±‹8‰”ÅÅ‰2
+>
+java:S1170
+"!Make this final field static too.(ã¬±‹8‰”ÅÅ‰2
+>
+java:S1170"!Make this final field static too.(†Î›Ì8‰”ÅÅ‰2
+C
+java:S1170"!Make this final field static too.(–Å äøÿÿÿÿ8‰”ÅÅ‰2
+S
+java:S2696"6Make the enclosing method "static" or remove this set.(¶˜×°8Œ”ÅÅ‰2
+S
+java:S6437"6Revoke and change this password, as it is compromised.(¶˜×°8Œ”ÅÅ‰2

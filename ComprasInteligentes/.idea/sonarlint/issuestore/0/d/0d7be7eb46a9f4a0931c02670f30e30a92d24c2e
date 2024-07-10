@@ -1,0 +1,51 @@
+
+p
+java:S1192z"SDefine a constant instead of duplicating this literal "Error de conexion " 3 times.(êÊ§Á8áÆ»Õ‰2
+t
+java:S1192y"RDefine a constant instead of duplicating this literal "Error de conexion" 4 times.(åª–ñùÿÿÿÿ8áÆ»Õ‰2
+h
+java:S1192E"FDefine a constant instead of duplicating this literal "Error" 7 times.(Ïèùÿÿÿÿ8öâùĞ‰2
+i
+java:S11928"LDefine a constant instead of duplicating this literal "facilitador" 3 times.(†ĞÜÄ8öâùĞ‰2
+e
+java:S2095¦"GUse try-with-resources or close this "Statement" in a "finally" clause.(¥ÌÇà8ËãùĞ‰2
+e
+java:S2095·"GUse try-with-resources or close this "Statement" in a "finally" clause.(¥ÌÇà8•È»Õ‰2
+q
+java:S2095j"OUse try-with-resources or close this "PreparedStatement" in a "finally" clause.(ÀÜôûÿÿÿÿ8•È»Õ‰2
+r
+java:S2095…"OUse try-with-resources or close this "PreparedStatement" in a "finally" clause.(öÎ¬Ùøÿÿÿÿ8•È»Õ‰2
+e
+java:S2095•"GUse try-with-resources or close this "Statement" in a "finally" clause.(¥ÌÇà8•È»Õ‰2
+d
+java:S5361C"HReplace this call to "replaceAll()" by a call to the "replace()" method.(îÇ98ÑãùĞ‰2
+]	java:S125Q"<This block of commented-out lines of code should be removed.(Àµ·‚øÿÿÿÿ8 È»Õ‰2
+c
+java:S1117]"ARename "numeroTarjeta" which hides the field declared at line 40.(É ¡ùşÿÿÿÿ8£È»Õ‰2
+e
+java:S1117^"CRename "fechaExpiracion" which hides the field declared at line 43.(™í·İùÿÿÿÿ8£È»Õ‰2
+a
+java:S1117_"?Rename "facilitador" which hides the field declared at line 46.(êÒí¬ùÿÿÿÿ8ÛãùĞ‰2
+]
+java:S1117`";Rename "cliente" which hides the field declared at line 49.(Ş¢°­øÿÿÿÿ8ÚãùĞ‰2
+U	java:S106z"9Replace this use of System.out or System.err by a logger.(êÊ§Á8ÚãùĞ‰2
+V	java:S106"9Replace this use of System.out or System.err by a logger.(Ì’Úß8ÛãùĞ‰2
+b
+java:S1117˜"?Rename "facilitador" which hides the field declared at line 46.(½Ç”¥ıÿÿÿÿ8«È»Õ‰2
+Y
+java:S1117™";Rename "cliente" which hides the field declared at line 49.(£å¥Ğ8«È»Õ‰2
+V	java:S106 "9Replace this use of System.out or System.err by a logger.(ÍÇè…8­È»Õ‰2
+^
+java:S1117«";Rename "cliente" which hides the field declared at line 49.(²ÜÌáüÿÿÿÿ8¯È»Õ‰2
+V	java:S106±"9Replace this use of System.out or System.err by a logger.(êÊ§Á8¯È»Õ‰2
+b
+java:S1117º"?Rename "facilitador" which hides the field declared at line 46.(ê¨¿Ğûÿÿÿÿ8°È»Õ‰2
+V	java:S106À"9Replace this use of System.out or System.err by a logger.(êÊ§Á8±È»Õ‰2
+Q
+java:S1128"/Remove this unused import 'javafx.stage.Stage'.(æÄ¸²úÿÿÿÿ8İãùĞ‰2
+w
+java:S1128"URemove this unused import 'org.example.comprasinteligentes.views.ClienteApplication'.(ïóóùÿÿÿÿ8İãùĞ‰2
+w
+java:S1128"URemove this unused import 'org.example.comprasinteligentes.views.ComprasApplication'.(Š˜Üëøÿÿÿÿ8İãùĞ‰2
+r
+java:S1128"URemove this unused import 'org.example.comprasinteligentes.views.ReporteApplication'.(¤»Š8İãùĞ‰2

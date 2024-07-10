@@ -1,0 +1,56 @@
+
+|
+java:S2293§"YReplace the type specification in this constructor call with the diamond operator ("<>").(„ßÓúÿÿÿÿ8ç­ŞÒ‰2
+|
+java:S2293¨"YReplace the type specification in this constructor call with the diamond operator ("<>").(‡Å¿Èûÿÿÿÿ8ç­ŞÒ‰2
+w
+java:S2293©"YReplace the type specification in this constructor call with the diamond operator ("<>").(²òç8ç­ŞÒ‰2
+w
+java:S2293ª"YReplace the type specification in this constructor call with the diamond operator ("<>").(ªÓ¾ã8—úİÒ‰2
+w
+java:S2293«"YReplace the type specification in this constructor call with the diamond operator ("<>").(’©Æ¢8—úİÒ‰2
+q
+java:S1192K"TDefine a constant instead of duplicating this literal "error de conexion: " 5 times.(‹ú‹ï8è­ŞÒ‰2
+h
+java:S1192R"FDefine a constant instead of duplicating this literal "Error" 6 times.(Ì±ÀĞøÿÿÿÿ8è­ŞÒ‰2
+e
+java:S1192E"HDefine a constant instead of duplicating this literal "Fracaso" 5 times.(°ñÚâ8è­ŞÒ‰2
+i
+java:S1192C"GDefine a constant instead of duplicating this literal "Ã‰xito" 3 times.(´ÄÙÿÿÿÿÿ8ïöâÒ‰2
+s	java:S117°"QRename this local variable to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(Ã›“ùûÿÿÿÿ8è­ŞÒ‰2
+s	java:S117¾"QRename this local variable to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(øŒÄ³ûÿÿÿÿ8Âƒ×‰2
+i
+java:S2095>"GUse try-with-resources or close this "Statement" in a "finally" clause.(¡ÂöÒıÿÿÿÿ8‹®ŞÒ‰2
+e
+java:S2095À"GUse try-with-resources or close this "Statement" in a "finally" clause.(‚é¿õ8‹®ŞÒ‰2
+q
+java:S2095W"OUse try-with-resources or close this "PreparedStatement" in a "finally" clause.(ÇÕÜ¢ûÿÿÿÿ8‹®ŞÒ‰2
+q
+java:S20956"OUse try-with-resources or close this "PreparedStatement" in a "finally" clause.(ïÂ½Üøÿÿÿÿ8ÂúİÒ‰2
+j
+java:S2095–"GUse try-with-resources or close this "Statement" in a "finally" clause.(úÑˆüıÿÿÿÿ8äƒ×‰2
+l
+java:S2095t"OUse try-with-resources or close this "PreparedStatement" in a "finally" clause.(â·ùÈ8‹®ŞÒ‰2
+U	java:S106G"9Replace this use of System.out or System.err by a logger.(œÚã8‘®ŞÒ‰2
+U	java:S106K"9Replace this use of System.out or System.err by a logger.(‹ú‹ï8‘®ŞÒ‰2
+U	java:S106h"9Replace this use of System.out or System.err by a logger.(‹ú‹ï8“®ŞÒ‰2
+[	java:S106Š"9Replace this use of System.out or System.err by a logger.(À±şûÿÿÿÿ8•®ŞÒ‰2
+V	java:S106"9Replace this use of System.out or System.err by a logger.(‹ú‹ï8–®ŞÒ‰2
+V	java:S106¢"9Replace this use of System.out or System.err by a logger.(‹ú‹ï8—®ŞÒ‰2
+V	java:S106Ë"9Replace this use of System.out or System.err by a logger.(‹ú‹ï8ñƒ×‰2
+f
+java:S5361Ü"HReplace this call to "replaceAll()" by a call to the "replace()" method.(ÒÀÎª8›®ŞÒ‰2
+Z
+java:S1128"=Remove this unused import 'javafx.collections.FXCollections'.(´¶²Æ8À¯şÖ‰2
+;
+java:S1128"Remove this duplicated import.(ˆ’Å˜8ÕúİÒ‰2
+Q
+java:S1128	"/Remove this unused import 'javafx.stage.Stage'.(æÄ¸²úÿÿÿÿ8À¯şÖ‰2
+w
+java:S1128"URemove this unused import 'org.example.comprasinteligentes.views.ComprasApplication'.(Š˜Üëøÿÿÿÿ8À¯şÖ‰2
+r
+java:S1128"URemove this unused import 'org.example.comprasinteligentes.views.ReporteApplication'.(¤»Š8À¯şÖ‰2
+r
+java:S1128"URemove this unused import 'org.example.comprasinteligentes.views.TarjetaApplication'.(ó—¶ï8À¯şÖ‰2
+V
+java:S1128"4Remove this unused import 'java.util.regex.Pattern'.(Ã•…Äúÿÿÿÿ8À¯şÖ‰2

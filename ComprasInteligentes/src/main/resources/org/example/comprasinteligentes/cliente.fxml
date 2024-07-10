@@ -90,17 +90,21 @@
       <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0">
          <children>
             <Label text="Identificador Cliente:" /> <!-- 00016623 - Etiqueta para identificador -->
-            <TextField fx:id="txtIDCliente">
+            <TextField fx:id="txtIDCliente" prefHeight="25.0" prefWidth="49.0">
                <HBox.margin>
                   <Insets left="10.0" /> <!-- 00016623 - Margen izquierdo -->
                </HBox.margin>
             </TextField>
+            <Button fx:id="btnObtener" layoutX="438.0" layoutY="13.0" mnemonicParsing="false" onAction="#obtenerCliente" styleClass="loadBtn" text="Cargar Cliente">
+               <HBox.margin>
+                  <Insets left="50.0" />
+               </HBox.margin></Button>
             <Button fx:id="btnEliminar" mnemonicParsing="false" onAction="#eliminarCliente" styleClass="deleteBtn" text="Eliminar Cliente"> <!-- 00016623 - Botón para eliminar cliente -->
                <HBox.margin>
-                  <Insets left="50.0" /> <!-- 00016623 - Margen izquierdo -->
+                  <Insets left="10.0" /> <!-- 00016623 - Margen izquierdo -->
                </HBox.margin>
             </Button>
-            <Button fx:id="btnModificar" mnemonicParsing="false" onAction="#modificarCliente" styleClass="loadBtn" text="Modificar Cliente"> <!-- 00016623 - Botón para modificar cliente -->
+            <Button fx:id="btnModificar" mnemonicParsing="false" onAction="#modificarCliente" styleClass="addBtn" text="Modificar Cliente"> <!-- 00016623 - Botón para modificar cliente -->
                <HBox.margin>
                   <Insets left="10.0" /> <!-- 00016623 - Margen izquierdo -->
                </HBox.margin>

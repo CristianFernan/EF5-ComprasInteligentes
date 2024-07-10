@@ -1,0 +1,15 @@
+=== REPORTE D ====
+=================
+Cliente #1:
+N° de Cliente: #1
+Nombre del Cliente: Carlos Santana
+Total gastado: 1158.49
+Cantidad de compras:9
+=================
+=================
+Cliente #2:
+N° de Cliente: #2
+Nombre del Cliente: Juan Pérez
+Total gastado: 878.5
+Cantidad de compras:6
+=================

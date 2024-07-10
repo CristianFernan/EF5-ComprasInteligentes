@@ -244,7 +244,7 @@ public class ReportesController { //00083723 Controlador para gestionar reportes
 
                 tarjetas.add( new Tarjeta(tarjetaOcultada, tipo));
 
-                if (tipo.equals("Credito")) { //00083723 Si la tarjeta es de credito
+                if (tipo.equalsIgnoreCase("Crédito")) { //00083723 Si la tarjeta es de credito
                     tarjetasCredito.append(tarjetaOcultada).append("\n"); //00083723 Agrega la tarjeta al StringBuilder de tarjetas de credito
                 } else { //00083723 Si la tarjeta es de debito
                     tarjetasDebito.append(tarjetaOcultada).append("\n"); //00083723 Agrega la tarjeta al StringBuilder de tarjetas de debito
@@ -261,7 +261,7 @@ public class ReportesController { //00083723 Controlador para gestionar reportes
 
             generarReporteC(tarjetas); // 00107223 Llamar la función que imprime los resultados en un .txt
 
-            txtAreaTarjetasClienteC.setText("Tarjetas de credito:\n" + tarjetasCredito + "\nTarjetas de debito:\n" + tarjetasDebito); //00083723 Muestra las tarjetas en el TextArea
+            txtAreaTarjetasClienteC.setText("Tarjetas de crédito:\n" + tarjetasCredito + "\nTarjetas de débito:\n" + tarjetasDebito); //00083723 Muestra las tarjetas en el TextArea
         } catch (SQLException e) { //00083723 Captura las excepciones SQL
             e.printStackTrace(); //00083723 Imprime la pila de errores
         }
@@ -373,7 +373,7 @@ public class ReportesController { //00083723 Controlador para gestionar reportes
             escritor.write("=== REPORTE C ====\n"); // 00107223 se le da un título al reporte
             escritor.write("Tárjetas de Crédito:\n"); // 00107223 Imprime el título de las tarjetas de crédito
             for (Tarjeta tarjeta : tarjetas){ // 00107223 un bucle foreach para evaluar si el cliente posee una tarjeta de crédito y si es asi que la imprima
-                if (tarjeta.getTipo().equalsIgnoreCase("CREDITO")){ // 00107223 condicional que evaluá si el tipo coincide con crédito el ignoreCase es para que no le importe si el tipo posee Mayúsculas o Minúsculas
+                if (tarjeta.getTipo().equalsIgnoreCase("CRÉDITO")){ // 00107223 condicional que evaluá si el tipo coincide con crédito el ignoreCase es para que no le importe si el tipo posee Mayúsculas o Minúsculas
                     contadorCredito++; // 00107223 se aumenta en uno el contador de tarjeta de crédito
                     escritor.write("\t"+tarjeta.getNumeroTarjeta()+"\n"); // 00107223 se le da un título al reporte
                 }
@@ -382,9 +382,9 @@ public class ReportesController { //00083723 Controlador para gestionar reportes
                 escritor.write("\tN/A\n"); // 00107223 Impresion  de N/A
 
             }
-            escritor.write("Tárjetas de Dédito:\n"); // 00107223 Imprime el título de las tarjetas de dédito
+            escritor.write("Tárjetas de Débito:\n"); // 00107223 Imprime el título de las tarjetas de dédito
             for (Tarjeta tarjeta : tarjetas){ // 00107223 un bucle foreach para evaluar si el cliente posee una tarjeta de crédito y si es asi que la imprima
-                if (tarjeta.getTipo().equalsIgnoreCase("DEBITO")){  // 00107223 condicional que evaluá si el tipo coincide con crédito el ignoreCase es para que no le importe si el tipo posee Mayúsculas o Minúsculas
+                if (tarjeta.getTipo().equalsIgnoreCase("DÉBITO")){  // 00107223 condicional que evaluá si el tipo coincide con crédito el ignoreCase es para que no le importe si el tipo posee Mayúsculas o Minúsculas
                     contadorDebito++; // 00107223 se aumenta en uno el contador de tarjeta de débito
                     escritor.write("\t"+tarjeta.getNumeroTarjeta()+"\n"); // 00107223 se le da un título al reporte
                 }

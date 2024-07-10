@@ -1,0 +1,5 @@
+=== REPORTE B ====
+===========================
+Fecha(2024/7) Cliente: Carlos Santana
+Monto Total Gastado en el mes de Julio: $858.49
+===========================

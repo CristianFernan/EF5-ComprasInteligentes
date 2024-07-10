@@ -57,14 +57,16 @@ public class ClienteController {
             ps.setString(3, cliente.getNumeroTelefono()); // 00107223 Asigna el numero de telefono del cliente al tercer parametro de la consulta
             ps.setString(4, cliente.getDireccion()); // 00107223 Asigna la direccion del cliente al cuarto parametro de la consulta
             result = ps.executeUpdate(); // 00107223 Ejecuta la consulta SQL
-
-            if (result > 0){
+            if (result > 0) {
                 tbListadoCliente.getItems().add(cliente); // 00107223 Si la insercion fue exitosa, agrega el cliente a la tabla
                 Statement st = conexion.conectar().createStatement(); // 00107223 Se crea una sentencia para obtener el identificador del cliente que se acaba de agregar
                 ResultSet rs = st.executeQuery("SELECT ID FROM tbCliente order by ID desc limit 1"); // 00107223 Se obtiene el ID del cliente más reciente (el que colocamos en el CRUD)
                 if (rs.next()){ // 00107223 si se obtuvo ID entonces se ejecuta estas instrucciones
                     cliente.setId(rs.getInt("ID")); // 00107223 modificar ID del cliente local con el ID de la BD
                 }
+                Alerts.showAlert("Éxito", "Se ha ingresado el cliente satisfactoriamente", 1); //00016623 Muestra alerta de éxito si la inserción fue exitosa
+            } else {
+                Alerts.showAlert("Fracaso", "Ocurrió un error al ingresar el cliente", 3); //00016623 Muestra alerta de fracaso si la inserción falló
             }
             System.out.println(result > 0 ? "Exito" : "Fracaso"); // 00107223 Imprime el resultado de la insercion en la consola
             limpiar(); // 00107223 Limpia los campos del formulario
@@ -86,14 +88,17 @@ public class ClienteController {
             ps.setInt(1, Integer.parseInt(txtIDCliente.getText())); // 00107223 Asigna el ID del cliente al primer parametro de la consulta
             result = ps.executeUpdate(); // 00107223 Ejecuta la consulta SQL
 
+
             if (result > 0) {
                 int id = buscarCliente(Integer.parseInt(txtIDCliente.getText())); // 00107223 Busca el cliente en la tabla
                 if (id != -1) {
                     tbListadoCliente.getItems().remove(id); // 00107223 Remueve el cliente de la tabla
                     tbListadoCliente.refresh(); // 00107223 Refresca la tabla para mostrar los cambios
                 }
+                Alerts.showAlert("Éxito", "Se ha eliminado el cliente satisfactoriamente", 1); //00016623 Muestra alerta de éxito si la inserción fue exitosa
+            } else {
+                Alerts.showAlert("Fracaso", "Ocurrió un error al ingresar el cliente", 3); //00016623 Muestra alerta de fracaso si la inserción falló
             }
-            System.out.println(result > 0 ? "Exito" : "Fracaso"); // 00107223 Imprime el resultado de la eliminacion en la consola
             limpiar(); // 00107223 Limpia los campos del formulario
             conexion.cerrarConexion(); // 00107223 Cierra la conexion a la base de datos
         } catch (SQLException e) {
@@ -127,6 +132,9 @@ public class ClienteController {
                     cliente.setDireccion(txtDireccion.getText()); // 00107223 Actualiza la direccion del cliente en la tabla
                     tbListadoCliente.refresh(); // 00107223 Refresca la tabla para mostrar los cambios
                 }
+                Alerts.showAlert("Éxito", "Se ha modificado el cliente satisfactoriamente", 1); //00016623 Muestra alerta de éxito si la inserción fue exitosa
+            } else {
+                Alerts.showAlert("Fracaso", "Ocurrió un error al modificar el cliente", 3); //00016623 Muestra alerta de fracaso si la inserción falló
             }
             System.out.println(result > 0 ? "Exito" : "Fracaso"); // 00107223 Imprime el resultado de la modificacion en la consola
             limpiar(); // 00107223 Limpia los campos del formulario
@@ -155,7 +163,6 @@ public class ClienteController {
             System.out.println("error de conexion: " + e); // 00107223 Imprime el mensaje de error de conexion en la consola
         }
     }
-
     @FXML
     public void initialize() { // 00107223 Manejar validaciones a la hora de iniciar la vista
         nombre.setCellValueFactory(new PropertyValueFactory<Cliente, String>("nombre")); // 00107223 Asignarle una value factory a la columna para que utilice el atributo nombre para guardarlos
@@ -176,8 +183,9 @@ public class ClienteController {
         }
         return -1; // 00107223 Retorna un indice fuera de los limites, por lo que no removeria nada
     }
-
-    private void obtenerCliente(int ID) { // 00107223 Función void, obtiene un ID digitado y realiza una consulta para buscar los datos del cliente relacionado con ese ID.
+    @FXML
+    private void obtenerCliente() { // 00107223 Función void, obtiene un ID digitado y realiza una consulta para buscar los datos del cliente relacionado con ese ID.
+        int ID = Integer.parseInt(txtIDCliente.getText());// 00107223 Obtener y convertir a int id de cliente del textField
         try { // 00107223 try necesario para la conexión a la base de datos
             Statement st = conexion.conectar().createStatement(); // 00107223 Se crea una sentencia para obtener los datos del cliente por su ID
             ResultSet rs = st.executeQuery("SELECT ID, NOMBRE, APELLIDO, DIRECCION, NUMEROTELEFONO FROM tbCLIENTE WHERE ID =" + ID + ";"); // 00107223 se obtienen todos los datos del cliente por medio de la ID digitada en txtIDCliente.
@@ -229,9 +237,6 @@ public class ClienteController {
                 Alerts.showAlert("Error", "Ingrese valores válidos. Solo se permiten dígitos.", 3); // 00068223 Muestra un mensaje de error si se ingresan letras
                 txtIDCliente.clear(); // 00068223 Borra el contenido del campo de texto
             }
-        });
-        txtIDCliente.textProperty().addListener((observable, oldValue, newValue) -> { // 00107223 Crear un addListener que al ingresar un numero llame a la función de obtenerCliente
-            obtenerCliente(Integer.parseInt(txtIDCliente.getText())); // 00107223 se llama a la función que busca al cliente en la Base de datos y llenar los campos para comodidad al modificar/borrar
         });
     }
 

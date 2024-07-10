@@ -1,0 +1,5 @@
+=== REPORTE C ====
+Tárjetas de Crédito:
+	XXXX XXXX XXXX 4004
+Tárjetas de Débito:
+	XXXX XXXX XXXX 1234

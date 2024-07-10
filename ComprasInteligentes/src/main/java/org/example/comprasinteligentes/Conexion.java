@@ -9,7 +9,7 @@ public class Conexion { // 00107223 Creacion de un singleton para la conexion co
     private static Conexion instance; // 00107223 Estableciendo la instancia de la clase conexion
     private final String URL = "jdbc:mysql://localhost:3306/dbComprasInteligentes"; // 00107223 Estableciendo el URL para establecer la conexion
     private final String user = "root";// 00107223 Estableciendo el usuario que hara la conexion
-    private final String password = "ganglyPie44311"; // 00107223 Estableciendo la contraseña del usuario
+    private final String password = "admin123"; // 00107223 Estableciendo la contraseña del usuario
 
     private Conexion(){} // 00107223 constructor privado para que no se pueda llamar afuera de la clase
 

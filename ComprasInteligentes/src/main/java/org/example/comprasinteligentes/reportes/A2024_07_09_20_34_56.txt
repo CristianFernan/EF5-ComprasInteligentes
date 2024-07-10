@@ -1,0 +1,36 @@
+=== REPORTE A ====
+=================
+Numero Cliente #1:
+N° de compra: #1
+Monto total: $100.0
+Fecha de compra: 2024-07-06
+Descripción de compra:Telefono Samsung, amazon
+=================
+=================
+Numero Cliente #2:
+N° de compra: #2
+Monto total: $200.0
+Fecha de compra: 2024-07-06
+Descripción de compra:Tablet Xiaomi, Siman
+=================
+=================
+Numero Cliente #3:
+N° de compra: #16
+Monto total: $80.0
+Fecha de compra: 2024-07-01
+Descripción de compra:Compra en La Curacao
+=================
+=================
+Numero Cliente #4:
+N° de compra: #22
+Monto total: $50.0
+Fecha de compra: 2024-07-07
+Descripción de compra:Compra en Tienda en línea
+=================
+=================
+Numero Cliente #5:
+N° de compra: #36
+Monto total: $98.5
+Fecha de compra: 2024-07-09
+Descripción de compra:Compra de zapatos
+=================

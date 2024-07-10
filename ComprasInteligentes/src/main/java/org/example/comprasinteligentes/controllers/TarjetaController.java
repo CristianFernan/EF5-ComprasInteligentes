@@ -84,7 +84,7 @@ public class TarjetaController { //00068223 Clase controladora para manejar la l
     }
 
     private void cargarTiposTarjeta() { //00068223 Funcion para cargar los tipos de tarjeta en el comboBox cmbTipoTarjeta
-        cmbTipoTarjeta.getItems().addAll("Debito", "Credito"); //00068223 Agregar "Debito" y "Credito" al comboBox
+        cmbTipoTarjeta.getItems().addAll("Débito", "Crédito"); //00068223 Agregar "Debito" y "Credito" al comboBox
     }
 
     @FXML
@@ -112,7 +112,7 @@ public class TarjetaController { //00068223 Clase controladora para manejar la l
 
                 result = ps.executeUpdate(); //00068223 Ejecuta la consulta SQL
                 if (result > 0) { //00068223 Verifica si la insercion fue exitosa
-                    Alerts.showAlert("exito", "Se ha ingresado la tarjeta satisfactoriamente", 1); //00068223 Muestra alerta de exito si la insercion fue exitosa
+                    Alerts.showAlert("Éxito", "Se ha ingresado la tarjeta satisfactoriamente", 1); //00068223 Muestra alerta de exito si la insercion fue exitosa
                 } else { //00068223 else que se ejecuta cuando la insercion fallo
                     Alerts.showAlert("Fracaso", "Ocurrio un error al ingresar la tarjeta", 3); //00068223 Muestra alerta de fracaso si la insercion fallo
                 }

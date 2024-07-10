@@ -65,7 +65,7 @@ public class Cliente { //00107223 Creación de clase Cliente para poder gestiona
     }
 
     @Override
-    public String toString(){ // 00107223 sobreescribir el toString para su uso en los comboBox
-        return nombre + " " + apellido; // 00107223 retorna el nombre y el apellido del cliente
+    public String toString() {
+        return (nombre != null ? nombre : "") + " " + (apellido != null ? apellido : ""); // 00068223 haciendo una verificacion de que los valores no sean nulos
     }
 }
